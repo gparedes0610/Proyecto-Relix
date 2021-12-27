@@ -37,6 +37,7 @@ function LoginView() {
       const data = await crearUsuariosLogin({ ...sesion });
       console.log(data);
       console.log(data.Token);
+      console.log(data.idRol);
     } catch (error) {
       console.log(error);
     }
@@ -45,7 +46,7 @@ function LoginView() {
   useEffect(() => {
     getData();
   }, []);
-  console.log(usuarios);
+  //console.log(usuarios);
 
   return (
     <>
@@ -135,6 +136,7 @@ function LoginView() {
                     "linear-gradient(180deg, #1478A3 0%, rgba(37, 182, 244, 0.51) 100%)",
                   boxShadow: "0px 4px 25px rgba(0, 0, 0, 0.15)",
                   width: "100%",
+                  borderRadius: "0 10px 10px 0",
                 }}
                 className="img-fluid"
               />

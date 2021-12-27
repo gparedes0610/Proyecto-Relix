@@ -12,7 +12,7 @@ function RegisterView() {
     nombreUsuario: "",
     apellidoUsuario: "",
     correoUsuario: "",
-    passwordUsuario: "",
+    passwordUsuario: "m",
     idRol: "",
   });
 
@@ -136,7 +136,7 @@ function RegisterView() {
                       />
                     </Form.Group>
 
-                    <Form.Group
+                    {/*  <Form.Group
                       className="mb-3"
                       controlId="formBasicPassword"
                       style={{ background: "white" }}
@@ -150,7 +150,7 @@ function RegisterView() {
                         name="passwordUsuario"
                         onChange={(e) => actualizarInput(e)}
                       />
-                    </Form.Group>
+                    </Form.Group> */}
 
                     <Form.Group
                       controlId="formGridState"
@@ -160,12 +160,13 @@ function RegisterView() {
                         Rol
                       </Form.Label>
                       <Form.Select
-                        defaultValue="Choose..."
+                        defaultValue="Seleccione"
                         name="idRol"
                         onChange={(e) => {
                           actualizarInput(e);
                         }}
                       >
+                        <option>Seleccione</option>
                         {roles.map((rol, i) => (
                           <option key={i} value={rol.idRol}>
                             {rol.nombreRol}

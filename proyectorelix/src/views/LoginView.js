@@ -1,32 +1,36 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import LogoRelix from "../assets/relixjpg 1.svg";
 import login from "../assets/login4.svg";
 import { Form, Button } from "react-bootstrap";
-import {
-  crearUsuariosLogin,
-  obtenerUsuarios,
-} from "../services/usuarioService";
-
+import { validaSesion } from "../services/usuarioService";
+import { TokenContext } from "../context/tokenContext";
+import { Link } from "react-router-dom";
 function LoginView() {
+  const { setRol } = useContext(TokenContext);
+
   const [sesion, setSesion] = useState({
     correo: "",
     clave: "",
   });
 
-  const [usuarios, setUsuarios] = useState([]);
+  //const [usuarios, setUsuarios] = useState([]);
 
   const enviarInput = (e) => {
     setSesion({ ...sesion, [e.target.name]: e.target.value });
   };
 
-  const getData = async () => {
+  /*   const getData = async () => {
     try {
       const usuariosObtenidos = await obtenerUsuarios();
       setUsuarios(usuariosObtenidos);
     } catch (error) {
       console.log(error);
     }
-  };
+  }; */
+  /*  const guardarRolLs = (rol) => {
+    const rolguardado = localStorage.setItem("rol", JSON.stringify(rol));
+    setRol(rolguardado);
+  }; */
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -34,18 +38,20 @@ function LoginView() {
     console.log("acepta");
     try {
       //await crearUsuariosLogin({ ...sesion });
-      const data = await crearUsuariosLogin({ ...sesion });
+      const data = await validaSesion({ ...sesion });
       console.log(data);
       console.log(data.Token);
-      console.log(data.idRol);
+      console.log(data.user.idRol);
+      // setRol(data.user.idRol);
+      //guardarRolLs(data.user.idRol);
     } catch (error) {
       console.log(error);
     }
   };
 
-  useEffect(() => {
+  /*   useEffect(() => {
     getData();
-  }, []);
+  }, []); */
   //console.log(usuarios);
 
   return (
@@ -111,17 +117,19 @@ function LoginView() {
                         onChange={(e) => enviarInput(e)}
                       />
                     </Form.Group>
-                    <Button
+                    <Link
                       variant="info w-100 mt-2 text-white"
                       style={{
                         background:
                           "linear-gradient(180deg, #1478A3 0%, rgba(37, 182, 244, 0.51) 100%)",
                         border: "none",
                       }}
+                      className="btn btn-success mb-2 w-100"
+                      to={`/registrar`}
                       type="submit"
                     >
                       Ingresar
-                    </Button>
+                    </Link>
                   </Form>
                 </div>
               </div>

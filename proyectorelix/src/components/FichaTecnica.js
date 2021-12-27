@@ -8,7 +8,7 @@ function FichaTecnica() {
         <div className="container">
           <div className="row d-flex justify-content-center">
             <div
-              className="col-12 col-md-5"
+              className="col-12 col-md-6"
               style={{
                 background: "white",
                 boxShadow: "0px 4px 25px rgba(0, 0, 0, 0.15)",

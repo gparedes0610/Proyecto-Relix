@@ -5,11 +5,15 @@ import "./App.css";
 
 import bootstrap from "bootstrap/dist/css/bootstrap.min.css";
 import LoginView from "./views/LoginView";
-import RegisterView from "./views/RegisterView";
-import TrabajoView from "./views/TrabajoView";
+import IngenieroView from "./views/IngenieroView";
 import PrivateRoute from "./components/PrivateRoute";
 import FichaTecnica from "./components/FichaTecnica";
+
 import { TokenContextProvider } from "./context/tokenContext";
+import AdministradorView from "./views/AdministradorView";
+import GerenteView from "./views/GerenteView";
+import PrivateRouteIng from "./components/PrivateRouteIng";
+import PrivateRouteGg from "./components/PrivateRouteGg";
 
 function App() {
   return (
@@ -17,15 +21,33 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<LoginView />} />
-          {/*   <Route path="/registrar" element={<RegisterView />} /> */}
-          <Route path="/sesioniniciada" element={<TrabajoView />} />
+          {/* <Route path="/administrador" element={<AdministradorView />} /> */}
+          {/* <Route path="/ingeniero" element={<IngenieroView />} /> */}
+          {/*  <Route path="/gerente" element={<GerenteView />} /> */}
           <Route path="/fichatecnica" element={<FichaTecnica />} />
           <Route
-            path="/registrar"
+            path="/administrador"
             element={
               <PrivateRoute>
-                <RegisterView />
+                <AdministradorView />
               </PrivateRoute>
+            }
+          />
+          <Route
+            path="/ingeniero"
+            element={
+              <PrivateRouteIng>
+                <IngenieroView />
+              </PrivateRouteIng>
+            }
+          />
+
+          <Route
+            path="/gerente"
+            element={
+              <PrivateRouteGg>
+                <GerenteView />
+              </PrivateRouteGg>
             }
           />
         </Routes>

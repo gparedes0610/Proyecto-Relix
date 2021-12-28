@@ -4,53 +4,55 @@ import login from "../assets/login4.svg";
 import { Form, Button } from "react-bootstrap";
 import { validaSesion } from "../services/usuarioService";
 import { TokenContext } from "../context/tokenContext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+
 function LoginView() {
-  const { setRol } = useContext(TokenContext);
+  const { setRol, guardarSesion } = useContext(TokenContext);
+
+  const navigate = useNavigate();
 
   const [sesion, setSesion] = useState({
     correo: "",
     clave: "",
   });
 
-  //const [usuarios, setUsuarios] = useState([]);
-
   const enviarInput = (e) => {
     setSesion({ ...sesion, [e.target.name]: e.target.value });
   };
-
-  /*   const getData = async () => {
-    try {
-      const usuariosObtenidos = await obtenerUsuarios();
-      setUsuarios(usuariosObtenidos);
-    } catch (error) {
-      console.log(error);
-    }
-  }; */
-  /*  const guardarRolLs = (rol) => {
-    const rolguardado = localStorage.setItem("rol", JSON.stringify(rol));
-    setRol(rolguardado);
-  }; */
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(sesion);
-    console.log("acepta");
+    console.log("datos de sesion", sesion);
+    //console.log("acepta");
     try {
-      //await crearUsuariosLogin({ ...sesion });
       const data = await validaSesion({ ...sesion });
-      console.log(data);
+      /* console.log(data);
+      console.log(data.user);
       console.log(data.Token);
-      console.log(data.user.idRol);
+      console.log(data.user.idRol); */
+      localStorage.setItem("token", data.Token);
+      localStorage.setItem("idRol", data.user.idRol);
+      const idRolObtenido = JSON.parse(localStorage.getItem("idRol"));
+      console.log(idRolObtenido);
+      guardarSesion(data.user);
+      setRol(idRolObtenido);
       // setRol(data.user.idRol);
       //guardarRolLs(data.user.idRol);
+      if (idRolObtenido === 1) {
+        navigate("/administrador");
+      } else if (idRolObtenido === 2) {
+        navigate("/gerente");
+      } else if (idRolObtenido === 3) {
+        navigate("/ingeniero");
+      }
     } catch (error) {
       console.log(error);
     }
   };
 
-  /*   useEffect(() => {
-    getData();
+  /* useEffect(() => {
+    if (localStorage.getItem("token") != null) {
+      navigate("/registrar");
+    }
   }, []); */
   //console.log(usuarios);
 
@@ -117,19 +119,19 @@ function LoginView() {
                         onChange={(e) => enviarInput(e)}
                       />
                     </Form.Group>
-                    <Link
+                    <Button
                       variant="info w-100 mt-2 text-white"
                       style={{
                         background:
                           "linear-gradient(180deg, #1478A3 0%, rgba(37, 182, 244, 0.51) 100%)",
                         border: "none",
                       }}
-                      className="btn btn-success mb-2 w-100"
-                      to={`/registrar`}
+                      // className="btn btn-success mb-2 w-100"
+                      // to={`/registrar`}
                       type="submit"
                     >
                       Ingresar
-                    </Link>
+                    </Button>
                   </Form>
                 </div>
               </div>

@@ -8,20 +8,34 @@ import {
   Offcanvas,
   Button,
 } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaBars } from "react-icons/fa";
-//import "./Navbar.css";
+import { TokenContext } from "../context/tokenContext";
+import { useContext } from "react";
 function NavBar() {
+  const navigate = useNavigate();
+
+  const { usuario, limpiarSesion } = useContext(TokenContext);
+  console.log("estoy en navbar y este es el usuario", usuario);
+  console.log(
+    "estoy en navbar y este es el nombre usuaro",
+    usuario[0].nombreUsuario
+  );
   /*  const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true); */
 
   // <FaBars className="mx-2" />
+  const cerrarSesion = () => {
+    // console.log("cerre sesion ctmre");
+    limpiarSesion();
+    navigate("/");
+  };
   return (
     <>
       <Navbar bg="white" expand="lg">
-        <Container style={{ background: "white" }}>
+        <Container fluid style={{ background: "white" }}>
           <Navbar.Brand href="#" style={{ background: "white" }}>
             <img
               src={LogoRelix}
@@ -39,7 +53,9 @@ function NavBar() {
               className="text-uppercase h6"
               style={{ color: "#4253FF", background: "white" }}
             >
-              PRESUPUESTO BLUE GOLD-CERRO VERDE
+              {usuario[0].idRol === "1" && "Bienvenido Administrador"}
+              {usuario[0].idRol === "2" && "Bienvenido Gerente General"}
+              {usuario[0].idRol === "3" && "Presupuesto Blue Gold"}
             </span>
           </span>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -53,30 +69,51 @@ function NavBar() {
                 title={
                   <div className="d-inline" style={{ background: "white" }}>
                     <span style={{ background: "white" }}>
-                      Bienvenido Jorge (Ingeniero)
+                      {`Bienvenido ${usuario[0].nombreUsuario}`}
                     </span>
                   </div>
                 }
                 id="basic-nav-dropdown"
-                className="bg-white"
+                className="bg-white pe-5"
                 bg="white"
                 style={{ background: "white !important" }}
               >
-                <NavDropdown.Item href="#action/3.2">
-                  Cerrar Sesion
-                </NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.2">
-                  Importado
-                </NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.2">
-                  Tuberias PVC
-                </NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.2">
-                  Materiales y equipos nacionales
-                </NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.2">
-                  Mesa Fertilizacion
-                </NavDropdown.Item>
+                {usuario[0].idRol === "1" ? (
+                  <div>
+                    <NavDropdown.Item>Control de Usuarios</NavDropdown.Item>
+                    <NavDropdown.Item onClick={() => cerrarSesion()}>
+                      Cerrar Sesion
+                    </NavDropdown.Item>
+                  </div>
+                ) : usuario[0].idRol === "2" ? (
+                  <div>
+                    {" "}
+                    <NavDropdown.Item onClick={() => cerrarSesion()}>
+                      Cerrar Sesion
+                    </NavDropdown.Item>
+                  </div>
+                ) : usuario[0].idRol === "3" ? (
+                  <div>
+                    <NavDropdown.Item>Importado</NavDropdown.Item>
+                    <NavDropdown.Item>Tuberias PVC</NavDropdown.Item>
+                    <NavDropdown.Item>
+                      Materiales y equipos nacionales
+                    </NavDropdown.Item>
+                    <NavDropdown.Item>Mesa Fertilizacion</NavDropdown.Item>
+                    <NavDropdown.Item>Accesorios de conexion</NavDropdown.Item>
+                    <NavDropdown.Item>Bombas y tableros</NavDropdown.Item>
+                    <NavDropdown.Item>Item 37 Accesorios PVC</NavDropdown.Item>
+                    <NavDropdown.Item onClick={() => cerrarSesion()}>
+                      Cerrar Sesion
+                    </NavDropdown.Item>
+                  </div>
+                ) : (
+                  <div>
+                    <NavDropdown.Item onClick={() => cerrarSesion()}>
+                      Cerrar Sesion
+                    </NavDropdown.Item>{" "}
+                  </div>
+                )}
               </NavDropdown>
             </Nav>
           </Navbar.Collapse>

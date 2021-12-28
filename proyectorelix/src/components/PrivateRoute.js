@@ -4,6 +4,7 @@ import { TokenContext } from "../context/tokenContext";
 
 function PrivateRoute(props) {
   const { rol } = useContext(TokenContext);
+  console.log("soy rol y estoy en privateroute", rol);
   /*   {
         if (rol ==='1'){
             <Navigate to="/" />
@@ -11,13 +12,7 @@ function PrivateRoute(props) {
             <Navigate to="/" />
         }
     } */
-  return rol === "1" ? (
-    props.children
-  ) : rol === "2" ? (
-    <Navigate to="/sesioniniciada" />
-  ) : (
-    <Navigate to="/" />
-  );
+  return rol === 1 ? props.children : <Navigate to="/" />;
 }
 
 export default PrivateRoute;

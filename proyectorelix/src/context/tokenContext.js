@@ -3,15 +3,15 @@ import { createContext, useEffect, useState } from "react";
 export const TokenContext = createContext();
 
 export const TokenContextProvider = (props) => {
-  const [rol, setRol] = useState("");
+  // const [rol, setRol] = useState("");
   const [usuario, guardarUsuario] = useState([]);
 
-  console.log("soy rol de tokencontext", rol);
+  //console.log("soy rol de tokencontext", rol);
 
   const guardarSesion = (sesion) => {
     guardarUsuario([...usuario, sesion]);
   };
-  console.log("soy un usario", usuario);
+  console.log("soy un usario y estoy en tokencontext", usuario);
 
   /*  useEffect(() => {
     localStorage.setItem("rol", JSON.stringify(rol));
@@ -19,7 +19,7 @@ export const TokenContextProvider = (props) => {
 
   const limpiarSesion = () => {
     localStorage.clear();
-    setRol("");
+    //setRol("");
     guardarUsuario([]);
   };
 
@@ -33,10 +33,9 @@ export const TokenContextProvider = (props) => {
   useEffect(() => {
     localStorage.setItem("appUsuarios", JSON.stringify(usuario));
   }, [usuario]);
+
   return (
-    <TokenContext.Provider
-      value={{ rol, setRol, limpiarSesion, guardarSesion, usuario }}
-    >
+    <TokenContext.Provider value={{ limpiarSesion, guardarSesion, usuario }}>
       {props.children}
     </TokenContext.Provider>
   );

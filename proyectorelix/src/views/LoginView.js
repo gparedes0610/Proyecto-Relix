@@ -7,7 +7,7 @@ import { TokenContext } from "../context/tokenContext";
 import { Link, useNavigate } from "react-router-dom";
 
 function LoginView() {
-  const { setRol, guardarSesion } = useContext(TokenContext);
+  const { guardarSesion } = useContext(TokenContext);
 
   const navigate = useNavigate();
 
@@ -29,19 +29,29 @@ function LoginView() {
       console.log(data.user);
       console.log(data.Token);
       console.log(data.user.idRol); */
-      localStorage.setItem("token", data.Token);
-      localStorage.setItem("idRol", data.user.idRol);
+      localStorage.setItem("token", JSON.stringify(data.Token));
+      localStorage.setItem("idRol", JSON.stringify(data.user.idRol));
+      localStorage.setItem(
+        "nombreUsuario",
+        JSON.stringify(data.user.nombreUsuario)
+      );
+      const obtenerDatos = {
+        token: JSON.parse(localStorage.getItem("token")),
+        idRol: JSON.parse(localStorage.getItem("idRol")),
+        nombreUsuario: JSON.parse(localStorage.getItem("nombreUsuario")),
+      };
       const idRolObtenido = JSON.parse(localStorage.getItem("idRol"));
-      console.log(idRolObtenido);
-      guardarSesion(data.user);
-      setRol(idRolObtenido);
+      console.log(`soy id rol de login ${idRolObtenido}`);
+      guardarSesion(obtenerDatos);
+      //setRol(idRolObtenido);
+
       // setRol(data.user.idRol);
       //guardarRolLs(data.user.idRol);
       if (idRolObtenido === 1) {
         navigate("/administrador");
       } else if (idRolObtenido === 2) {
         navigate("/gerente");
-      } else if (idRolObtenido === 3) {
+      } else if (idRolObtenido === "3") {
         navigate("/ingeniero");
       } else if (idRolObtenido === 4) {
         navigate("/backoffice");

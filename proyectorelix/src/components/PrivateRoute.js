@@ -3,8 +3,9 @@ import { Navigate } from "react-router-dom";
 import { TokenContext } from "../context/tokenContext";
 
 function PrivateRoute(props) {
-  const { rol } = useContext(TokenContext);
-  console.log("soy rol y estoy en privateroute", rol);
+  const { usuario } = useContext(TokenContext);
+  const { idRol } = usuario;
+  console.log("soy rol y estoy en privateroute de administrador", idRol);
   /*   {
         if (rol ==='1'){
             <Navigate to="/" />
@@ -12,7 +13,7 @@ function PrivateRoute(props) {
             <Navigate to="/" />
         }
     } */
-  return rol === 1 ? props.children : <Navigate to="/" />;
+  return idRol === 1 ? props.children : <Navigate to="/" />;
 }
 
 export default PrivateRoute;

@@ -21,7 +21,7 @@ function LoginView() {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("datos de sesion", sesion);
+    // console.log("datos de sesion", sesion);
     //console.log("acepta");
     try {
       const data = await validaSesion({ ...sesion });
@@ -29,31 +29,40 @@ function LoginView() {
       console.log(data.user);
       console.log(data.Token);
       console.log(data.user.idRol); */
-      localStorage.setItem("token", JSON.stringify(data.Token));
+
+      /*   localStorage.setItem("token", JSON.stringify(data.Token));
       localStorage.setItem("idRol", JSON.stringify(data.user.idRol));
       localStorage.setItem(
         "nombreUsuario",
         JSON.stringify(data.user.nombreUsuario)
-      );
-      const obtenerDatos = {
+      ); */
+
+      /* const obtenerDatos = {
         token: JSON.parse(localStorage.getItem("token")),
         idRol: JSON.parse(localStorage.getItem("idRol")),
         nombreUsuario: JSON.parse(localStorage.getItem("nombreUsuario")),
+      }; */
+      const obtenerDatos = {
+        token: data.Token,
+        idRol: data.user.idRol,
+        nombreUsuario: data.user.nombreUsuario,
       };
-      const idRolObtenido = JSON.parse(localStorage.getItem("idRol"));
-      console.log(`soy id rol de login ${idRolObtenido}`);
+      console.log("estos datos se van a pasar del login", obtenerDatos);
+      /* const idRolObtenido = JSON.parse(localStorage.getItem("idRol"));
+      console.log(`soy id rol de login ${idRolObtenido}`); */
       guardarSesion(obtenerDatos);
       //setRol(idRolObtenido);
 
       // setRol(data.user.idRol);
       //guardarRolLs(data.user.idRol);
-      if (idRolObtenido === 1) {
+      if (obtenerDatos.idRol === 1) {
         navigate("/administrador");
-      } else if (idRolObtenido === 2) {
+      } else if (obtenerDatos.idRol === 2) {
         navigate("/gerente");
-      } else if (idRolObtenido === "3") {
+      } else if (obtenerDatos.idRol === "3") {
         navigate("/ingeniero");
-      } else if (idRolObtenido === 4) {
+        /*  console.log("prueba"); */
+      } else if (obtenerDatos.idRol === 4) {
         navigate("/backoffice");
       }
     } catch (error) {

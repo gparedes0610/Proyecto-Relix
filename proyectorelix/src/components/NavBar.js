@@ -15,23 +15,24 @@ import { useContext } from "react";
 function NavBar() {
   const navigate = useNavigate();
 
-  const { usuario, limpiarSesion } = useContext(TokenContext);
+  /*   const { usuario, limpiarSesion } = useContext(TokenContext);
   console.log("estoy en navbar y este es el usuario", usuario);
   console.log(
     "estoy en navbar y este es el nombre usuaro",
     usuario[0].nombreUsuario
-  );
+  ); */
+
   /*  const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true); */
 
   // <FaBars className="mx-2" />
-  const cerrarSesion = () => {
+  /*   const cerrarSesion = () => {
     // console.log("cerre sesion ctmre");
     limpiarSesion();
     navigate("/");
-  };
+  }; */
   return (
     <>
       <Navbar bg="white" expand="lg">
@@ -53,10 +54,10 @@ function NavBar() {
               className="text-uppercase h6"
               style={{ color: "#4253FF", background: "white" }}
             >
-              {usuario[0].idRol === "1" && "Bienvenido Administrador"}
+              {/*    {usuario[0].idRol === "1" && "Bienvenido Administrador"}
               {usuario[0].idRol === "2" && "Bienvenido Gerente General"}
               {usuario[0].idRol === "3" && "Presupuesto Blue Gold"}
-              {usuario[0].idRol === "4" && "Presupuesto Blue Gold"}
+              {usuario[0].idRol === "4" && "Presupuesto Blue Gold"} */}
             </span>
           </span>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -70,7 +71,7 @@ function NavBar() {
                 title={
                   <div className="d-inline" style={{ background: "white" }}>
                     <span style={{ background: "white" }}>
-                      {`Bienvenido ${usuario[0].nombreUsuario}`}
+                      {/*    {`Bienvenido ${usuario[0].nombreUsuario}`} */}
                     </span>
                   </div>
                 }
@@ -79,7 +80,7 @@ function NavBar() {
                 bg="white"
                 style={{ background: "white !important" }}
               >
-                {usuario[0].idRol === "1" ? (
+                {/* {usuario[0].idRol === "1" ? (
                   <div>
                     <NavDropdown.Item>Control de Usuarios</NavDropdown.Item>
                     <NavDropdown.Item onClick={() => cerrarSesion()}>
@@ -126,7 +127,7 @@ function NavBar() {
                       Cerrar Sesion
                     </NavDropdown.Item>{" "}
                   </div>
-                )}
+                )} */}
               </NavDropdown>
             </Nav>
           </Navbar.Collapse>

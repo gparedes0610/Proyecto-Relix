@@ -5,13 +5,15 @@ export const TokenContext = createContext();
 export const TokenContextProvider = (props) => {
   // const [rol, setRol] = useState("");
   const [usuario, guardarUsuario] = useState([]);
-
-  //console.log("soy rol de tokencontext", rol);
-
+  const [ingeniero, setIngeniero] = useState({
+    token: "",
+    idRol: "",
+    nombreUsuario: "",
+  });
+  console.log("soy un usuario y estoy en tokencontext", usuario);
   const guardarSesion = (sesion) => {
     guardarUsuario([...usuario, sesion]);
   };
-  console.log("soy un usario y estoy en tokencontext", usuario);
 
   /*  useEffect(() => {
     localStorage.setItem("rol", JSON.stringify(rol));
@@ -35,7 +37,9 @@ export const TokenContextProvider = (props) => {
   }, [usuario]);
 
   return (
-    <TokenContext.Provider value={{ limpiarSesion, guardarSesion, usuario }}>
+    <TokenContext.Provider
+      value={{ limpiarSesion, guardarSesion, usuario, ingeniero, setIngeniero }}
+    >
       {props.children}
     </TokenContext.Provider>
   );

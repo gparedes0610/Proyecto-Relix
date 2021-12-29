@@ -14,12 +14,16 @@ import AdministradorView from "./views/AdministradorView";
 import GerenteView from "./views/GerenteView";
 import PrivateRouteIng from "./components/PrivateRouteIng";
 import PrivateRouteGg from "./components/PrivateRouteGg";
+import PrivateRouteBo from "./components/PrivateRouteBo";
+import BackOfficeView from "./views/BackOfficeView";
+import NotFound from "./components/NotFound";
 
 function App() {
   return (
     <TokenContextProvider>
       <Router>
         <Routes>
+          <Route path="*" element={<NotFound />} />
           <Route path="/" element={<LoginView />} />
           {/* <Route path="/administrador" element={<AdministradorView />} /> */}
           {/* <Route path="/ingeniero" element={<IngenieroView />} /> */}
@@ -48,6 +52,15 @@ function App() {
               <PrivateRouteGg>
                 <GerenteView />
               </PrivateRouteGg>
+            }
+          />
+
+          <Route
+            path="/backoffice"
+            element={
+              <PrivateRouteBo>
+                <BackOfficeView />
+              </PrivateRouteBo>
             }
           />
         </Routes>

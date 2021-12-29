@@ -43,6 +43,8 @@ function LoginView() {
         navigate("/gerente");
       } else if (idRolObtenido === 3) {
         navigate("/ingeniero");
+      } else if (idRolObtenido === 4) {
+        navigate("/backoffice");
       }
     } catch (error) {
       console.log(error);

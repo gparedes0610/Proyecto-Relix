@@ -56,6 +56,7 @@ function NavBar() {
               {usuario[0].idRol === "1" && "Bienvenido Administrador"}
               {usuario[0].idRol === "2" && "Bienvenido Gerente General"}
               {usuario[0].idRol === "3" && "Presupuesto Blue Gold"}
+              {usuario[0].idRol === "4" && "Presupuesto Blue Gold"}
             </span>
           </span>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -109,6 +110,18 @@ function NavBar() {
                   </div>
                 ) : (
                   <div>
+                    <NavDropdown.Item onClick={() => cerrarSesion()}>
+                      Reporte 1
+                    </NavDropdown.Item>{" "}
+                    <NavDropdown.Item onClick={() => cerrarSesion()}>
+                      Reporte 2
+                    </NavDropdown.Item>{" "}
+                    <NavDropdown.Item onClick={() => cerrarSesion()}>
+                      Reporte 3
+                    </NavDropdown.Item>{" "}
+                    <NavDropdown.Item onClick={() => cerrarSesion()}>
+                      Reporte 4
+                    </NavDropdown.Item>{" "}
                     <NavDropdown.Item onClick={() => cerrarSesion()}>
                       Cerrar Sesion
                     </NavDropdown.Item>{" "}

@@ -48,7 +48,7 @@ export const COLUMNS = [
     accessor: "total costo",
   },
   {
-    Header: "Cod.softcom",
+    Header: "Actions",
     accessor: "softcom",
   },
 ];

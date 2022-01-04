@@ -1,5 +1,5 @@
 import React from "react";
-import LogoRelix from "../assets/relixjpg 1.svg";
+import LogoRelix from "../assets/relixjpg1.svg";
 import { Form, Button } from "react-bootstrap";
 function FichaTecnica() {
   return (

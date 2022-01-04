@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import LogoRelix from "../assets/relixjpg 1.svg";
-import register from "../assets/register.svg";
-import { obtenerRoles } from "../services/rolesService";
-import { crearUsuarios } from "../services/usuarioService";
+import LogoRelix from "../../assets/relixjpg1.svg";
+import register from "../../assets/register.svg";
+import { obtenerRoles } from "../../services/rolesService";
+import { crearUsuarios } from "../../services/usuarioService";
 import { Form, Button } from "react-bootstrap";
 
 function RegisterView() {

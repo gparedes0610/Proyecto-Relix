@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import LogoRelix from "../assets/relixjpg 1.svg";
+import LogoRelix from "../assets/relixjpg1.svg";
 import {
   Navbar,
   Container,
@@ -8,12 +8,11 @@ import {
   Offcanvas,
   Button,
 } from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
+//import { Link, useNavigate } from "react-router-dom";
 import { FaBars } from "react-icons/fa";
-import { TokenContext } from "../context/tokenContext";
 import { useContext } from "react";
 function NavBar() {
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
 
   /*   const { usuario, limpiarSesion } = useContext(TokenContext);
   console.log("estoy en navbar y este es el usuario", usuario);
@@ -36,8 +35,10 @@ function NavBar() {
   return (
     <>
       <Navbar bg="white" expand="lg">
-        <Container fluid style={{ background: "white" }}>
-          <Navbar.Brand href="#" style={{ background: "white" }}>
+        {/* style={{ background: "white" }} */}
+        <Container fluid>
+          {/*   style={{ background: "white" }} */}
+          <Navbar.Brand href="#">
             <img
               src={LogoRelix}
               alt="relix"
@@ -45,15 +46,14 @@ function NavBar() {
               style={{ width: "200px" }}
             />
           </Navbar.Brand>
-          <span
-            className="text-uppercase h6"
-            style={{ color: "#001737", background: "white" }}
-          >
+          {/*  , background: "white"  */}
+          <span className="text-uppercase h6" style={{ color: "#001737" }}>
             DashBoard {">"}{" "}
             <span
               className="text-uppercase h6"
               style={{ color: "#4253FF", background: "white" }}
             >
+              Presupuesto Blue Gold-Cerro Verde
               {/*    {usuario[0].idRol === "1" && "Bienvenido Administrador"}
               {usuario[0].idRol === "2" && "Bienvenido Gerente General"}
               {usuario[0].idRol === "3" && "Presupuesto Blue Gold"}
@@ -71,6 +71,7 @@ function NavBar() {
                 title={
                   <div className="d-inline" style={{ background: "white" }}>
                     <span style={{ background: "white" }}>
+                      Bienvenido Persona (Cargo)
                       {/*    {`Bienvenido ${usuario[0].nombreUsuario}`} */}
                     </span>
                   </div>

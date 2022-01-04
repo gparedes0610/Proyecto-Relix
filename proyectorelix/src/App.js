@@ -4,68 +4,54 @@ import "./components/Navbar.css";
 import "./App.css";
 
 import bootstrap from "bootstrap/dist/css/bootstrap.min.css";
-import LoginView from "./views/LoginView";
-import IngenieroView from "./views/IngenieroView";
-import PrivateRoute from "./components/PrivateRoute";
+import LoginView from "./components/auth/LoginView";
+import RegisterView from "./components/auth/RegisterView";
 import FichaTecnica from "./components/FichaTecnica";
+import BackOfficeView from "./views/BackOfficeView";
+import IngenieroView from "./views/IngenieroView";
+import GerenteView from "./views/GerenteView";
 
-import { TokenContextProvider } from "./context/tokenContext";
+/* import IngenieroView from "./views/IngenieroView";
+import PrivateRoute from "./rutas/PrivateRoute"; */
+//import FichaTecnica from "./components/FichaTecnica";
+/* 
 import AdministradorView from "./views/AdministradorView";
 import GerenteView from "./views/GerenteView";
-import PrivateRouteIng from "./components/PrivateRouteIng";
-import PrivateRouteGg from "./components/PrivateRouteGg";
-import PrivateRouteBo from "./components/PrivateRouteBo";
-import BackOfficeView from "./views/BackOfficeView";
-import NotFound from "./components/NotFound";
+import BackOfficeView from "./views/BackOfficeView"; */
+//import NotFound from "./components/NotFound";
+//import LoginView from "./components/auth/LoginView";
 
 function App() {
   return (
-    <TokenContextProvider>
-      <Router>
-        <Routes>
-          <Route path="*" element={<NotFound />} />
-          <Route path="/" element={<LoginView />} />
-          {/* <Route path="/administrador" element={<AdministradorView />} /> */}
-          {/* <Route path="/ingeniero" element={<IngenieroView />} /> */}
-          {/*  <Route path="/gerente" element={<GerenteView />} /> */}
-          <Route path="/fichatecnica" element={<FichaTecnica />} />
-          <Route
-            path="/administrador"
-            element={
-              <PrivateRoute>
-                <AdministradorView />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/ingeniero"
-            element={
-              <PrivateRouteIng>
-                <IngenieroView />
-              </PrivateRouteIng>
-            }
-          />
-
-          <Route
-            path="/gerente"
-            element={
-              <PrivateRouteGg>
-                <GerenteView />
-              </PrivateRouteGg>
-            }
-          />
-
-          <Route
-            path="/backoffice"
-            element={
-              <PrivateRouteBo>
-                <BackOfficeView />
-              </PrivateRouteBo>
-            }
-          />
-        </Routes>
-      </Router>
-    </TokenContextProvider>
+    <Router>
+      <Routes>
+        <Route path="/" element={<LoginView />} />
+        <Route path="/registrar" element={<RegisterView />} />
+        <Route path="/fichatecnica" element={<FichaTecnica />} />
+        <Route path="/backoffice" element={<BackOfficeView />} />
+        <Route path="/ingeniero" element={<IngenieroView />} />
+        <Route path="/gerente" element={<GerenteView />} />
+        {/* <Route path="*" element={<NotFound />} />
+        <Route path="/" element={<LoginView />} />
+        <Route path="/fichatecnica" element={<FichaTecnica />} /> */}
+        {/*     <Route
+          path="/administrador"
+          element={
+            <PrivateRoute>
+              <AdministradorView />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/ingeniero"
+          element={
+            <PrivateRouteIng>
+              <IngenieroView />
+            </PrivateRouteIng>
+          }
+        /> */}
+      </Routes>
+    </Router>
   );
 }
 

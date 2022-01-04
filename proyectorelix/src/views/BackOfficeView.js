@@ -1,44 +1,189 @@
-import React, { useMemo } from "react";
+import React from "react";
 import NavBar from "../components/NavBar";
 import BdSimulado from "../services/BdSimulado.json";
-import { COLUMNS } from "../services/columns";
-import { useTable, usePagination } from "react-table";
-import { Table } from "react-bootstrap";
+import { AgGridReact } from "ag-grid-react";
+
+import "ag-grid-community/dist/styles/ag-grid.css";
+import "ag-grid-community/dist/styles/ag-theme-alpine.css";
+import { Card } from "react-bootstrap";
+
 function BackOfficeView() {
-  const columns = useMemo(() => COLUMNS, []);
-  const data = useMemo(() => BdSimulado, []);
-
-  const tableInstance = useTable(
+  const data = [
     {
-      columns: columns,
-      data: data, // de aqui viene la data
-      initialState: { pageIndex: 0 },
+      partida: "partida1",
+      subpartida: "subpartida2",
+      marca: "marca",
+      codprov: "codproveedor1",
+      codsoftcom: "codsoftcom1",
+      descripcion: "descripcion1",
+      cantTotal: 12,
+      preUnitario: 24,
+      preTotal: 47,
+      costoReal: 145,
+      costoTotal: 478,
     },
-    usePagination
-  );
+    {
+      partida: "partida1",
+      subpartida: "subpartida2",
+      marca: "marca",
+      codprov: "codproveedor1",
+      codsoftcom: "codsoftcom1",
+      descripcion: "descripcion1",
+      cantTotal: 12,
+      preUnitario: 24,
+      preTotal: 47,
+      costoReal: 145,
+      costoTotal: 478,
+    },
+    {
+      partida: "partida1",
+      subpartida: "subpartida2",
+      marca: "marca",
+      codprov: "codproveedor1",
+      codsoftcom: "codsoftcom1",
+      descripcion: "descripcion1",
+      cantTotal: 12,
+      preUnitario: 24,
+      preTotal: 47,
+      costoReal: 145,
+      costoTotal: 478,
+    },
+    {
+      partida: "partida1",
+      subpartida: "subpartida2",
+      marca: "marca",
+      codprov: "codproveedor1",
+      codsoftcom: "codsoftcom1",
+      descripcion: "descripcion1",
+      cantTotal: 12,
+      preUnitario: 24,
+      preTotal: 47,
+      costoReal: 145,
+      costoTotal: 478,
+    },
+    {
+      partida: "partida1",
+      subpartida: "subpartida2",
+      marca: "marca",
+      codprov: "codproveedor1",
+      codsoftcom: "codsoftcom1",
+      descripcion: "descripcion1",
+      cantTotal: 12,
+      preUnitario: 24,
+      preTotal: 47,
+      costoReal: 145,
+      costoTotal: 478,
+    },
+    {
+      partida: "partida1",
+      subpartida: "subpartida2",
+      marca: "marca",
+      codprov: "codproveedor1",
+      codsoftcom: "codsoftcom1",
+      descripcion: "descripcion1",
+      cantTotal: 12,
+      preUnitario: 24,
+      preTotal: 47,
+      costoReal: 145,
+      costoTotal: 478,
+    },
+    {
+      partida: "partida1",
+      subpartida: "subpartida2",
+      marca: "marca",
+      codprov: "codproveedor1",
+      codsoftcom: "codsoftcom1",
+      descripcion: "descripcion1",
+      cantTotal: 12,
+      preUnitario: 24,
+      preTotal: 47,
+      costoReal: 145,
+      costoTotal: 478,
+    },
+  ];
 
-  const {
-    getTableProps,
-    getTableBodyProps,
-    page,
-    nextPage,
-    previousPage,
-    canNextPage,
-    canPreviousPage,
-    pageOptions,
-    state,
-    headerGroups,
-    gotoPage,
-    pageCount,
-    setPageSize,
-    prepareRow,
-  } = tableInstance;
+  const columns = [
+    {
+      headerName: "Partida",
+      field: "partida",
+    },
+    {
+      headerName: "Subpartida",
+      field: "subpartida",
+    },
+    {
+      headerName: "Marca",
+      field: "marca",
+    },
+    {
+      headerName: "Codprov",
+      field: "codprov",
+    },
+    {
+      headerName: "Codsoftcom",
+      field: "codsoftcom",
+    },
+    {
+      headerName: "Descripcion",
+      field: "descripcion",
+    },
+    {
+      headerName: "CantTotal",
+      field: "cantTotal",
+    },
+    {
+      headerName: "PreUnitario",
+      field: "preUnitario",
+      cellRendererFramework: (params) => (
+        <select defaultValue={"DEFAULT"}>
+          <option value="DEFAULT" disabled>
+            Choose a salutation ...
+          </option>
+          <option value="value1">Value 1</option>
+          <option value="value2" selected>
+            Value 2
+          </option>
+          <option value="value3">Value 3</option>
+        </select>
+      ),
+    },
+    {
+      headerName: "PreTotal",
+      field: "preTotal",
+    },
+    {
+      headerName: "CostoReal",
+      field: "costoReal",
+    },
+    {
+      headerName: "CostoTotal",
+      field: "costoTotal",
+    },
+    /////////////////para agregar una columna
+    {
+      headerName: "Descuento",
+      field: "",
+    },
+    {
+      headerName: "Total con descuento",
+      field: "",
+    },
+    {
+      headerName: "Acciones",
+      field: "",
+    },
+  ];
 
-  const { pageIndex, pageSize } = state;
+  const defaultColDef = {
+    /* filter: true, */
+    /*  filter: true,
+    floatingFilter: true, */
+    editable: true,
+  };
   return (
     <div>
       <NavBar />
-      <div className="container-fluid pt-4 mb-3">
+      <div className="container pt-4 mb-3">
         <div className="row mt-3">
           <div className="col-12 col-md-3"></div>
           <div className="col-12 col-md-3"></div>
@@ -52,147 +197,104 @@ function BackOfficeView() {
           </div>
         </div>
       </div>
-      <div className="container-fluid">
-        <Table striped bordered hover {...getTableProps()}>
-          <thead>
-            {headerGroups.map((headerGroup, i) => (
-              <tr {...headerGroup.getHeaderGroupProps} key={i}>
-                {headerGroup.headers.map((column) => (
-                  <th {...column.getHeaderProps()}>
-                    {column.render("Header")}
-                  </th>
-                ))}
-              </tr>
-            ))}
-          </thead>
-          <tbody {...getTableBodyProps()}>
-            {page.map((row, i) => {
-              prepareRow(row);
-              return (
-                <tr {...row.getRowProps()} key={i}>
-                  {row.cells.map((cell) => {
-                    return (
-                      <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
-                    );
-                  })}
-                </tr>
-              );
-            })}
-          </tbody>
-        </Table>
+      <div className="container">
+        <div
+          id="myGrid"
+          className="ag-theme-alpine"
+          style={{ height: 400, width: "1300px" }}
+        >
+          <AgGridReact
+            rowData={data}
+            columnDefs={columns}
+            defaultColDef={defaultColDef}
+          />
+        </div>
+      </div>
+      <div className="container mt-5">
+        <div className="row">
+          <div className="col-12 col-md-6 text-end"></div>
+          <div className="col-12 col-md-6 text-end">
+            <button
+              style={{
+                background: "#008DCA",
+                border: "none",
+                color: "white ",
+                padding: "8px 16px",
+              }}
+              className="ms-3"
+            >
+              Generar Rq
+            </button>
 
-        <div className="mt-3 mb-3">
-          <div className="d-flex justify-content-between">
-            <div>
-              <span className="me-3">
-                Pagina{" "}
-                <strong>
-                  {pageIndex + 1} de {pageOptions.length}
-                </strong>
-              </span>
-
-              <span>
-                {" "}
-                Ir a la pagina:{" "}
-                <input
-                  type="number"
-                  defaultValue={pageIndex + 1}
-                  onChange={(e) => {
-                    const pageNumber = e.target.value
-                      ? Number(e.target.value) - 1 //se le resta uno xq en el pageindex se sumo uno, y este valor reeemplaza el pageindex
-                      : 0;
-
-                    //console.log("pageNumber", pageNumber);
-                    gotoPage(pageNumber);
-                  }}
-                  className="ms-2"
-                />
-              </span>
-
-              <select
-                value={pageSize}
-                onChange={(e) => setPageSize(Number(e.target.value))}
-                className="ms-3"
-              >
-                {[10, 25, 50].map((pageSize, i) => (
-                  <option value={pageSize} key={i}>
-                    Mostrar {pageSize}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div>
-              <button
-                style={{
-                  background: "#008DCA",
-                  border: "none",
-                  color: "white ",
-                  padding: "8px 24px",
-                }}
-                className="ms-3"
-              >
-                Generar Rq
-              </button>
-
-              <button
-                onClick={() => gotoPage(0)}
-                disabled={!canPreviousPage}
-                style={{
-                  background: "#C4C4C4",
-                  border: "none",
-                  color: "white ",
-                  padding: "8px 7px",
-                  borderRadius: "5px",
-                }}
-                className="ms-3"
-              >
-                {"<<"}
-              </button>
-              <button
-                onClick={() => previousPage()}
-                disabled={!canPreviousPage}
-                style={{
-                  background: "#C4C4C4",
-                  border: "none",
-                  color: "white ",
-                  padding: "8px 7px",
-                  borderRadius: "5px",
-                }}
-                className="ms-1"
-              >
-                {"<"}
-              </button>
-              <button
-                onClick={() => nextPage()}
-                disabled={!canNextPage}
-                style={{
-                  background: "#39D5D5",
-                  border: "none",
-                  color: "white ",
-                  padding: "8px 7px",
-                  borderRadius: "5px",
-                }}
-              >
-                {">"}
-              </button>
-              <button
-                onClick={() => gotoPage(pageCount - 1)}
-                disabled={!canNextPage}
-                style={{
-                  background: "#39D5D5",
-                  border: "none",
-                  color: "white ",
-                  padding: "8px 7px",
-                  borderRadius: "5px",
-                }}
-                className="ms-1"
-              >
-                {">>"}
-              </button>
-            </div>
+            <button
+              // disabled={!canPreviousPage}
+              style={{
+                background: "#C4C4C4",
+                border: "none",
+                color: "white ",
+                padding: "8px 7px",
+                borderRadius: "5px",
+              }}
+              className="ms-3"
+            >
+              {"<<"}
+            </button>
+            <button
+              //disabled={!canPreviousPage}
+              style={{
+                background: "#C4C4C4",
+                border: "none",
+                color: "white ",
+                padding: "8px 7px",
+                borderRadius: "5px",
+              }}
+              className="ms-1"
+            >
+              {"<"}
+            </button>
+            <button
+              //  disabled={!canNextPage}
+              style={{
+                background: "#39D5D5",
+                border: "none",
+                color: "white ",
+                padding: "8px 7px",
+                borderRadius: "5px",
+              }}
+            >
+              {">"}
+            </button>
+            <button
+              // disabled={!canNextPage}
+              style={{
+                background: "#39D5D5",
+                border: "none",
+                color: "white ",
+                padding: "8px 7px",
+                borderRadius: "5px",
+              }}
+              className="ms-1"
+            >
+              {">>"}
+            </button>
           </div>
         </div>
+      </div>
+      <div className="container">
+        <Card style={{ width: "18rem" }}>
+          <Card.Body>
+            <Card.Title>Card Title</Card.Title>
+            <Card.Subtitle className="mb-2 text-muted">
+              Card Subtitle
+            </Card.Subtitle>
+            <Card.Text>
+              Some quick example text to build on the card title and make up the
+              bulk of the card's content.
+            </Card.Text>
+            <Card.Link href="#">Card Link</Card.Link>
+            <Card.Link href="#">Another Link</Card.Link>
+          </Card.Body>
+        </Card>
       </div>
     </div>
   );

@@ -1,16 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
-import LogoRelix from "../assets/relixjpg 1.svg";
-import login from "../assets/login4.svg";
+import LogoRelix from "../../assets/relixjpg1.svg";
+import login from "../../assets/login4.svg";
 import { Form, Button } from "react-bootstrap";
-import { validaSesion } from "../services/usuarioService";
-import { TokenContext } from "../context/tokenContext";
-import { Link, useNavigate } from "react-router-dom";
+//import { validaSesion } from "../../services/usuarioService";
+//import { Link, useNavigate } from "react-router-dom";
 
 function LoginView() {
-  const { guardarSesion } = useContext(TokenContext);
-
-  const navigate = useNavigate();
-
   const [sesion, setSesion] = useState({
     correo: "",
     clave: "",
@@ -21,61 +16,19 @@ function LoginView() {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // console.log("datos de sesion", sesion);
-    //console.log("acepta");
-    try {
+    /*  try {
       const data = await validaSesion({ ...sesion });
-      /* console.log(data);
-      console.log(data.user);
-      console.log(data.Token);
-      console.log(data.user.idRol); */
-
-      /*   localStorage.setItem("token", JSON.stringify(data.Token));
-      localStorage.setItem("idRol", JSON.stringify(data.user.idRol));
-      localStorage.setItem(
-        "nombreUsuario",
-        JSON.stringify(data.user.nombreUsuario)
-      ); */
-
-      /* const obtenerDatos = {
-        token: JSON.parse(localStorage.getItem("token")),
-        idRol: JSON.parse(localStorage.getItem("idRol")),
-        nombreUsuario: JSON.parse(localStorage.getItem("nombreUsuario")),
-      }; */
+      localStorage.setItem("token", data.Token);
       const obtenerDatos = {
         token: data.Token,
         idRol: data.user.idRol,
         nombreUsuario: data.user.nombreUsuario,
       };
       console.log("estos datos se van a pasar del login", obtenerDatos);
-      /* const idRolObtenido = JSON.parse(localStorage.getItem("idRol"));
-      console.log(`soy id rol de login ${idRolObtenido}`); */
-      guardarSesion(obtenerDatos);
-      //setRol(idRolObtenido);
-
-      // setRol(data.user.idRol);
-      //guardarRolLs(data.user.idRol);
-      if (obtenerDatos.idRol === 1) {
-        navigate("/administrador");
-      } else if (obtenerDatos.idRol === 2) {
-        navigate("/gerente");
-      } else if (obtenerDatos.idRol === "3") {
-        navigate("/ingeniero");
-        /*  console.log("prueba"); */
-      } else if (obtenerDatos.idRol === 4) {
-        navigate("/backoffice");
-      }
     } catch (error) {
       console.log(error);
-    }
+    } */
   };
-
-  /* useEffect(() => {
-    if (localStorage.getItem("token") != null) {
-      navigate("/registrar");
-    }
-  }, []); */
-  //console.log(usuarios);
 
   return (
     <>

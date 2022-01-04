@@ -1,21 +1,13 @@
 import React from "react";
 import NavBar from "../components/NavBar";
-import BdSimulado from "../services/BdSimulado.json";
 import { AgGridReact } from "ag-grid-react";
 
+import Ok from "../assets/ok.svg";
+import Foco from "../assets/foco.svg";
 import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-alpine.css";
-import { Card } from "react-bootstrap";
-
 import edit from "../assets/edit.svg";
-import duplicar from "../assets/duplicar.svg";
-import PlantillaPedido from "./PlantillaPedido";
-import Cus013 from "./Cus013";
-import Cus014 from "./Cus014";
-import Cus017 from "./Cus017";
-import Cus016 from "./Cus016";
-
-function BackOfficeView() {
+function MaestroView() {
   const data = [
     {
       partida: "partida1",
@@ -191,13 +183,12 @@ function BackOfficeView() {
             }}
           >
             <img
-              src={duplicar}
+              src={edit}
               alt=""
               className="img-fluid"
               style={{ padding: "0 24px" }}
             />
           </button>
-          <input type="checkbox" className="ms-3" />
         </div>
       ),
     },
@@ -209,21 +200,40 @@ function BackOfficeView() {
     floatingFilter: true, */
     editable: true,
   };
+
   return (
     <div>
       <NavBar />
-      <div className="container pt-4 mb-3">
-        <div className="row mt-3">
-          <div className="col-12 col-md-3"></div>
-          <div className="col-12 col-md-3"></div>
-          <div className="col-12 col-md-3"></div>
-          <div className="col-12 col-md-3">
-            <input
-              className="form-control"
-              type="text"
-              placeholder="Buscar..."
-            />
+      <div className="container pt-4 mb-5">
+        <div className="row">
+          <div className="col-3"></div>
+          <div className="col-3 "></div>
+          <div className="col-3 "></div>
+          <div className="col-12 col-md-3 ">
+            <div className="d-flex justify-content-center align-item-center">
+              <p className="my-0">¿Como trabajar en esta plantilla?</p>
+              <img src={Ok} alt="" className="img-fluid ps-2" />
+            </div>
+
+            <div className="d-flex align-item-center">
+              <img src={Foco} alt="" className="pe-2" />
+              <p className="pt-2 my-0">Requisitos:</p>
+            </div>
+
+            <p className="my-0" style={{ fontSize: "14px" }}>
+              .Cargar solamente archivos Excel
+            </p>
+            <small>.Cargar el excel con la estructura acordada</small>
           </div>
+        </div>
+
+        <div className="row pt-4">
+          <div className=" col-12 col-md-3">
+            <input className="form-control" type="file" id="formFile" />
+          </div>
+          <div className=" col-12 col-md-3"></div>
+          <div className=" col-12 col-md-3 d-flex"></div>
+          <div className=" col-12 col-md-3"></div>
         </div>
       </div>
       <div className="container">
@@ -252,7 +262,7 @@ function BackOfficeView() {
               }}
               className="ms-3"
             >
-              Generar Rq
+              Agregar Manualmente
             </button>
 
             <button
@@ -309,87 +319,8 @@ function BackOfficeView() {
           </div>
         </div>
       </div>
-      <div className="container mt-3">
-        <div className="row mb-4">
-          <div className="col-12 col-md-6">
-            <Card style={{ width: "100%" }}>
-              <Card.Body>
-                <Card.Title style={{ color: "#F08820" }}>
-                  Numero de Rq pedido - AutoNum 11 caracters
-                </Card.Title>
-                <Card.Text>
-                  <div className="row">
-                    <div className="col-12 col-md-4">
-                      <p className="h6">Fecha</p>
-                      <p className="h6">Fecha de vencimiento</p>
-                      <p className="h6">Tipo de pedido</p>
-                    </div>
-                    <div className="col-12 col-md-4">
-                      <p className="h6">Centro de costo</p>
-                      <p className="h6">Glosa</p>
-                      <p className="h6">Codigo Cliente</p>
-                      <p className="h6">Tipo documento</p>
-                      <p className="h6">Tipo pedido para percepcion</p>
-                    </div>
-                    <div className="col-12 col-md-4">
-                      <p className="h6" style={{ color: "#4253FF" }}>
-                        Codigo Vendedor
-                      </p>
-                      <p className="h6">Nro.Orden de compra</p>
-                      <p className="h6">Codigo forma de pago</p>
-                      <p className="h6">Moneda U$</p>
-                      <p className="h6">Agencia 0001</p>
-                    </div>
-                  </div>
-                </Card.Text>
-              </Card.Body>
-            </Card>
-          </div>
-        </div>
-
-        <div
-          id="myGrid"
-          className="ag-theme-alpine"
-          style={{ height: 400, width: "1300px" }}
-        >
-          <AgGridReact
-            rowData={data}
-            columnDefs={columns}
-            defaultColDef={defaultColDef}
-          />
-        </div>
-
-        <div className="row mt-5 mb-4">
-          <div className="col-12 col-md-6 text-end"></div>
-          <div className="col-12 col-md-6 text-end">
-            <button
-              style={{
-                background: "#3BBA00",
-                border: "none",
-                color: "white ",
-                padding: "8px 16px",
-              }}
-              className="ms-3"
-            >
-              Generar Plantilla
-            </button>
-          </div>
-        </div>
-        <div className="row">
-          <PlantillaPedido />
-        </div>
-        <div className="row">
-          <Cus013 />
-        </div>
-        <div className="row">
-          <Cus016 />
-        </div>
-        <div className="row">
-          <Cus017 />
-        </div>
-      </div>
     </div>
   );
 }
 
-export default BackOfficeView;
+export default MaestroView;

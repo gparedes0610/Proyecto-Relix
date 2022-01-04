@@ -10,7 +10,7 @@ import FichaTecnica from "./components/FichaTecnica";
 import BackOfficeView from "./views/BackOfficeView";
 import IngenieroView from "./views/IngenieroView";
 import GerenteView from "./views/GerenteView";
-
+import MaestroView from "./views/MaestroView";
 /* import IngenieroView from "./views/IngenieroView";
 import PrivateRoute from "./rutas/PrivateRoute"; */
 //import FichaTecnica from "./components/FichaTecnica";
@@ -31,6 +31,8 @@ function App() {
         <Route path="/backoffice" element={<BackOfficeView />} />
         <Route path="/ingeniero" element={<IngenieroView />} />
         <Route path="/gerente" element={<GerenteView />} />
+        <Route path="/maestro" element={<MaestroView />} />
+
         {/* <Route path="*" element={<NotFound />} />
         <Route path="/" element={<LoginView />} />
         <Route path="/fichatecnica" element={<FichaTecnica />} /> */}

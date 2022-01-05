@@ -11,6 +11,12 @@ import BackOfficeView from "./views/BackOfficeView";
 import IngenieroView from "./views/IngenieroView";
 import GerenteView from "./views/GerenteView";
 import MaestroView from "./views/MaestroView";
+import Aside from "./views/Aside";
+import Cus014 from "./views/Cus014";
+import Cu08 from "./views/Cu08";
+import Cus016 from "./views/Cus016";
+import Cus017 from "./views/Cus017";
+
 /* import IngenieroView from "./views/IngenieroView";
 import PrivateRoute from "./rutas/PrivateRoute"; */
 //import FichaTecnica from "./components/FichaTecnica";
@@ -28,10 +34,16 @@ function App() {
         <Route path="/" element={<LoginView />} />
         <Route path="/registrar" element={<RegisterView />} />
         <Route path="/fichatecnica" element={<FichaTecnica />} />
-        <Route path="/backoffice" element={<BackOfficeView />} />
         <Route path="/ingeniero" element={<IngenieroView />} />
         <Route path="/gerente" element={<GerenteView />} />
+        <Route path="/backoffice" element={<BackOfficeView />} />
+        <Route path="/cu08" element={<Cu08 />} />
+        <Route path="/guiatranslado" element={<Cus014 />} />
+        <Route path="/guiavalorizada" element={<Cus016 />} />
+        <Route path="/guiavalorizadareal" element={<Cus017 />} />
+
         <Route path="/maestro" element={<MaestroView />} />
+        <Route path="/aside" element={<Aside />} />
 
         {/* <Route path="*" element={<NotFound />} />
         <Route path="/" element={<LoginView />} />

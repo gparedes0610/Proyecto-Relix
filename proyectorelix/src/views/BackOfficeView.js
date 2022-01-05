@@ -230,7 +230,7 @@ function BackOfficeView() {
         <div
           id="myGrid"
           className="ag-theme-alpine"
-          style={{ height: 400, width: "1300px" }}
+          style={{ height: 400, width: "100%" }}
         >
           <AgGridReact
             rowData={data}
@@ -243,6 +243,17 @@ function BackOfficeView() {
         <div className="row">
           <div className="col-12 col-md-6 text-end"></div>
           <div className="col-12 col-md-6 text-end">
+            <button
+              style={{
+                background: "#008DCA",
+                border: "none",
+                color: "white ",
+                padding: "8px 16px",
+              }}
+              className="ms-3"
+            >
+              Guardar Cambios
+            </button>
             <button
               style={{
                 background: "#008DCA",
@@ -310,77 +321,6 @@ function BackOfficeView() {
         </div>
       </div>
       <div className="container mt-3">
-        <div className="row mb-4">
-          <div className="col-12 col-md-6">
-            <Card style={{ width: "100%" }}>
-              <Card.Body>
-                <Card.Title style={{ color: "#F08820" }}>
-                  Numero de Rq pedido - AutoNum 11 caracters
-                </Card.Title>
-                <Card.Text>
-                  <div className="row">
-                    <div className="col-12 col-md-4">
-                      <p className="h6">Fecha</p>
-                      <p className="h6">Fecha de vencimiento</p>
-                      <p className="h6">Tipo de pedido</p>
-                    </div>
-                    <div className="col-12 col-md-4">
-                      <p className="h6">Centro de costo</p>
-                      <p className="h6">Glosa</p>
-                      <p className="h6">Codigo Cliente</p>
-                      <p className="h6">Tipo documento</p>
-                      <p className="h6">Tipo pedido para percepcion</p>
-                    </div>
-                    <div className="col-12 col-md-4">
-                      <p className="h6" style={{ color: "#4253FF" }}>
-                        Codigo Vendedor
-                      </p>
-                      <p className="h6">Nro.Orden de compra</p>
-                      <p className="h6">Codigo forma de pago</p>
-                      <p className="h6">Moneda U$</p>
-                      <p className="h6">Agencia 0001</p>
-                    </div>
-                  </div>
-                </Card.Text>
-              </Card.Body>
-            </Card>
-          </div>
-        </div>
-
-        <div
-          id="myGrid"
-          className="ag-theme-alpine"
-          style={{ height: 400, width: "1300px" }}
-        >
-          <AgGridReact
-            rowData={data}
-            columnDefs={columns}
-            defaultColDef={defaultColDef}
-          />
-        </div>
-
-        <div className="row mt-5 mb-4">
-          <div className="col-12 col-md-6 text-end"></div>
-          <div className="col-12 col-md-6 text-end">
-            <button
-              style={{
-                background: "#3BBA00",
-                border: "none",
-                color: "white ",
-                padding: "8px 16px",
-              }}
-              className="ms-3"
-            >
-              Generar Plantilla
-            </button>
-          </div>
-        </div>
-        <div className="row">
-          <PlantillaPedido />
-        </div>
-        <div className="row">
-          <Cus013 />
-        </div>
         <div className="row">
           <Cus016 />
         </div>

@@ -11,7 +11,13 @@ function Cus016() {
       descripcion: "descripcion1",
       precio: "precio1",
       saldoproducto: "saldoproducto1",
-      cantguia12: "cantguia121",
+      cantidad: "cantidad1",
+      serielote: "serielote1",
+      nserielote: "nserielote1",
+      descuentoitem: "descuentoitem1",
+      descuentoadicional: "descuentoadicional",
+      descuentofinanciero: "descuentofinanciero1",
+      descuentobonificacion: "descuentobonificacion1",
     },
     {
       npedido: "npedido1",
@@ -20,7 +26,13 @@ function Cus016() {
       descripcion: "descripcion1",
       precio: "precio1",
       saldoproducto: "saldoproducto1",
-      cantguia12: "cantguia121",
+      cantidad: "cantidad1",
+      serielote: "serielote1",
+      nserielote: "nserielote1",
+      descuentoitem: "descuentoitem1",
+      descuentoadicional: "descuentoadicional",
+      descuentofinanciero: "descuentofinanciero1",
+      descuentobonificacion: "descuentobonificacion1",
     },
     {
       npedido: "npedido1",
@@ -29,7 +41,13 @@ function Cus016() {
       descripcion: "descripcion1",
       precio: "precio1",
       saldoproducto: "saldoproducto1",
-      cantguia12: "cantguia121",
+      cantidad: "cantidad1",
+      serielote: "serielote1",
+      nserielote: "nserielote1",
+      descuentoitem: "descuentoitem1",
+      descuentoadicional: "descuentoadicional",
+      descuentofinanciero: "descuentofinanciero1",
+      descuentobonificacion: "descuentobonificacion1",
     },
     {
       npedido: "npedido1",
@@ -38,19 +56,17 @@ function Cus016() {
       descripcion: "descripcion1",
       precio: "precio1",
       saldoproducto: "saldoproducto1",
-      cantguia12: "cantguia121",
+      cantidad: "cantidad1",
+      serielote: "serielote1",
+      nserielote: "nserielote1",
+      descuentoitem: "descuentoitem1",
+      descuentoadicional: "descuentoadicional",
+      descuentofinanciero: "descuentofinanciero1",
+      descuentobonificacion: "descuentobonificacion1",
     },
   ];
 
   const columns = [
-    {
-      headerName: "N.Pedido",
-      field: "npedido",
-    },
-    {
-      headerName: "Guia Translado",
-      field: "guiatranslado",
-    },
     {
       headerName: "Cod.Articulo",
       field: "codarticulo",
@@ -60,16 +76,39 @@ function Cus016() {
       field: "descripcion",
     },
     {
+      headerName: "Serie/Lote",
+      field: "serielote",
+    },
+    {
+      headerName: "Nro serie/Lote",
+      field: "nserielote",
+    },
+    {
+      headerName: "Cantidad",
+      field: "cantidad",
+    },
+    {
       headerName: "Precio",
       field: "precio",
     },
     {
-      headerName: "Saldo producto",
-      field: "saldoproducto",
+      headerName: "Descuento item",
+      field: "descuentoitem",
     },
     {
-      headerName: "Cant.Guia12",
-      field: "cantguia12",
+      headerName: "Descuento Adicional",
+      field: "descuentoadicional",
+    },
+    {
+      headerName: "Descuento Financiero",
+      field: "descuentofinanciero",
+    },
+    {
+      headerName: "Descuento Bonificacion",
+      field: "descuentobonificacion",
+    },
+    {
+      headerName: "Saldo Producto",
     },
   ];
   const defaultColDef = {
@@ -77,7 +116,6 @@ function Cus016() {
     /*  filter: true,
                 floatingFilter: true, */
     editable: true,
-    flex: 1,
   };
   return (
     <div className="container">
@@ -102,7 +140,18 @@ function Cus016() {
       </div>
 
       <div className="row mt-5 mb-4">
-        <div className="col-12 col-md-6 text-end"></div>
+        <div className="col-12 col-md-6 text-start">
+          <button
+            style={{
+              border: "none",
+              color: "white ",
+              padding: "8px 16px",
+            }}
+            className="ms-3 btn-primary"
+          >
+            Guardar Datos
+          </button>
+        </div>
         <div className="col-12 col-md-6 text-end">
           <button
             style={{

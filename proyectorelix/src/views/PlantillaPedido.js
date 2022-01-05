@@ -98,13 +98,41 @@ function PlantillaPedido() {
       <div
         id="myGrid"
         className="ag-theme-alpine"
-        style={{ height: 400, width: "1300px" }}
+        style={{ height: 400, width: "100%" }}
       >
         <AgGridReact
           //rowData={data}
           columnDefs={columns}
           defaultColDef={defaultColDef}
         />
+      </div>
+
+      <div className="row mt-5 mb-4">
+        <div className="col-12 col-md-6 text-start">
+          <button
+            style={{
+              border: "none",
+              color: "white ",
+              padding: "8px 16px",
+            }}
+            className="ms-3 btn-danger"
+          >
+            Eliminar plantilla pedidos
+          </button>
+        </div>
+        <div className="col-12 col-md-6 text-end">
+          <button
+            style={{
+              background: "#3BBA00",
+              border: "none",
+              color: "white ",
+              padding: "8px 16px",
+            }}
+            className="ms-3"
+          >
+            Guardar Cambios
+          </button>
+        </div>
       </div>
     </div>
   );

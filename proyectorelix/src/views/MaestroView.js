@@ -205,28 +205,6 @@ function MaestroView() {
     <div>
       <NavBar />
       <div className="container pt-4 mb-5">
-        <div className="row">
-          <div className="col-3"></div>
-          <div className="col-3 "></div>
-          <div className="col-3 "></div>
-          <div className="col-12 col-md-3 ">
-            <div className="d-flex justify-content-center align-item-center">
-              <p className="my-0">¿Como trabajar en esta plantilla?</p>
-              <img src={Ok} alt="" className="img-fluid ps-2" />
-            </div>
-
-            <div className="d-flex align-item-center">
-              <img src={Foco} alt="" className="pe-2" />
-              <p className="pt-2 my-0">Requisitos:</p>
-            </div>
-
-            <p className="my-0" style={{ fontSize: "14px" }}>
-              .Cargar solamente archivos Excel
-            </p>
-            <small>.Cargar el excel con la estructura acordada</small>
-          </div>
-        </div>
-
         <div className="row pt-4">
           <div className=" col-12 col-md-3">
             <input className="form-control" type="file" id="formFile" />
@@ -240,7 +218,7 @@ function MaestroView() {
         <div
           id="myGrid"
           className="ag-theme-alpine"
-          style={{ height: 400, width: "1300px" }}
+          style={{ height: 400, width: "100%" }}
         >
           <AgGridReact
             rowData={data}

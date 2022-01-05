@@ -34,7 +34,7 @@ function NavBar() {
   }; */
   return (
     <>
-      <Navbar bg="white" expand="lg">
+      <Navbar bg="white" expand="lg" className="mb-5">
         {/* style={{ background: "white" }} */}
         <Container fluid>
           {/*   style={{ background: "white" }} */}

@@ -6,16 +6,26 @@ import { Form, Button } from "react-bootstrap";
 //import { Link, useNavigate } from "react-router-dom";
 
 function LoginView() {
+  /////////////////////////////////
+  useEffect(() => {}, []);
+
   const [sesion, setSesion] = useState({
     correo: "",
     clave: "",
   });
+  const { correo, clave } = sesion;
 
   const enviarInput = (e) => {
     setSesion({ ...sesion, [e.target.name]: e.target.value });
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
+    //error
+    if (correo.trim() === "" || clave.trim() === "") {
+      //mostrarAlerta("Todos los campos son obligatorios", "alerta-error");
+      console.log("error");
+    }
+    console.log(sesion);
     /*  try {
       const data = await validaSesion({ ...sesion });
       localStorage.setItem("token", data.Token);
@@ -32,7 +42,10 @@ function LoginView() {
 
   return (
     <>
-      <div className="vh-100 d-flex justify-content-center align-items-center">
+      <div
+        className="vh-100 d-flex justify-content-center align-items-center"
+        style={{ background: " #f6f6f6" }}
+      >
         <div className="container">
           <div className="row">
             <div
@@ -75,6 +88,7 @@ function LoginView() {
                         type="email"
                         placeholder="Ingrese su Correo"
                         name="correo"
+                        value={correo}
                         onChange={(e) => enviarInput(e)}
                       />
                     </Form.Group>
@@ -90,6 +104,7 @@ function LoginView() {
                         type="password"
                         placeholder="Ingrese su password"
                         name="clave"
+                        value={clave}
                         onChange={(e) => enviarInput(e)}
                       />
                     </Form.Group>

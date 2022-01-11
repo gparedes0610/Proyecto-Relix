@@ -34,7 +34,7 @@ export default (state, action) => {
         cargando: false,
       };
     case LOGIN_EXITOSO:
-      localStorage.setItem("token", action.payload.token);
+      localStorage.setItem("token", action.payload.Token);
       return {
         ...state,
         autenticado: true,

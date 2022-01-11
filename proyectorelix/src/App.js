@@ -2,13 +2,12 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./components/Navbar.css";
 import "./App.css";
-
 import bootstrap from "bootstrap/dist/css/bootstrap.min.css";
+
 import LoginView from "./components/auth/LoginView";
 import RegisterView from "./components/auth/RegisterView";
-import FichaTecnica from "./components/FichaTecnica";
+
 import BackOfficeView from "./views/BackOfficeView";
-import IngenieroView from "./views/IngenieroView";
 import GerenteView from "./views/GerenteView";
 import MaestroView from "./views/MaestroView";
 import Aside from "./views/Aside";
@@ -17,38 +16,42 @@ import Cu08 from "./views/Cu08";
 import Cus016 from "./views/Cus016";
 import Cus017 from "./views/Cus017";
 
-/* import IngenieroView from "./views/IngenieroView";
-import PrivateRoute from "./rutas/PrivateRoute"; */
-//import FichaTecnica from "./components/FichaTecnica";
-/* 
-import AdministradorView from "./views/AdministradorView";
-import GerenteView from "./views/GerenteView";
-import BackOfficeView from "./views/BackOfficeView"; */
-//import NotFound from "./components/NotFound";
-//import LoginView from "./components/auth/LoginView";
+import AuthStateProvider from "./context/autenticacion/authState";
+import AlertaStateProvider from "./context/alertas/alertaState";
+import FichaTecnica from "./components/Ingeniero/FichaTecnica";
+import SesionIniciada from "./views/SesionIniciada";
 
+import tokenAuth from "./config/token";
 function App() {
+  //revisar si tenemos un token
+  const token = localStorage.getItem("token");
+  if (token) {
+    tokenAuth(token);
+  }
+
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<LoginView />} />
-        <Route path="/registrar" element={<RegisterView />} />
-        <Route path="/fichatecnica" element={<FichaTecnica />} />
-        <Route path="/ingeniero" element={<IngenieroView />} />
-        <Route path="/gerente" element={<GerenteView />} />
-        <Route path="/backoffice" element={<BackOfficeView />} />
-        <Route path="/cu08" element={<Cu08 />} />
-        <Route path="/guiatranslado" element={<Cus014 />} />
-        <Route path="/guiavalorizada" element={<Cus016 />} />
-        <Route path="/guiavalorizadareal" element={<Cus017 />} />
+    <AlertaStateProvider>
+      <AuthStateProvider>
+        <Router>
+          <Routes>
+            <Route path="/" element={<LoginView />} />
+            <Route path="/registrar" element={<RegisterView />} />
+            <Route path="/fichatecnica" element={<FichaTecnica />} />
+            <Route path="/sesioniniciada/*" element={<SesionIniciada />} />
+            <Route path="/gerente" element={<GerenteView />} />
+            <Route path="/backoffice" element={<BackOfficeView />} />
+            <Route path="/cu08" element={<Cu08 />} />
+            <Route path="/guiatranslado" element={<Cus014 />} />
+            <Route path="/guiavalorizada" element={<Cus016 />} />
+            <Route path="/guiavalorizadareal" element={<Cus017 />} />
 
-        <Route path="/maestro" element={<MaestroView />} />
-        <Route path="/aside" element={<Aside />} />
+            <Route path="/maestro" element={<MaestroView />} />
+            <Route path="/aside" element={<Aside />} />
 
-        {/* <Route path="*" element={<NotFound />} />
+            {/* <Route path="*" element={<NotFound />} />
         <Route path="/" element={<LoginView />} />
         <Route path="/fichatecnica" element={<FichaTecnica />} /> */}
-        {/*     <Route
+            {/*     <Route
           path="/administrador"
           element={
             <PrivateRoute>
@@ -64,8 +67,10 @@ function App() {
             </PrivateRouteIng>
           }
         /> */}
-      </Routes>
-    </Router>
+          </Routes>
+        </Router>
+      </AuthStateProvider>
+    </AlertaStateProvider>
   );
 }
 

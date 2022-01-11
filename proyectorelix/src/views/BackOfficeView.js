@@ -321,12 +321,12 @@ function BackOfficeView() {
         </div>
       </div>
       <div className="container mt-3">
-        <div className="row">
+        {/*  <div className="row">
           <Cus016 />
         </div>
         <div className="row">
           <Cus017 />
-        </div>
+        </div> */}
       </div>
     </div>
   );

@@ -81,6 +81,7 @@ function NavBar() {
                 bg="white"
                 style={{ background: "white !important" }}
               >
+                <NavDropdown.Item>Cerrar Sesion</NavDropdown.Item>
                 {/* {usuario[0].idRol === "1" ? (
                   <div>
                     <NavDropdown.Item>Control de Usuarios</NavDropdown.Item>

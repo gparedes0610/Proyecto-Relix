@@ -2,12 +2,29 @@ import React, { useContext, useEffect, useState } from "react";
 import LogoRelix from "../../assets/relixjpg1.svg";
 import login from "../../assets/login4.svg";
 import { Form, Button } from "react-bootstrap";
-//import { validaSesion } from "../../services/usuarioService";
-//import { Link, useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
+import authContext from "../../context/autenticacion/authContext";
+import alertContext from "../../context/alertas/alertaContext";
 
 function LoginView() {
+  const navigate = useNavigate();
+
+  const alertascontext = useContext(alertContext);
+  const { alerta, mostrarAlerta } = alertascontext;
   /////////////////////////////////
-  useEffect(() => {}, []);
+  const autentificaciones = useContext(authContext);
+  const { mensaje, autenticado, iniciarSesion } = autentificaciones;
+
+  /////////////////////////////////
+  useEffect(() => {
+    if (autenticado) {
+      navigate("/sesioniniciada");
+    }
+    if (mensaje) {
+      mostrarAlerta(mensaje.msg, mensaje.categoria);
+    }
+  }, [mensaje, autenticado]);
+  /////////////////////////////////////////////////
 
   const [sesion, setSesion] = useState({
     correo: "",
@@ -22,22 +39,14 @@ function LoginView() {
     e.preventDefault();
     //error
     if (correo.trim() === "" || clave.trim() === "") {
-      //mostrarAlerta("Todos los campos son obligatorios", "alerta-error");
+      mostrarAlerta("Todos los campos son obligatorios", "alert alert-danger");
+
       console.log("error");
+      return;
     }
-    console.log(sesion);
-    /*  try {
-      const data = await validaSesion({ ...sesion });
-      localStorage.setItem("token", data.Token);
-      const obtenerDatos = {
-        token: data.Token,
-        idRol: data.user.idRol,
-        nombreUsuario: data.user.nombreUsuario,
-      };
-      console.log("estos datos se van a pasar del login", obtenerDatos);
-    } catch (error) {
-      console.log(error);
-    } */
+    //console.log(sesion);
+
+    iniciarSesion({ correo, clave });
   };
 
   return (
@@ -122,6 +131,11 @@ function LoginView() {
                       Ingresar
                     </Button>
                   </Form>
+                  {alerta ? (
+                    <div className={`${alerta.categoria}`} role="alert">
+                      {alerta.msg}
+                    </div>
+                  ) : null}
                 </div>
               </div>
             </div>

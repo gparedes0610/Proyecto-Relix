@@ -159,6 +159,7 @@ function Cu08() {
       headerName: "CostoTotal",
       field: "costoTotal",
     },
+
     /////////////////para agregar una columna
     {
       headerName: "Descuento",
@@ -167,6 +168,28 @@ function Cu08() {
     {
       headerName: "Total con descuento",
       field: "",
+    },
+    {
+      headerName: "Estados",
+      field: "",
+      cellRendererFramework: (params) => (
+        <select defaultValue={"DEFAULT"}>
+          <option value="DEFAULT" disabled>
+            SELECCIONE
+          </option>
+          <option value="value1">PROCESADO</option>
+          <option value="value1">PENDIENTE</option>
+          <option value="value2" selected>
+            STAND BY
+          </option>
+          <option value="value3">ANULADO</option>
+          <option value="value3">ADICIONAL</option>
+        </select>
+      ),
+    },
+    {
+      headerName: "Observaciones",
+      field: "obs",
     },
     {
       headerName: "Acciones",
@@ -183,12 +206,13 @@ function Cu08() {
             }}
           >
             <img
-              src={edit}
+              src={duplicar}
               alt=""
               className="img-fluid"
               style={{ padding: "0 24px" }}
             />
           </button>
+          <input type="checkbox" className="ms-3" />
         </div>
       ),
     },

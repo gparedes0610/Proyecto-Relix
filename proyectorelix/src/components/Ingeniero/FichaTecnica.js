@@ -62,6 +62,77 @@ function FichaTecnica() {
                       </Form.Label>
                       <Form.Control type="text" placeholder="Cliente" />
                     </Form.Group>
+                    <Form.Group
+                      controlId="formBasicText"
+                      style={{ background: "white" }}
+                    >
+                      <Form.Label style={{ background: "white" }}>
+                        Ruc:
+                      </Form.Label>
+                      <Form.Control type="text" placeholder="Ruc" />
+                    </Form.Group>
+                    <Form.Group
+                      controlId="formBasicText"
+                      style={{ background: "white" }}
+                    >
+                      <Form.Label style={{ background: "white" }}>
+                        Direccion Fiscal:
+                      </Form.Label>
+                      <Form.Control
+                        type="text"
+                        placeholder="Direccion Fiscal"
+                      />
+                    </Form.Group>
+                    <Form.Group
+                      controlId="formBasicText"
+                      style={{ background: "white" }}
+                    >
+                      <Form.Label style={{ background: "white" }}>
+                        Atencion:
+                      </Form.Label>
+                      <Form.Control type="text" placeholder="Atencion" />
+                    </Form.Group>
+                    <Form.Group>
+                      <Form.Label style={{ background: "white" }}>
+                        Vendedor:
+                      </Form.Label>
+                      <Form.Select aria-label="Default select example">
+                        <option>Seleccione Vendedor</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                      </Form.Select>
+                    </Form.Group>
+                    <Form.Group
+                      controlId="formBasicText"
+                      style={{ background: "white" }}
+                    >
+                      <Form.Label style={{ background: "white" }}>
+                        Telefono:
+                      </Form.Label>
+                      <Form.Control type="text" placeholder="Telefono" />
+                    </Form.Group>
+                    <Form.Group
+                      controlId="formBasicText"
+                      style={{ background: "white" }}
+                    >
+                      <Form.Label style={{ background: "white" }}>
+                        Referencia:
+                      </Form.Label>
+                      <Form.Control type="text" placeholder="Referencia" />
+                    </Form.Group>
+                    <Form.Group
+                      controlId="formBasicText"
+                      style={{ background: "white" }}
+                    >
+                      <Form.Label style={{ background: "white" }}>
+                        Validez de oferta:
+                      </Form.Label>
+                      <Form.Control
+                        type="text"
+                        placeholder="Validez de oferta"
+                      />
+                    </Form.Group>
                   </div>
 
                   <div

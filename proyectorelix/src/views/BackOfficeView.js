@@ -167,6 +167,7 @@ function BackOfficeView() {
       headerName: "CostoTotal",
       field: "costoTotal",
     },
+
     /////////////////para agregar una columna
     {
       headerName: "Descuento",
@@ -175,6 +176,28 @@ function BackOfficeView() {
     {
       headerName: "Total con descuento",
       field: "",
+    },
+    {
+      headerName: "Estados",
+      field: "",
+      cellRendererFramework: (params) => (
+        <select defaultValue={"DEFAULT"}>
+          <option value="DEFAULT" disabled>
+            SELECCIONE
+          </option>
+          <option value="value1">PROCESADO</option>
+          <option value="value1">PENDIENTE</option>
+          <option value="value2" selected>
+            STAND BY
+          </option>
+          <option value="value3">ANULADO</option>
+          <option value="value3">ADICIONAL</option>
+        </select>
+      ),
+    },
+    {
+      headerName: "Observaciones",
+      field: "obs",
     },
     {
       headerName: "Acciones",

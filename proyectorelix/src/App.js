@@ -20,8 +20,14 @@ import AuthStateProvider from "./context/autenticacion/authState";
 import AlertaStateProvider from "./context/alertas/alertaState";
 import FichaTecnica from "./components/Ingeniero/FichaTecnica";
 import SesionIniciada from "./views/SesionIniciada";
+import ReporteDePartidas from "./views/ReporteDePartidas";
 
 import tokenAuth from "./config/token";
+import PresupuestoCotizacion from "./views/PresupuestoCotizacion";
+import MaterialesProcesados from "./views/MaterialesProcesados";
+import MaterialesAtendidos from "./views/MaterialesAtendidos";
+import MaterialesServicios from "./views/MaterialesServicios";
+
 function App() {
   //revisar si tenemos un token
   const token = localStorage.getItem("token");
@@ -44,6 +50,24 @@ function App() {
             <Route path="/guiatranslado" element={<Cus014 />} />
             <Route path="/guiavalorizada" element={<Cus016 />} />
             <Route path="/guiavalorizadareal" element={<Cus017 />} />
+
+            <Route path="/reportedepartidas" element={<ReporteDePartidas />} />
+            <Route
+              path="/presupuestocotizacion"
+              element={<PresupuestoCotizacion />}
+            />
+            <Route
+              path="/materialesprocesados"
+              element={<MaterialesProcesados />}
+            />
+            <Route
+              path="/materialesatendidos"
+              element={<MaterialesAtendidos />}
+            />
+            <Route
+              path="/materialesservicios"
+              element={<MaterialesServicios />}
+            />
 
             <Route path="/maestro" element={<MaestroView />} />
             <Route path="/aside" element={<Aside />} />

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import NavBar from "../components/NavBar";
 import "../components/Navbar.css";
 
@@ -13,9 +13,17 @@ import ComoTrabajar from "../components/ComoTrabajar";
 import Tabla from "../components/Ingeniero/Tabla";
 import FormFicha from "../components/Fichas/FormFicha";
 import ListaFichas from "../components/Fichas/ListaFichas";
+import authContext from "../context/autenticacion/authContext";
 
 function SesionIniciada() {
-  useEffect(() => {}, []);
+  /////////////////////////////////
+  const autentificaciones = useContext(authContext);
+  const { mensaje, autenticado, iniciarSesion, usuarioAutenticado } =
+    autentificaciones;
+
+  useEffect(() => {
+    usuarioAutenticado();
+  }, []);
   return (
     <>
       <NavBar />

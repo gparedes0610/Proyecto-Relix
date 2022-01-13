@@ -28,7 +28,7 @@ const AuthStateProvider = (props) => {
       // console.log("esta es la respuesta en usuarioAutenticado", respuesta);
       dispatch({
         type: OBTENER_USUARIO,
-        payload: respuesta.data.users,
+        payload: respuesta.data,
       });
     } catch (error) {
       console.log(error.response.data.messages.error);

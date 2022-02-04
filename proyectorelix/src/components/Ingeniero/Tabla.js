@@ -307,7 +307,7 @@ function Tabla() {
               padding: "8px 16px",
             }}
           >
-            Alta de Negocio
+            Guardar Cotizacion
           </button>
           <button
             style={{

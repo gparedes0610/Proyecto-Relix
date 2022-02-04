@@ -1,7 +1,34 @@
 import React from "react";
 import LogoRelix from "../../assets/relixjpg1.svg";
 import { Form, Button } from "react-bootstrap";
+import { useState } from "react";
 function FichaTecnica() {
+  const [registrarFichaTecnica, setRegistrarFichaTecnica] = useState({
+    nombreProyecto: "",
+    ubicacion: "",
+    cliente: "",
+    ruc: "",
+    direccionFiscal: "",
+    atencion: "",
+    vendedor: "",
+    telefono: "",
+    referencia: "",
+    validezOferta: "",
+    montoUsd: "",
+    etapaActual: "",
+    area: "",
+    cultivo: "",
+    tipoProyecto: "",
+    duracion: "",
+    modalidad: "",
+    inicioProyectado: "",
+    finProyectado: "",
+    formaDePago: "",
+    proximoHito: "",
+  });
+
+  //consumiendo api para el select
+
   return (
     <div>
       <div className="container">
@@ -43,14 +70,53 @@ function FichaTecnica() {
                       />
                     </Form.Group>
 
+                    <Form.Group>
+                      <Form.Label style={{ background: "white" }}>
+                        Departamento:
+                      </Form.Label>
+                      <Form.Select aria-label="Default select example">
+                        <option>Seleccione Departamento</option>
+                        <option value="1">Lima</option>
+                        <option value="2">Trujillo</option>
+                        <option value="3">Arequipa</option>
+                      </Form.Select>
+                    </Form.Group>
+
+                    <Form.Group>
+                      <Form.Label style={{ background: "white" }}>
+                        Provincia:
+                      </Form.Label>
+                      <Form.Select aria-label="Default select example">
+                        <option>Seleccione Provincia</option>
+                        <option value="1">Provincia1</option>
+                        <option value="2">Provincia2</option>
+                        <option value="3">Provincia3</option>
+                      </Form.Select>
+                    </Form.Group>
+
+                    <Form.Group>
+                      <Form.Label style={{ background: "white" }}>
+                        Distrito:
+                      </Form.Label>
+                      <Form.Select aria-label="Default select example">
+                        <option>Seleccione Provincia</option>
+                        <option value="1">Distrito1</option>
+                        <option value="2">Distrito2</option>
+                        <option value="3">Distrito3</option>
+                      </Form.Select>
+                    </Form.Group>
+
                     <Form.Group
                       controlId="formBasicText"
                       style={{ background: "white" }}
                     >
                       <Form.Label style={{ background: "white" }}>
-                        Ubicacion:
+                        Direccion de Entrega:
                       </Form.Label>
-                      <Form.Control type="text" placeholder="Ubicacion" />
+                      <Form.Control
+                        type="text"
+                        placeholder="Direccion de entrega"
+                      />
                     </Form.Group>
 
                     <Form.Group
@@ -62,6 +128,7 @@ function FichaTecnica() {
                       </Form.Label>
                       <Form.Control type="text" placeholder="Cliente" />
                     </Form.Group>
+
                     <Form.Group
                       controlId="formBasicText"
                       style={{ background: "white" }}
@@ -71,6 +138,7 @@ function FichaTecnica() {
                       </Form.Label>
                       <Form.Control type="text" placeholder="Ruc" />
                     </Form.Group>
+
                     <Form.Group
                       controlId="formBasicText"
                       style={{ background: "white" }}
@@ -83,26 +151,7 @@ function FichaTecnica() {
                         placeholder="Direccion Fiscal"
                       />
                     </Form.Group>
-                    <Form.Group
-                      controlId="formBasicText"
-                      style={{ background: "white" }}
-                    >
-                      <Form.Label style={{ background: "white" }}>
-                        Atencion:
-                      </Form.Label>
-                      <Form.Control type="text" placeholder="Atencion" />
-                    </Form.Group>
-                    <Form.Group>
-                      <Form.Label style={{ background: "white" }}>
-                        Vendedor:
-                      </Form.Label>
-                      <Form.Select aria-label="Default select example">
-                        <option>Seleccione Vendedor</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                      </Form.Select>
-                    </Form.Group>
+
                     <Form.Group
                       controlId="formBasicText"
                       style={{ background: "white" }}
@@ -110,29 +159,35 @@ function FichaTecnica() {
                       <Form.Label style={{ background: "white" }}>
                         Telefono:
                       </Form.Label>
-                      <Form.Control type="text" placeholder="Telefono" />
+                      <Form.Control type="text" placeholder="Atencion" />
                     </Form.Group>
-                    <Form.Group
-                      controlId="formBasicText"
+
+                    <div
+                      className="d-flex justify-content-between"
                       style={{ background: "white" }}
                     >
-                      <Form.Label style={{ background: "white" }}>
-                        Referencia:
-                      </Form.Label>
-                      <Form.Control type="text" placeholder="Referencia" />
-                    </Form.Group>
-                    <Form.Group
-                      controlId="formBasicText"
-                      style={{ background: "white" }}
-                    >
-                      <Form.Label style={{ background: "white" }}>
-                        Validez de oferta:
-                      </Form.Label>
-                      <Form.Control
-                        type="text"
-                        placeholder="Validez de oferta"
-                      />
-                    </Form.Group>
+                      <Form.Group>
+                        <Form.Label style={{ background: "white" }}>
+                          Vendedor:
+                        </Form.Label>
+                        <Form.Select aria-label="Default select example">
+                          <option>Seleccione Vendedor</option>
+                          <option value="1">One</option>
+                          <option value="2">Two</option>
+                          <option value="3">Three</option>
+                        </Form.Select>
+                      </Form.Group>
+
+                      <Form.Group
+                        controlId="formBasicText"
+                        style={{ background: "white" }}
+                      >
+                        <Form.Label style={{ background: "white" }}>
+                          Codigo:
+                        </Form.Label>
+                        <Form.Control type="text" placeholder="Codigo" />
+                      </Form.Group>
+                    </div>
                   </div>
 
                   <div
@@ -149,16 +204,18 @@ function FichaTecnica() {
                       <Form.Control type="number" placeholder="Ingrese monto" />
                     </Form.Group>
 
-                    <Form.Group
-                      controlId="formBasicText"
-                      style={{ background: "white" }}
-                    >
+                    <Form.Group>
                       <Form.Label style={{ background: "white" }}>
-                        Etapa Actual:
+                        Division:
                       </Form.Label>
-                      <Form.Control type="text" placeholder="Etapa actual" />
+                      <Form.Select aria-label="Default select example">
+                        <option>Seleccione Division</option>
+                        <option value="1">Agua</option>
+                        <option value="2">Riego</option>
+                      </Form.Select>
                     </Form.Group>
                   </div>
+
                   <div
                     className="d-flex justify-content-between"
                     style={{ background: "white" }}
@@ -168,11 +225,11 @@ function FichaTecnica() {
                       style={{ background: "white" }}
                     >
                       <Form.Label style={{ background: "white" }}>
-                        Area:
+                        Area (Has):
                       </Form.Label>
                       <Form.Control
                         type="number"
-                        placeholder="Ingrese Area m2"
+                        placeholder="Ingrese cantidad de hectareas"
                       />
                     </Form.Group>
 
@@ -187,50 +244,35 @@ function FichaTecnica() {
                     </Form.Group>
                   </div>
 
+                  <Form.Group>
+                    <Form.Label style={{ background: "white" }}>
+                      Tipo de Proyecto:
+                    </Form.Label>
+                    <Form.Select aria-label="Default select example">
+                      <option>Seleccione Tipo de Proyecto</option>
+                      <option value="1">
+                        Proyecto Integral: Sistema de Riego por Goteo, Planta de
+                        Tratamiento por Osmosis Inversa e Implementación de
+                        Pozos
+                      </option>
+                      <option value="2">Sistema de Riego por Aspersión</option>
+                      <option value="3">Perforación de Pozos</option>
+                      <option value="4">Otro</option>
+                    </Form.Select>
+                  </Form.Group>
+
                   <Form.Group
                     controlId="formBasicText"
                     style={{ background: "white" }}
                   >
                     <Form.Label style={{ background: "white" }}>
-                      Tipo de Proyecto:
+                      Duracion(meses):
                     </Form.Label>
                     <Form.Control
-                      as="textarea"
-                      rows={2}
-                      placeholder="Tipo de proyecto"
+                      type="number"
+                      placeholder="Ingrese duracion"
                     />
                   </Form.Group>
-
-                  <div
-                    className="d-flex justify-content-between"
-                    style={{ background: "white" }}
-                  >
-                    <Form.Group
-                      controlId="formBasicText"
-                      style={{ background: "white" }}
-                    >
-                      <Form.Label style={{ background: "white" }}>
-                        Duracion(meses):
-                      </Form.Label>
-                      <Form.Control
-                        type="number"
-                        placeholder="Ingrese duracion"
-                      />
-                    </Form.Group>
-
-                    <Form.Group
-                      controlId="formBasicText"
-                      style={{ background: "white" }}
-                    >
-                      <Form.Label style={{ background: "white" }}>
-                        Modalidad:
-                      </Form.Label>
-                      <Form.Control
-                        type="text"
-                        placeholder="Ingrese modalidad"
-                      />
-                    </Form.Group>
-                  </div>
 
                   <div
                     className="d-flex justify-content-between"
@@ -257,28 +299,79 @@ function FichaTecnica() {
                     </Form.Group>
                   </div>
 
-                  <Form.Group
-                    controlId="formBasicText"
-                    style={{ background: "white" }}
-                  >
+                  <Form.Group>
                     <Form.Label style={{ background: "white" }}>
-                      Forma de pago:
+                      Tipo de Facturacion:
                     </Form.Label>
-                    <Form.Control
-                      as="textarea"
-                      rows={2}
-                      placeholder="Forma de pago...."
-                    />
+                    <Form.Select aria-label="Default select example">
+                      <option>Seleccione Tipo de Facturacion</option>
+                      <option value="1">
+                        Llave en mano / Valorización por avance
+                      </option>
+                      <option value="2">
+                        Suministro de materiales e instalación
+                      </option>
+                    </Form.Select>
                   </Form.Group>
 
-                  <Form.Group
-                    controlId="formBasicText"
+                  <Form.Group>
+                    <Form.Label style={{ background: "white" }}>
+                      Forma de Pago:
+                    </Form.Label>
+                    <Form.Select aria-label="Default select example">
+                      <option>Seleccione Forma de Pago</option>
+                      <option value="1">Contado</option>
+                      <option value="2">
+                        Anticipo con la OC y saldo contra valorizaciones
+                      </option>
+                      <option value="3">100% Avance valorizado</option>
+                      <option value="4">
+                        Avance contra entrega de materiales
+                      </option>
+                      <option value="5">
+                        Instalación contra entrega de obra
+                      </option>
+                    </Form.Select>
+                  </Form.Group>
+
+                  <div
+                    className="d-flex justify-content-between"
                     style={{ background: "white" }}
                   >
+                    <Form.Group>
+                      <Form.Label style={{ background: "white" }}>
+                        Financiamiento:
+                      </Form.Label>
+                      <Form.Select aria-label="Default select example">
+                        <option>Seleccione Financiamiento</option>
+                        <option value="1">Si</option>
+                        <option value="2">No</option>
+                      </Form.Select>
+                    </Form.Group>
+
+                    <Form.Group
+                      controlId="formBasicText"
+                      style={{ background: "white" }}
+                    >
+                      <Form.Label style={{ background: "white" }}>
+                        Detallar:
+                      </Form.Label>
+                      <Form.Control type="text" placeholder="Ingrese detalle" />
+                    </Form.Group>
+                  </div>
+
+                  <Form.Group>
                     <Form.Label style={{ background: "white" }}>
-                      Proximo Hito:
+                      Estado:
                     </Form.Label>
-                    <Form.Control type="text" placeholder="Proximo hito" />
+                    <Form.Select aria-label="Default select example">
+                      <option>Seleccione Tipo de Proyecto</option>
+                      <option value="1">Cerrado</option>
+                      <option value="2">Preparación</option>
+                      <option value="3">Diseño</option>
+                      <option value="4">Negociación</option>
+                      <option value="5">Perdido</option>
+                    </Form.Select>
                   </Form.Group>
 
                   <Button

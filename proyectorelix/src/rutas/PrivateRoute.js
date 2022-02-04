@@ -6,9 +6,11 @@ function PrivateRoute(props) {
   const autentificaciones = useContext(authContext);
   const { autenticado, usuarioAutenticado, cargando } = autentificaciones;
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    usuarioAutenticado();
+  }, []);
 
-  return <div>habla cgda</div>;
+  return !autenticado && !cargando ? <Navigate to="/" /> : props.children;
 }
 
 export default PrivateRoute;

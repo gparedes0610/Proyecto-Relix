@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import "./components/Navbar.css";
+//import "./components/Navbar.css";
 import "./App.css";
 import bootstrap from "bootstrap/dist/css/bootstrap.min.css";
 
@@ -27,6 +27,9 @@ import PresupuestoCotizacion from "./views/PresupuestoCotizacion";
 import MaterialesProcesados from "./views/MaterialesProcesados";
 import MaterialesAtendidos from "./views/MaterialesAtendidos";
 import MaterialesServicios from "./views/MaterialesServicios";
+import PrivateRoute from "./rutas/PrivateRoute";
+import CambiarContrasena from "./views/CambiarContrasena";
+import PlaneamientoDeCompras from "./views/PlaneamientoDeCompras";
 
 function App() {
   //revisar si tenemos un token
@@ -42,8 +45,16 @@ function App() {
           <Routes>
             <Route path="/" element={<LoginView />} />
             <Route path="/registrar" element={<RegisterView />} />
+            <Route path="/cambiarclave" element={<CambiarContrasena />} />
             <Route path="/fichatecnica" element={<FichaTecnica />} />
-            <Route path="/sesioniniciada/*" element={<SesionIniciada />} />
+            <Route
+              path="/sesioniniciada/*"
+              element={
+                <PrivateRoute>
+                  <SesionIniciada />
+                </PrivateRoute>
+              }
+            />
             <Route path="/gerente" element={<GerenteView />} />
             <Route path="/backoffice" element={<BackOfficeView />} />
             <Route path="/cu08" element={<Cu08 />} />
@@ -68,7 +79,10 @@ function App() {
               path="/materialesservicios"
               element={<MaterialesServicios />}
             />
-
+            <Route
+              path="/planeamiento-de-compras"
+              element={<PlaneamientoDeCompras />}
+            />
             <Route path="/maestro" element={<MaestroView />} />
             <Route path="/aside" element={<Aside />} />
 

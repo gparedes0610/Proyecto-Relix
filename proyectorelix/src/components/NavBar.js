@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import LogoRelix from "../assets/relixjpg1.svg";
 import {
   Navbar,
@@ -11,34 +11,33 @@ import {
 //import { Link, useNavigate } from "react-router-dom";
 import { FaBars } from "react-icons/fa";
 import { useContext } from "react";
+import authContext from "../context/autenticacion/authContext";
+
 function NavBar() {
-  //const navigate = useNavigate();
+  /////////////////////////////////
+  const autentificaciones = useContext(authContext);
+  const { usuario, usuarioAutenticado } = autentificaciones;
 
-  /*   const { usuario, limpiarSesion } = useContext(TokenContext);
-  console.log("estoy en navbar y este es el usuario", usuario);
-  console.log(
-    "estoy en navbar y este es el nombre usuaro",
-    usuario[0].nombreUsuario
-  ); */
+  useEffect(() => {
+    usuarioAutenticado();
+  }, []);
 
-  /*  const [show, setShow] = useState(false);
+  if (!usuario) {
+    return null;
+  }
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true); */
-
-  // <FaBars className="mx-2" />
-  /*   const cerrarSesion = () => {
-    // console.log("cerre sesion ctmre");
-    limpiarSesion();
-    navigate("/");
-  }; */
   return (
     <>
-      <Navbar bg="white" expand="lg" className="mb-5">
+      <Navbar
+        //bg="white"
+        expand="lg"
+        className="mb-5"
+        //style={{ background: "#51BBFE" }}
+      >
         {/* style={{ background: "white" }} */}
         <Container fluid>
           {/*   style={{ background: "white" }} */}
-          <Navbar.Brand href="#">
+          <Navbar.Brand>
             <img
               src={LogoRelix}
               alt="relix"
@@ -53,7 +52,7 @@ function NavBar() {
               className="text-uppercase h6"
               style={{ color: "#4253FF", background: "white" }}
             >
-              Presupuesto Blue Gold-Cerro Verde
+              Necesita crear una ficha Tecnica
               {/*    {usuario[0].idRol === "1" && "Bienvenido Administrador"}
               {usuario[0].idRol === "2" && "Bienvenido Gerente General"}
               {usuario[0].idRol === "3" && "Presupuesto Blue Gold"}
@@ -71,8 +70,7 @@ function NavBar() {
                 title={
                   <div className="d-inline" style={{ background: "white" }}>
                     <span style={{ background: "white" }}>
-                      Bienvenido Persona (Cargo)
-                      {/*    {`Bienvenido ${usuario[0].nombreUsuario}`} */}
+                      {`Bienvenido ${usuario.nombreUsuario} (${usuario.nombreRol})`}
                     </span>
                   </div>
                 }
@@ -82,54 +80,6 @@ function NavBar() {
                 style={{ background: "white !important" }}
               >
                 <NavDropdown.Item>Cerrar Sesion</NavDropdown.Item>
-                {/* {usuario[0].idRol === "1" ? (
-                  <div>
-                    <NavDropdown.Item>Control de Usuarios</NavDropdown.Item>
-                    <NavDropdown.Item onClick={() => cerrarSesion()}>
-                      Cerrar Sesion
-                    </NavDropdown.Item>
-                  </div>
-                ) : usuario[0].idRol === "2" ? (
-                  <div>
-                    {" "}
-                    <NavDropdown.Item onClick={() => cerrarSesion()}>
-                      Cerrar Sesion
-                    </NavDropdown.Item>
-                  </div>
-                ) : usuario[0].idRol === "3" ? (
-                  <div>
-                    <NavDropdown.Item>Importado</NavDropdown.Item>
-                    <NavDropdown.Item>Tuberias PVC</NavDropdown.Item>
-                    <NavDropdown.Item>
-                      Materiales y equipos nacionales
-                    </NavDropdown.Item>
-                    <NavDropdown.Item>Mesa Fertilizacion</NavDropdown.Item>
-                    <NavDropdown.Item>Accesorios de conexion</NavDropdown.Item>
-                    <NavDropdown.Item>Bombas y tableros</NavDropdown.Item>
-                    <NavDropdown.Item>Item 37 Accesorios PVC</NavDropdown.Item>
-                    <NavDropdown.Item onClick={() => cerrarSesion()}>
-                      Cerrar Sesion
-                    </NavDropdown.Item>
-                  </div>
-                ) : (
-                  <div>
-                    <NavDropdown.Item onClick={() => cerrarSesion()}>
-                      Reporte 1
-                    </NavDropdown.Item>{" "}
-                    <NavDropdown.Item onClick={() => cerrarSesion()}>
-                      Reporte 2
-                    </NavDropdown.Item>{" "}
-                    <NavDropdown.Item onClick={() => cerrarSesion()}>
-                      Reporte 3
-                    </NavDropdown.Item>{" "}
-                    <NavDropdown.Item onClick={() => cerrarSesion()}>
-                      Reporte 4
-                    </NavDropdown.Item>{" "}
-                    <NavDropdown.Item onClick={() => cerrarSesion()}>
-                      Cerrar Sesion
-                    </NavDropdown.Item>{" "}
-                  </div>
-                )} */}
               </NavDropdown>
             </Nav>
           </Navbar.Collapse>

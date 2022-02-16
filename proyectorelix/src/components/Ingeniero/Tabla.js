@@ -6,101 +6,7 @@ import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 
 import * as XLSX from "xlsx";
 function Tabla() {
-  /* DATA FALSA */
-  const data = [
-    {
-      partida: "partida1",
-      subpartida: "subpartida2",
-      marca: "marca",
-      codprov: "codproveedor1",
-      codsoftcom: "codsoftcom1",
-      descripcion: "descripcion1",
-      cantTotal: 12,
-      preUnitario: 24,
-      preTotal: 47,
-      costoReal: 145,
-      costoTotal: 478,
-    },
-    {
-      partida: "partida1",
-      subpartida: "subpartida2",
-      marca: "marca",
-      codprov: "codproveedor1",
-      codsoftcom: "codsoftcom1",
-      descripcion: "descripcion1",
-      cantTotal: 12,
-      preUnitario: 24,
-      preTotal: 47,
-      costoReal: 145,
-      costoTotal: 478,
-    },
-    {
-      partida: "partida1",
-      subpartida: "subpartida2",
-      marca: "marca",
-      codprov: "codproveedor1",
-      codsoftcom: "codsoftcom1",
-      descripcion: "descripcion1",
-      cantTotal: 12,
-      preUnitario: 24,
-      preTotal: 47,
-      costoReal: 145,
-      costoTotal: 478,
-    },
-    {
-      partida: "partida1",
-      subpartida: "subpartida2",
-      marca: "marca",
-      codprov: "codproveedor1",
-      codsoftcom: "codsoftcom1",
-      descripcion: "descripcion1",
-      cantTotal: 12,
-      preUnitario: 24,
-      preTotal: 47,
-      costoReal: 145,
-      costoTotal: 478,
-    },
-    {
-      partida: "partida1",
-      subpartida: "subpartida2",
-      marca: "marca",
-      codprov: "codproveedor1",
-      codsoftcom: "codsoftcom1",
-      descripcion: "descripcion1",
-      cantTotal: 12,
-      preUnitario: 24,
-      preTotal: 47,
-      costoReal: 145,
-      costoTotal: 478,
-    },
-    {
-      partida: "partida1",
-      subpartida: "subpartida2",
-      marca: "marca",
-      codprov: "codproveedor1",
-      codsoftcom: "codsoftcom1",
-      descripcion: "descripcion1",
-      cantTotal: 12,
-      preUnitario: 24,
-      preTotal: 47,
-      costoReal: 145,
-      costoTotal: 478,
-    },
-    {
-      partida: "partida1",
-      subpartida: "subpartida2",
-      marca: "marca",
-      codprov: "codproveedor1",
-      codsoftcom: "codsoftcom1",
-      descripcion: "descripcion1",
-      cantTotal: 12,
-      preUnitario: 24,
-      preTotal: 47,
-      costoReal: 145,
-      costoTotal: 478,
-    },
-  ];
-  /* DATA FALSA */
+  const [dataTabla, setDataTabla] = useState([]);
 
   /* COLUMNAS */
   const columns = [
@@ -180,7 +86,6 @@ function Tabla() {
   };
 
   /* para importar un excel y convertilo en un array de objetos */
-  const [items, setItems] = useState([]);
 
   const readExcel = (file) => {
     const promise = new Promise((resolve, reject) => {
@@ -209,9 +114,7 @@ function Tabla() {
     promise.then((itemsFinales) => {
       //setItems(d);
       console.log(itemsFinales);
-      //itemsFinales.map((item) => {
-      //console.log(item);
-      //});
+      setDataTabla(itemsFinales);
     });
   };
   return (
@@ -268,6 +171,7 @@ function Tabla() {
         </div>
       </div>
       {/*   Acciones */}
+
       {/* TABLA */}
       <div className="row">
         <div className="col-12 ">
@@ -277,7 +181,7 @@ function Tabla() {
             style={{ height: 400, width: "100%" }}
           >
             <AgGridReact
-              rowData={data}
+              rowData={dataTabla}
               columnDefs={columns}
               defaultColDef={defaultColDef}
             />

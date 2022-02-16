@@ -46,7 +46,6 @@ function App() {
             <Route path="/" element={<LoginView />} />
             <Route path="/registrar" element={<RegisterView />} />
             <Route path="/cambiarclave" element={<CambiarContrasena />} />
-            <Route path="/fichatecnica" element={<FichaTecnica />} />
             <Route
               path="/sesioniniciada/*"
               element={

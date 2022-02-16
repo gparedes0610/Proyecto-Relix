@@ -1,6 +1,11 @@
 import authContext from "./authContext";
 import authReducer from "./authReducer";
-import { OBTENER_USUARIO, LOGIN_EXITOSO, LOGIN_ERROR } from "../../types";
+import {
+  OBTENER_USUARIO,
+  LOGIN_EXITOSO,
+  LOGIN_ERROR,
+  CERRAR_SESION,
+} from "../../types";
 import { useReducer } from "react";
 import clienteAxios from "../../config/axios"; //obtengo la bd urlS
 import tokenAuth from "../../config/token"; //valido el token en el headers
@@ -68,6 +73,14 @@ const AuthStateProvider = (props) => {
     }
   };
 
+  //cerrar sesion
+
+  const cerrarSesion = () => {
+    dispatch({
+      type: CERRAR_SESION,
+    });
+  };
+
   return (
     <authContext.Provider
       value={{
@@ -78,6 +91,7 @@ const AuthStateProvider = (props) => {
         cargando: state.cargando,
         iniciarSesion,
         usuarioAutenticado,
+        cerrarSesion,
       }}
     >
       {props.children}

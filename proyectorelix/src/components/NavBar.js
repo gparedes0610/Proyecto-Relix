@@ -16,7 +16,7 @@ import authContext from "../context/autenticacion/authContext";
 function NavBar() {
   /////////////////////////////////
   const autentificaciones = useContext(authContext);
-  const { usuario, usuarioAutenticado } = autentificaciones;
+  const { usuario, usuarioAutenticado, cerrarSesion } = autentificaciones;
 
   useEffect(() => {
     usuarioAutenticado();
@@ -48,16 +48,22 @@ function NavBar() {
           {/*  , background: "white"  */}
           <span className="text-uppercase h6" style={{ color: "#001737" }}>
             DashBoard {">"}{" "}
-            <span
-              className="text-uppercase h6"
-              style={{ color: "#4253FF", background: "white" }}
-            >
-              Necesita crear una ficha Tecnica
-              {/*    {usuario[0].idRol === "1" && "Bienvenido Administrador"}
-              {usuario[0].idRol === "2" && "Bienvenido Gerente General"}
-              {usuario[0].idRol === "3" && "Presupuesto Blue Gold"}
-              {usuario[0].idRol === "4" && "Presupuesto Blue Gold"} */}
-            </span>
+            {usuario.idRol == 2 && (
+              <span
+                className="text-uppercase h6"
+                style={{ color: "#4253FF", background: "white" }}
+              >
+                NECESITA SELECCIONAR UNA FICHA TECNICA PARA REVISION
+              </span>
+            )}
+            {usuario.idRol == 3 && (
+              <span
+                className="text-uppercase h6"
+                style={{ color: "#4253FF", background: "white" }}
+              >
+                Necesita crear una ficha tecnica
+              </span>
+            )}
           </span>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
 
@@ -79,7 +85,9 @@ function NavBar() {
                 bg="white"
                 style={{ background: "white !important" }}
               >
-                <NavDropdown.Item>Cerrar Sesion</NavDropdown.Item>
+                <NavDropdown.Item onClick={() => cerrarSesion()}>
+                  Cerrar Sesion
+                </NavDropdown.Item>
               </NavDropdown>
             </Nav>
           </Navbar.Collapse>

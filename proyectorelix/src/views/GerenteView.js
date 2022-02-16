@@ -176,10 +176,10 @@ function GerenteView() {
   };
   return (
     <div>
-      <NavBar />
-      <div className="container pt-4 mb-4">
+      {/* <NavBar /> */}
+      <div>
         <div className="row mt-3">
-          <div className="col-12 col-md-3">
+          <div className="col-12 col-md-3 mb-4">
             <button className="btn btn-success mb-3">
               Confirmar Alta de Negocio
             </button>
@@ -196,6 +196,7 @@ function GerenteView() {
           </div>
         </div>
       </div>
+      {/* 
       <div className="container">
         <div
           id="myGrid"
@@ -208,9 +209,27 @@ function GerenteView() {
             defaultColDef={defaultColDef}
           />
         </div>
-      </div>
+      </div> */}
 
-      <div className="container mt-5">
+      {/* TABLA */}
+      <div className="row">
+        <div className="col-12 ">
+          <div
+            id="myGrid"
+            className="ag-theme-alpine"
+            style={{ height: 400, width: "100%" }}
+          >
+            <AgGridReact
+              rowData={data}
+              columnDefs={columns}
+              defaultColDef={defaultColDef}
+            />
+          </div>
+        </div>
+      </div>
+      {/* TABLA */}
+
+      {/*   <div className="container mt-5">
         <div className="row">
           <div className="col-12 col-md-6 text-end"></div>
           <div className="col-12 col-md-6 text-end">
@@ -267,7 +286,7 @@ function GerenteView() {
             </button>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }

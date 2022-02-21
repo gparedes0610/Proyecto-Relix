@@ -16,67 +16,90 @@ import ListaFichas from "../components/Fichas/ListaFichas";
 import authContext from "../context/autenticacion/authContext";
 import FichaTecnica from "../components/Ingeniero/FichaTecnica";
 
+//administrador
+import RegisterView from "../components/auth/RegisterView";
+import TablaUsuarios from "../components/Administrador/TablaUsuarios";
 //Gerente
 import GerenteView from "./GerenteView";
 
 function SesionIniciada() {
   /////////////////////////////////
   const [ActivarFicha, setActivarFicha] = useState(false);
+  const [verUsuarios, setVerUsuarios] = useState(false);
   const autentificaciones = useContext(authContext);
-  const { mensaje, autenticado, usuarioAutenticado, usuario } =
-    autentificaciones;
+  const {
+    usuarioAutenticado,
+    usuario,
+    obtenerTodosLosUsuarios,
+    todosLosUsuarios,
+  } = autentificaciones;
+
   useEffect(() => {
     usuarioAutenticado();
+    obtenerTodosLosUsuarios();
   }, []);
   if (!usuario) {
     return null;
   }
-  //console.log(usuario.idRol);
   return (
     <>
-      <NavBar />
+      <NavBar setVerUsuarios={setVerUsuarios} verUsuarios={verUsuarios} />
 
       <div className="container-fluid">
         {/* muestra requisitos */}
         <div className="row">
-          {usuario.idRol == "2" ? null : <ComoTrabajar />}
+          {usuario.idRol == "3" ? <ComoTrabajar /> : null}
         </div>
         {/* muestra requisitos */}
         <div className="row">
           {/*  TABLA */}
 
-          <div className="col-12 col-md-12 col-lg-9">
-            {/*   {ActivarFicha ? <Tabla /> : <FichaTecnica />} */}
-            {usuario.idRol == "2" && <GerenteView />}
-            {/*  {usuario.idRol == "3" && ActivarFicha ? (
-              <FichaTecnica />
+          {usuario.idRol == "1" ? (
+            verUsuarios ? (
+              <TablaUsuarios
+                setVerUsuarios={setVerUsuarios}
+                verUsuarios={verUsuarios}
+              />
             ) : (
-              <Tabla />
-            )} */}
-          </div>
-
-          {/* FIN TABLA */}
-
-          {/* FICHAS */}
-          <div className="col-12 col-md-12 col-lg-3 text-center mt-2">
-            <div className="row">
-              <div className="col-12">
-                {usuario.idRol == "2" ? null : (
-                  <BtnCrearFicha
-                    setActivarFicha={setActivarFicha}
-                    ActivarFicha={ActivarFicha}
-                  />
-                )}
+              <RegisterView />
+            )
+          ) : (
+            <>
+              <div className="col-12 col-md-12 col-lg-9">
+                {usuario.idRol == "2" && <GerenteView />}
+                {usuario.idRol == "3" ? (
+                  ActivarFicha ? (
+                    <FichaTecnica />
+                  ) : (
+                    <Tabla />
+                  )
+                ) : null}
               </div>
-            </div>
-            <div className="row mt-4 text-start">
-              <div className="col-12">
-                <h5>Lista de Fichas</h5>
-                <ListaFichas />
+
+              {/* FIN TABLA */}
+
+              {/* FICHAS */}
+              <div className="col-12 col-md-12 col-lg-3 text-center mt-2">
+                <div className="row">
+                  <div className="col-12">
+                    {usuario.idRol == "2" ? null : (
+                      <BtnCrearFicha
+                        setActivarFicha={setActivarFicha}
+                        ActivarFicha={ActivarFicha}
+                      />
+                    )}
+                  </div>
+                </div>
+                <div className="row mt-4 text-start">
+                  <div className="col-12">
+                    <h5>Lista de Fichas</h5>
+                    <ListaFichas />
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-          {/*FIN FICHAS */}
+              {/*FIN FICHAS */}
+            </>
+          )}
         </div>
       </div>
     </>

@@ -13,7 +13,7 @@ import { FaBars } from "react-icons/fa";
 import { useContext } from "react";
 import authContext from "../context/autenticacion/authContext";
 
-function NavBar() {
+function NavBar({ setVerUsuarios, verUsuarios }) {
   /////////////////////////////////
   const autentificaciones = useContext(authContext);
   const { usuario, usuarioAutenticado, cerrarSesion } = autentificaciones;
@@ -25,6 +25,10 @@ function NavBar() {
   if (!usuario) {
     return null;
   }
+
+  const BtnverUsuarios = () => {
+    setVerUsuarios(!verUsuarios);
+  };
 
   return (
     <>
@@ -88,6 +92,11 @@ function NavBar() {
                 <NavDropdown.Item onClick={() => cerrarSesion()}>
                   Cerrar Sesion
                 </NavDropdown.Item>
+                {usuario.idRol == "1" && (
+                  <NavDropdown.Item onClick={() => BtnverUsuarios()}>
+                    Administracion de usuarios
+                  </NavDropdown.Item>
+                )}
               </NavDropdown>
             </Nav>
           </Navbar.Collapse>

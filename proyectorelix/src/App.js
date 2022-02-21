@@ -44,7 +44,7 @@ function App() {
         <Router>
           <Routes>
             <Route path="/" element={<LoginView />} />
-            <Route path="/registrar" element={<RegisterView />} />
+            {/* <Route path="/registrar" element={<RegisterView />} /> */}
             <Route path="/cambiarclave" element={<CambiarContrasena />} />
             <Route
               path="/sesioniniciada/*"

@@ -5,15 +5,16 @@ import {
   LOGIN_EXITOSO,
   LOGIN_ERROR,
   CERRAR_SESION,
+  OBTENER_TODOS_LOS_USUARIOS,
 } from "../../types";
 
 export default (state, action) => {
   switch (action.type) {
     case REGISTRO_EXITOSO:
-      localStorage.setItem("token", "Bearer " + action.payload.Token);
+      // localStorage.setItem("token", "Bearer " + action.payload.Token);
       return {
         ...state,
-        autenticado: true,
+        //autenticado: true,
         mensaje: null,
       };
 
@@ -30,6 +31,13 @@ export default (state, action) => {
       return {
         ...state,
         usuario: action.payload.user,
+        autenticado: true,
+        cargando: false,
+      };
+    case OBTENER_TODOS_LOS_USUARIOS:
+      return {
+        ...state,
+        todosLosUsuarios: action.payload,
         autenticado: true,
         cargando: false,
       };

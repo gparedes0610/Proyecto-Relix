@@ -1,11 +1,27 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import LogoRelix from "../../assets/relixjpg1.svg";
 import register from "../../assets/register.svg";
 import { obtenerRoles } from "../../services/rolesService";
 import { crearUsuarios } from "../../services/usuarioService";
 import { Form, Button } from "react-bootstrap";
-
+import authContext from "../../context/autenticacion/authContext";
+import alertContext from "../../context/alertas/alertaContext";
 function RegisterView() {
+  /////////////////////////////////
+  const alertascontext = useContext(alertContext);
+  const { alerta, mostrarAlerta } = alertascontext;
+  /////////////////////////////////
+  const autentificaciones = useContext(authContext);
+  const { mensaje, registroDeUsuario } = autentificaciones;
+  /////////////////////////////////
+
+  useEffect(() => {
+    if (mensaje) {
+      mostrarAlerta(mensaje.msg, mensaje.categoria);
+    }
+    // eslint-disable-next-line
+  }, [mensaje]);
+
   const [roles, setRoles] = useState([]);
 
   const [registrarUsuario, setregistrarUsuario] = useState({
@@ -15,8 +31,13 @@ function RegisterView() {
     passwordUsuario: "m",
     idRol: "",
   });
-
-  //const [usuarios, setUsuarios] = useState([]);
+  const {
+    nombreUsuario,
+    apellidoUsuario,
+    correoUsuario,
+    idRol,
+    passwordUsuario,
+  } = registrarUsuario;
 
   const actualizarInput = (e) => {
     setregistrarUsuario({
@@ -27,14 +48,41 @@ function RegisterView() {
 
   const manejarSubmit = async (e) => {
     e.preventDefault();
-    console.log("se registro algo");
+    /*  console.log("se registro algo");
     console.log(registrarUsuario);
+ */
+    if (
+      nombreUsuario.trim() === "" ||
+      apellidoUsuario.trim() === "" ||
+      correoUsuario.trim() === "" ||
+      idRol.trim() === ""
+    ) {
+      console.log("no puede haber un valor vacio");
+      mostrarAlerta("no puede haber un valor vacio", "alert alert-danger");
+      return;
+    }
 
-    try {
+    console.log("registraste");
+    console.log({
+      nombreUsuario,
+      apellidoUsuario,
+      correoUsuario,
+      idRol,
+      passwordUsuario,
+    });
+    registroDeUsuario({
+      nombreUsuario,
+      apellidoUsuario,
+      correoUsuario,
+      idRol,
+      passwordUsuario,
+    });
+
+    /*  try {
       await crearUsuarios({ ...registrarUsuario });
     } catch (error) {
       console.log(error);
-    }
+    } */
   };
 
   const getData = async () => {
@@ -55,7 +103,7 @@ function RegisterView() {
 
   return (
     <>
-      <div className="vh-100 d-flex justify-content-center align-items-center">
+      <div className="d-flex justify-content-center align-items-center mt-5">
         <div className="container">
           <div className="row">
             <div
@@ -81,7 +129,11 @@ function RegisterView() {
                     Registrar
                   </h3>
                 </div>
-
+                {alerta ? (
+                  <div className={`${alerta.categoria}`} role="alert">
+                    {alerta.msg}
+                  </div>
+                ) : null}
                 <div>
                   <Form
                     style={{ background: "white" }}

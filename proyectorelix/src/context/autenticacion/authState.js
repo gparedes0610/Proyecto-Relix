@@ -5,6 +5,9 @@ import {
   LOGIN_EXITOSO,
   LOGIN_ERROR,
   CERRAR_SESION,
+  REGISTRO_EXITOSO,
+  REGISTRO_ERROR,
+  OBTENER_TODOS_LOS_USUARIOS,
 } from "../../types";
 import { useReducer } from "react";
 import clienteAxios from "../../config/axios"; //obtengo la bd urlS
@@ -16,6 +19,7 @@ const AuthStateProvider = (props) => {
     usuario: null,
     mensaje: null,
     cargando: true,
+    todosLosUsuarios: [],
   };
 
   const [state, dispatch] = useReducer(authReducer, initialState);
@@ -72,6 +76,30 @@ const AuthStateProvider = (props) => {
       });
     }
   };
+  //////////////////////////////////////////////////REGISTRAR USUARIO
+  const registroDeUsuario = async (datos) => {
+    try {
+      const respuesta = await clienteAxios.post("/api/usuarios", datos);
+      console.log("respuesta de usuarioRegistrado", respuesta);
+      console.log(respuesta.data);
+
+      dispatch({
+        type: REGISTRO_EXITOSO,
+        payload: respuesta.data,
+      });
+    } catch (error) {
+      console.log(error.response.data.messages.error);
+      console.log("hubo un error manito", error.response.data.messages.error);
+      const alerta = {
+        msg: error.response.data.messages.error,
+        categoria: "alert alert-danger",
+      };
+      dispatch({
+        type: REGISTRO_ERROR,
+        payload: alerta,
+      });
+    }
+  };
 
   //cerrar sesion
 
@@ -79,6 +107,19 @@ const AuthStateProvider = (props) => {
     dispatch({
       type: CERRAR_SESION,
     });
+  };
+  //obtener usuarios
+  const obtenerTodosLosUsuarios = async () => {
+    try {
+      const respuesta = await clienteAxios.get("/api/usuarios");
+      console.log("estas en obtener todos los usuarios", respuesta);
+      dispatch({
+        type: OBTENER_TODOS_LOS_USUARIOS,
+        payload: respuesta.data,
+      });
+    } catch (error) {
+      console.log(error.response.data.messages.error);
+    }
   };
 
   return (
@@ -89,9 +130,12 @@ const AuthStateProvider = (props) => {
         usuario: state.usuario,
         mensaje: state.mensaje,
         cargando: state.cargando,
+        todosLosUsuarios: state.todosLosUsuarios,
         iniciarSesion,
         usuarioAutenticado,
         cerrarSesion,
+        registroDeUsuario,
+        obtenerTodosLosUsuarios,
       }}
     >
       {props.children}

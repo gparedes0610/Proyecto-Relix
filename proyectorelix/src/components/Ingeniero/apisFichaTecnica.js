@@ -4,6 +4,7 @@ const URLTIPOSPROYECTOS = `http://relixapi.mskdevmusic.com/tiposproyecto`;
 const URLVENDEDORES = `http://relixapi.mskdevmusic.com/vendedor`;
 const URLDEPARTAMENTOS = `http://relixapi.mskdevmusic.com/departamento`;
 const URLESTADOS = `http://relixapi.mskdevmusic.com/estadosfichaproyecto`;
+
 const obtenerTiposDeProyectos = async () => {
   try {
     const { data } = await axios.get(URLTIPOSPROYECTOS);
@@ -33,7 +34,7 @@ const obtenerDepartamentos = async () => {
 
 const obtenerEstados = async () => {
   try {
-    const { data } = await axios.get(URLDEPARTAMENTOS);
+    const { data } = await axios.get(URLESTADOS);
     return data;
   } catch (error) {
     console.log(error);

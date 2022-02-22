@@ -6,6 +6,7 @@ import { crearUsuarios } from "../../services/usuarioService";
 import { Form, Button } from "react-bootstrap";
 import authContext from "../../context/autenticacion/authContext";
 import alertContext from "../../context/alertas/alertaContext";
+
 function RegisterView() {
   /////////////////////////////////
   const alertascontext = useContext(alertContext);
@@ -77,12 +78,6 @@ function RegisterView() {
       idRol,
       passwordUsuario,
     });
-
-    /*  try {
-      await crearUsuarios({ ...registrarUsuario });
-    } catch (error) {
-      console.log(error);
-    } */
   };
 
   const getData = async () => {
@@ -155,7 +150,6 @@ function RegisterView() {
                         onChange={(e) => actualizarInput(e)}
                       />
                     </Form.Group>
-
                     <Form.Group
                       className="mb-3"
                       controlId="formBasicText"
@@ -171,7 +165,6 @@ function RegisterView() {
                         onChange={(e) => actualizarInput(e)}
                       />
                     </Form.Group>
-
                     <Form.Group
                       className="mb-3"
                       controlId="formBasicEmail"
@@ -187,23 +180,6 @@ function RegisterView() {
                         onChange={(e) => actualizarInput(e)}
                       />
                     </Form.Group>
-
-                    {/*  <Form.Group
-                      className="mb-3"
-                      controlId="formBasicPassword"
-                      style={{ background: "white" }}
-                    >
-                      <Form.Label style={{ background: "white" }}>
-                        Password:
-                      </Form.Label>
-                      <Form.Control
-                        type="password"
-                        placeholder="Ingrese su password"
-                        name="passwordUsuario"
-                        onChange={(e) => actualizarInput(e)}
-                      />
-                    </Form.Group> */}
-
                     <Form.Group
                       controlId="formGridState"
                       style={{ background: "white" }}
@@ -225,24 +201,8 @@ function RegisterView() {
                           </option>
                         ))}
                       </Form.Select>
-                    </Form.Group>
-
-                    {/*  <Form.Group
-                      className="mb-3"
-                      controlId="formBasicText"
-                      style={{ background: "white" }}
-                    >
-                      <Form.Label style={{ background: "white" }}>
-                        Rol:
-                      </Form.Label>
-                      <Form.Control
-                        type="text"
-                        placeholder="Ingrese su Apellido"
-                        name="idRol"
-                        onChange={(e) => actualizarInput(e)}
-                      />
-                    </Form.Group> */}
-
+                    </Form.Group>{" "}
+                    {/* ya esta */}
                     <Button
                       variant="info w-100 mt-4 text-white"
                       type="submit"

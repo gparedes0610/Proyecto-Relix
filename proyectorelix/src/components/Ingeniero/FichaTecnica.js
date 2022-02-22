@@ -2,32 +2,62 @@ import React from "react";
 import LogoRelix from "../../assets/relixjpg1.svg";
 import { Form, Button } from "react-bootstrap";
 import { useState } from "react";
-function FichaTecnica() {
-  const [registrarFichaTecnica, setRegistrarFichaTecnica] = useState({
-    nombreProyecto: "",
-    ubicacion: "",
-    cliente: "",
-    ruc: "",
-    direccionFiscal: "",
-    atencion: "",
-    vendedor: "",
-    telefono: "",
-    referencia: "",
-    validezOferta: "",
-    montoUsd: "",
-    etapaActual: "",
-    area: "",
-    cultivo: "",
-    tipoProyecto: "",
-    duracion: "",
-    modalidad: "",
-    inicioProyectado: "",
-    finProyectado: "",
-    formaDePago: "",
-    proximoHito: "",
-  });
+import { useEffect } from "react";
+//apis
+import {
+  obtenerTiposDeProyectos,
+  obtenerVendedores,
+  obtenerDepartamentos,
+} from "../Ingeniero/apisFichaTecnica";
 
-  //consumiendo api para el select
+function FichaTecnica() {
+  //consumiento apis
+  const [tiposDeProyectos, setTiposDeProyectos] = useState([]);
+  const [vendedores, setVendedores] = useState([]);
+  const [departamentos, setDepartamentos] = useState([]);
+  const [registrarFichaTecnica, setRegistrarFichaTecnica] = useState({
+    fechaProyecto: "",
+    divisionProyecto: "",
+    tipoDeProyecto: "",
+    nombreProyecto: "",
+    clienteProyecto: "",
+    rucProyecto: "",
+    telefonoProyecto: "",
+    direccionFiscal: "",
+    vendedorProyecto: "",
+  });
+  const { vendedorProyecto } = registrarFichaTecnica;
+
+  const actualizarInput = (e) => {
+    setRegistrarFichaTecnica({
+      ...registrarFichaTecnica,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    console.log("ficha tecnica", registrarFichaTecnica);
+  };
+
+  const getData = async () => {
+    try {
+      const tiposDeProyectosObtenidos = await obtenerTiposDeProyectos();
+      setTiposDeProyectos(tiposDeProyectosObtenidos);
+      const todosLosVendedores = await obtenerVendedores();
+      setVendedores(todosLosVendedores);
+      const todosLosDepartamentos = await obtenerDepartamentos();
+      setDepartamentos(todosLosDepartamentos);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  //console.log("vendedores", vendedores);
+  //console.log("departamentos", departamentos);
+
+  useEffect(() => {
+    getData();
+  }, []);
 
   return (
     <div>
@@ -50,7 +80,11 @@ function FichaTecnica() {
               </div>
 
               <div>
-                <Form style={{ background: "white" }} className="pb-3 ">
+                <Form
+                  style={{ background: "white" }}
+                  className="pb-3 "
+                  onSubmit={(e) => onSubmit(e)}
+                >
                   <div
                     className="d-flex justify-content-between my-3"
                     style={{ background: "white" }}
@@ -62,9 +96,14 @@ function FichaTecnica() {
                       <Form.Label style={{ background: "white" }}>
                         Fecha
                       </Form.Label>
-                      <Form.Control type="date" placeholder="Ingrese fecha" />
+                      <Form.Control
+                        type="date"
+                        placeholder="Ingrese fecha"
+                        name="fechaProyecto"
+                        onChange={(e) => actualizarInput(e)}
+                      />
                     </Form.Group>
-
+                    {/* ya esta */}
                     <Form.Group
                       controlId="formBasicText"
                       style={{ background: "white" }}
@@ -72,9 +111,30 @@ function FichaTecnica() {
                       <Form.Label style={{ background: "white" }}>
                         NUM
                       </Form.Label>
-                      <Form.Control type="text" placeholder="Codigo vendedor" />
+                      {vendedorProyecto ? (
+                        <>
+                          <Form.Control
+                            type="text"
+                            placeholder="Codigo vendedor"
+                            value={`PR-CODIGO VENDEDOR-${
+                              vendedores[parseInt(vendedorProyecto) - 1]
+                                .codigoVendedor
+                            }`}
+                            disabled
+                            style={{ width: "275px" }}
+                          />
+                        </>
+                      ) : (
+                        <>
+                          <Form.Control
+                            type="text"
+                            placeholder="Codigo vendedor"
+                            disabled
+                          />
+                        </>
+                      )}
                     </Form.Group>
-
+                    {/* esto tiene que venir al verificar la api */}
                     <Form.Group
                       controlId="formBasicText"
                       style={{ background: "white" }}
@@ -82,42 +142,34 @@ function FichaTecnica() {
                       <Form.Label style={{ background: "white" }}>
                         Division
                       </Form.Label>
-                      <Form.Control type="text" placeholder="Division" />
-                    </Form.Group>
+                      <Form.Control
+                        type="text"
+                        placeholder="Division"
+                        name="divisionProyecto"
+                        onChange={(e) => actualizarInput(e)}
+                      />
+                    </Form.Group>{" "}
+                    {/* ya esta */}
                   </div>
                   <Form.Group className="my-2">
                     <Form.Label style={{ background: "white" }}>
                       Tipo de Proyecto:
                     </Form.Label>
-                    <Form.Select aria-label="Default select example">
-                      <option>Seleccione Tipo de Proyecto</option>
-                      <option value="1">
-                        Sistema de Riego por Goteo (gotero insertado) - 08
-                      </option>
-                      <option value="2">
-                        Sistema de Riego por Goteo (gotero botón) - 08
-                      </option>
-                      <option value="3">
-                        Sistema de Riego por Aspersión - 08
-                      </option>
-                      <option value="4">
-                        Sistema de Riego por Microaspersión -08
-                      </option>
-                      <option value="5">Implementación de Pozos - 09</option>
-                      <option value="5">Perforación de Pozos - 09</option>
-                      <option value="5">
-                        Implementación y Perforación de Pozos - 09
-                      </option>
-                      <option value="5">
-                        Proyecto Integral: Sistema de Riego por Goteo, Planta de
-                        Tratamiento por Osmosis Inversa e Implementación de
-                        Pozos - 1750 / 0850 / 0950{" "}
-                      </option>
-                      <option value="5">Suministro de materiales - 0707</option>
-                      <option value="5">Otros: XXXXX</option>
+                    <Form.Select
+                      aria-label="Default select example"
+                      name="tipoDeProyecto"
+                      onChange={(e) => {
+                        actualizarInput(e);
+                      }}
+                    >
+                      {tiposDeProyectos.map((proyecto, i) => (
+                        <option key={i} value={proyecto.idTipoproyecto}>
+                          {proyecto.tipoProyecto}
+                        </option>
+                      ))}
                     </Form.Select>
-                  </Form.Group>
-
+                  </Form.Group>{" "}
+                  {/* ya esta */}
                   <div
                     className="d-flex justify-content-between my-3"
                     style={{ background: "white" }}
@@ -131,10 +183,12 @@ function FichaTecnica() {
                       </Form.Label>
                       <Form.Control
                         type="text"
+                        name="nombreProyecto"
                         placeholder="Nombre del proyecto"
+                        onChange={(e) => actualizarInput(e)}
                       />
-                    </Form.Group>
-
+                    </Form.Group>{" "}
+                    {/* ya esta */}
                     <Form.Group
                       controlId="formBasicText"
                       style={{ background: "white" }}
@@ -142,9 +196,14 @@ function FichaTecnica() {
                       <Form.Label style={{ background: "white" }}>
                         Cliente
                       </Form.Label>
-                      <Form.Control type="text" placeholder="Cliente" />
+                      <Form.Control
+                        type="text"
+                        placeholder="Cliente"
+                        name="clienteProyecto"
+                        onChange={(e) => actualizarInput(e)}
+                      />
                     </Form.Group>
-
+                    {/* ya esta */}
                     <Form.Group
                       controlId="formBasicText"
                       style={{ background: "white" }}
@@ -152,9 +211,14 @@ function FichaTecnica() {
                       <Form.Label style={{ background: "white" }}>
                         RUC
                       </Form.Label>
-                      <Form.Control type="text" placeholder="Ruc" />
+                      <Form.Control
+                        type="text"
+                        placeholder="Ruc"
+                        name="rucProyecto"
+                        onChange={(e) => actualizarInput(e)}
+                      />
                     </Form.Group>
-
+                    {/* ya esta */}
                     <Form.Group
                       controlId="formBasicText"
                       style={{ background: "white" }}
@@ -162,10 +226,15 @@ function FichaTecnica() {
                       <Form.Label style={{ background: "white" }}>
                         Telefono
                       </Form.Label>
-                      <Form.Control type="number" placeholder="Telefono" />
+                      <Form.Control
+                        type="number"
+                        placeholder="Telefono"
+                        name="telefonoProyecto"
+                        onChange={(e) => actualizarInput(e)}
+                      />
                     </Form.Group>
+                    {/* ya esta */}
                   </div>
-
                   <div
                     className="d-flex justify-content-between my-3"
                     style={{ background: "white" }}
@@ -180,21 +249,30 @@ function FichaTecnica() {
                       <Form.Control
                         type="text"
                         placeholder="Direccion de Fiscal"
+                        name="direccionFiscal"
+                        onChange={(e) => actualizarInput(e)}
                       />
                     </Form.Group>
-
+                    {/* ya esta */}
                     <Form.Group>
                       <Form.Label style={{ background: "white" }}>
                         Vendedor:
                       </Form.Label>
-                      <Form.Select aria-label="Default select example">
-                        <option>Seleccione Vendedor</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
+                      <Form.Select
+                        aria-label="Default select example"
+                        name="vendedorProyecto"
+                        onChange={(e) => {
+                          actualizarInput(e);
+                        }}
+                      >
+                        {vendedores.map((vendedor, i) => (
+                          <option value={vendedor.idVendedor} key={i}>
+                            {vendedor.nombreVendedor}
+                          </option>
+                        ))}
                       </Form.Select>
                     </Form.Group>
-
+                    {/* ya esta */}
                     <Form.Group
                       controlId="formBasicText"
                       style={{ background: "white" }}
@@ -202,7 +280,27 @@ function FichaTecnica() {
                       <Form.Label style={{ background: "white" }}>
                         Codigo:
                       </Form.Label>
-                      <Form.Control type="text" placeholder="Codigo" />
+                      {vendedorProyecto ? (
+                        <>
+                          <Form.Control
+                            type="text"
+                            placeholder="Codigo"
+                            value={
+                              vendedores[parseInt(vendedorProyecto) - 1]
+                                .codigoVendedor
+                            }
+                            disabled
+                          />
+                        </>
+                      ) : (
+                        <>
+                          <Form.Control
+                            type="text"
+                            placeholder="Codigo"
+                            disabled
+                          />
+                        </>
+                      )}
                     </Form.Group>
 
                     <Form.Group>
@@ -210,14 +308,14 @@ function FichaTecnica() {
                         Departamento:
                       </Form.Label>
                       <Form.Select aria-label="Default select example">
-                        <option>Selec Departamento</option>
-                        <option value="1">Lima</option>
-                        <option value="2">Trujillo</option>
-                        <option value="3">Arequipa</option>
+                        {departamentos.map((departamento, i) => (
+                          <option value={departamento.idDepartamento} key={i}>
+                            {departamento.nombreDepartamento}
+                          </option>
+                        ))}
                       </Form.Select>
                     </Form.Group>
                   </div>
-
                   <div
                     className="d-flex justify-content-between my-3"
                     style={{ background: "white" }}
@@ -227,7 +325,6 @@ function FichaTecnica() {
                         Provincia:
                       </Form.Label>
                       <Form.Select aria-label="Default select example">
-                        <option>Seleccione una Provincia</option>
                         <option value="1">Provincia1</option>
                         <option value="2">Provincia2</option>
                         <option value="3">Provincia3</option>
@@ -239,7 +336,6 @@ function FichaTecnica() {
                         Distrito:
                       </Form.Label>
                       <Form.Select aria-label="Default select example">
-                        <option>Seleccione un Distrito</option>
                         <option value="1">Distrito1</option>
                         <option value="2">Distrito2</option>
                         <option value="3">Distrito3</option>
@@ -269,7 +365,6 @@ function FichaTecnica() {
                       <Form.Control type="text" placeholder="Alcance" />
                     </Form.Group>
                   </div>
-
                   <div
                     className="d-flex justify-content-between my-3"
                     style={{ background: "white" }}
@@ -323,7 +418,6 @@ function FichaTecnica() {
                       />
                     </Form.Group>
                   </div>
-
                   <div
                     className="d-flex justify-content-between my-3"
                     style={{ background: "white" }}
@@ -372,7 +466,6 @@ function FichaTecnica() {
                       </Form.Select>
                     </Form.Group>
                   </div>
-
                   <div
                     className="d-flex justify-content-between my-3"
                     style={{ background: "white" }}
@@ -430,9 +523,7 @@ function FichaTecnica() {
                       </Form.Select>
                     </Form.Group> */}
                   </div>
-
                   <h3 className="text-primary my-3">Forma de pago</h3>
-
                   <div
                     className="d-flex justify-content-between my-3"
                     style={{ background: "white" }}
@@ -479,7 +570,6 @@ function FichaTecnica() {
                       </Form.Select>
                     </Form.Group>
                   </div>
-
                   <div
                     className="d-flex justify-content-between my-3"
                     style={{ background: "white" }}
@@ -530,7 +620,6 @@ function FichaTecnica() {
                       />
                     </Form.Group>
                   </div>
-
                   <div
                     className="d-flex justify-content-between my-3"
                     style={{ background: "white" }}
@@ -570,9 +659,7 @@ function FichaTecnica() {
                       </Form.Select>
                     </Form.Group>
                   </div>
-
                   <h3 className="text-primary my-3">Facturacion</h3>
-
                   <div
                     className="d-flex justify-content-between my-3"
                     style={{ background: "white" }}
@@ -609,7 +696,6 @@ function FichaTecnica() {
                       <Form.Control type="text" placeholder="Saldo" />
                     </Form.Group>
                   </div>
-
                   <Form.Group className="my-2">
                     <Form.Label style={{ background: "white" }}>
                       Estado:
@@ -623,9 +709,7 @@ function FichaTecnica() {
                       <option value="5">Perdido</option>
                     </Form.Select>
                   </Form.Group>
-
                   <h3 className="text-primary my-3">Recursos</h3>
-
                   <div
                     className="d-flex justify-content-between my-3"
                     style={{ background: "white" }}
@@ -696,7 +780,6 @@ function FichaTecnica() {
                       <Form.Control type="text" placeholder="Prevencionista" />
                     </Form.Group>
                   </div>
-
                   <div
                     className="d-flex justify-content-between my-3"
                     style={{ background: "white" }}
@@ -767,7 +850,6 @@ function FichaTecnica() {
                       />
                     </Form.Group>
                   </div>
-
                   <Form.Group
                     controlId="formBasicText"
                     style={{ background: "white" }}
@@ -780,7 +862,6 @@ function FichaTecnica() {
                       placeholder="Oportunidades de Optimizacion"
                     />
                   </Form.Group>
-
                   <Form.Group
                     controlId="formBasicText"
                     style={{ background: "white" }}
@@ -793,7 +874,6 @@ function FichaTecnica() {
                       placeholder="Riesgos del contrato"
                     />
                   </Form.Group>
-
                   <div
                     className="d-flex justify-content-between mt-3"
                     style={{ background: "white" }}

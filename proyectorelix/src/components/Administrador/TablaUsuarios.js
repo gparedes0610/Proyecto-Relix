@@ -4,14 +4,30 @@ import { Table } from "react-bootstrap";
 import authContext from "../../context/autenticacion/authContext";
 function TablaUsuarios({ setVerUsuarios, verUsuarios }) {
   const autentificaciones = useContext(authContext);
-  const { todosLosUsuarios, obtenerTodosLosUsuarios } = autentificaciones;
+  const { todosLosUsuarios, obtenerTodosLosUsuarios, actualizarUsuario } =
+    autentificaciones;
   useEffect(() => {
     obtenerTodosLosUsuarios();
   }, []);
-  console.log("hola usuarios", todosLosUsuarios);
+  //console.log("hola usuarios", todosLosUsuarios);
   const verRegistrar = () => {
     setVerUsuarios(!verUsuarios);
   };
+
+  const cambiarEstado = (usuario) => {
+    console.log("diste click en cambiar estado");
+    console.log(usuario);
+    if (usuario.estadoUsuario == "ACTIVO") {
+      usuario.idEstadousuario = 0;
+      //console.log("se tendria q cambiar a usuario inactivo", usuario);
+    } else {
+      usuario.idEstadousuario = 1;
+      //console.log("entro al else", usuario);
+    }
+    console.log("fuera de la condicional", usuario);
+    actualizarUsuario(usuario.idEstadousuario);
+  };
+
   return (
     <div className="container">
       <Table>
@@ -35,7 +51,10 @@ function TablaUsuarios({ setVerUsuarios, verUsuarios }) {
               <td>{usuario.estadoUsuario}</td>
               <td>
                 {usuario.estadoUsuario == "ACTIVO" ? (
-                  <button className="btn btn-danger text-uppercase">
+                  <button
+                    className="btn btn-danger text-uppercase"
+                    onClick={() => cambiarEstado(usuario)}
+                  >
                     Inhabilitar
                   </button>
                 ) : (

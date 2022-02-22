@@ -8,6 +8,7 @@ import {
   REGISTRO_EXITOSO,
   REGISTRO_ERROR,
   OBTENER_TODOS_LOS_USUARIOS,
+  ACTUALIZAR_USUARIO,
 } from "../../types";
 import { useReducer } from "react";
 import clienteAxios from "../../config/axios"; //obtengo la bd urlS
@@ -122,6 +123,24 @@ const AuthStateProvider = (props) => {
     }
   };
 
+  //cambiar estado de usuario
+  const actualizarUsuario = async (usuario) => {
+    try {
+      const resultado = await clienteAxios.put(
+        `/api/usuarios/estado/${usuario}`,
+        usuario
+      );
+      console.log("resultado de actualizarUsuario ", resultado);
+      console.log("resultado de actualizarUsuario ", resultado.data);
+      /* dispatch({
+        type: ACTUALIZAR_USUARIO,
+        payload: resultado.data.usuario,
+      }); */
+    } catch (error) {
+      console.log(error.response.data.messages.error);
+    }
+  };
+
   return (
     <authContext.Provider
       value={{
@@ -136,6 +155,7 @@ const AuthStateProvider = (props) => {
         cerrarSesion,
         registroDeUsuario,
         obtenerTodosLosUsuarios,
+        actualizarUsuario,
       }}
     >
       {props.children}

@@ -65,7 +65,7 @@ function SesionIniciada() {
             )
           ) : (
             <>
-              <div className="col-12 col-md-12 col-lg-9">
+              <div className="col-12 col-md-12 col-lg-12 col-xl-9">
                 {usuario.idRol == "2" && <GerenteView />}
                 {usuario.idRol == "3" ? (
                   ActivarFicha ? (
@@ -79,7 +79,7 @@ function SesionIniciada() {
               {/* FIN TABLA */}
 
               {/* FICHAS */}
-              <div className="col-12 col-md-12 col-lg-3 text-center mt-2">
+              <div className="col-12 col-md-12 col-lg-12 col-xl-3 text-center mt-2">
                 <div className="row">
                   <div className="col-12">
                     {usuario.idRol == "2" ? null : (

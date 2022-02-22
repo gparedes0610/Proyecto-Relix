@@ -6,6 +6,7 @@ import {
   LOGIN_ERROR,
   CERRAR_SESION,
   OBTENER_TODOS_LOS_USUARIOS,
+  ACTUALIZAR_USUARIO,
 } from "../../types";
 
 export default (state, action) => {
@@ -38,6 +39,17 @@ export default (state, action) => {
       return {
         ...state,
         todosLosUsuarios: action.payload,
+        autenticado: true,
+        cargando: false,
+      };
+    case ACTUALIZAR_USUARIO:
+      return {
+        ...state,
+        todosLosUsuarios: state.todosLosUsuarios.map((usuario) =>
+          usuario.idUsuario === action.payload.idUsuario
+            ? action.payload
+            : usuario
+        ),
         autenticado: true,
         cargando: false,
       };

@@ -126,16 +126,18 @@ const AuthStateProvider = (props) => {
   //cambiar estado de usuario
   const actualizarUsuario = async (usuario) => {
     try {
+      console.log("entra a actualizar usuario");
+      console.log("este es el id usuaro", usuario.idUsuario);
       const resultado = await clienteAxios.put(
-        `/api/usuarios/estado/${usuario}`,
+        `/api/usuarios/estado/${usuario.idUsuario}`,
         usuario
       );
       console.log("resultado de actualizarUsuario ", resultado);
       console.log("resultado de actualizarUsuario ", resultado.data);
-      /* dispatch({
+      dispatch({
         type: ACTUALIZAR_USUARIO,
-        payload: resultado.data.usuario,
-      }); */
+        payload: resultado.data,
+      });
     } catch (error) {
       console.log(error.response.data.messages.error);
     }

@@ -8,6 +8,7 @@ import {
   obtenerTiposDeProyectos,
   obtenerVendedores,
   obtenerDepartamentos,
+  obtenerEstados,
 } from "../Ingeniero/apisFichaTecnica";
 
 function FichaTecnica() {
@@ -15,6 +16,9 @@ function FichaTecnica() {
   const [tiposDeProyectos, setTiposDeProyectos] = useState([]);
   const [vendedores, setVendedores] = useState([]);
   const [departamentos, setDepartamentos] = useState([]);
+  ////////////////
+  const [estados, setEstados] = useState([]);
+  ///////////////////////////////////////
   const [registrarFichaTecnica, setRegistrarFichaTecnica] = useState({
     fechaProyecto: "",
     divisionProyecto: "",
@@ -25,6 +29,53 @@ function FichaTecnica() {
     telefonoProyecto: "",
     direccionFiscal: "",
     vendedorProyecto: "",
+    departamento: "",
+    direccionEntrega: "",
+    alcanceProyecto: "",
+    areaProyecto: "",
+    cultivoProyecto: "",
+    modalidadContrato: "",
+    modalidadEjecucion: "",
+    detracciones: "",
+    retenciones: "",
+    cartaFianzaAnticipo: "",
+    fielCumplimiento: "",
+    plazoEjecucion: "",
+    inicioProyectado: "",
+    finProyectado: "",
+    /*  forma de pago */
+    anticipo: "",
+    porcentaje: "",
+    saldo: "",
+    financiamiento: "",
+    tasa: "",
+    periodoGracia: "",
+    plazo: "",
+    periodoCuotas: "",
+    inicioFinanciamiento: "",
+    facturaNegociable: "",
+    letrasAnticipadas: "",
+    /*  Facturacion */
+    anticipoOC: "",
+    aFirmaDeContrato: "",
+    saldoFacturacion: "",
+    /*  falta estado */
+
+    /*  Recursos */
+    instalacion: "",
+    guardiania: "",
+    contenedorOficina: "",
+    residenteObra: "",
+    vehiculo: "",
+    prevenciones: "",
+
+    costosProyecto: "",
+    margen: "",
+    valorVentaSinIgv: "",
+    prevencionista: "",
+    valorVentaIgv: "",
+    oportunidadesOptimizacion: "",
+    riegosContrato: "",
   });
   const { vendedorProyecto } = registrarFichaTecnica;
 
@@ -44,17 +95,22 @@ function FichaTecnica() {
     try {
       const tiposDeProyectosObtenidos = await obtenerTiposDeProyectos();
       setTiposDeProyectos(tiposDeProyectosObtenidos);
+
       const todosLosVendedores = await obtenerVendedores();
       setVendedores(todosLosVendedores);
+
       const todosLosDepartamentos = await obtenerDepartamentos();
       setDepartamentos(todosLosDepartamentos);
+
+      const TodosLosEstados = await obtenerEstados();
+      setEstados(TodosLosEstados);
     } catch (error) {
       console.log(error);
     }
   };
   //console.log("vendedores", vendedores);
   //console.log("departamentos", departamentos);
-
+  //console.log("estados", estados);
   useEffect(() => {
     getData();
   }, []);
@@ -302,12 +358,19 @@ function FichaTecnica() {
                         </>
                       )}
                     </Form.Group>
+                    {/* ya esta */}
 
                     <Form.Group>
                       <Form.Label style={{ background: "white" }}>
                         Departamento:
                       </Form.Label>
-                      <Form.Select aria-label="Default select example">
+                      <Form.Select
+                        aria-label="Default select example"
+                        name="departamento"
+                        onChange={(e) => {
+                          actualizarInput(e);
+                        }}
+                      >
                         {departamentos.map((departamento, i) => (
                           <option value={departamento.idDepartamento} key={i}>
                             {departamento.nombreDepartamento}
@@ -315,6 +378,7 @@ function FichaTecnica() {
                         ))}
                       </Form.Select>
                     </Form.Group>
+                    {/* ya esta */}
                   </div>
                   <div
                     className="d-flex justify-content-between my-3"
@@ -350,6 +414,10 @@ function FichaTecnica() {
                         Direccion de Entrega:
                       </Form.Label>
                       <Form.Control
+                        name="direccionEntrega"
+                        onChange={(e) => {
+                          actualizarInput(e);
+                        }}
                         type="text"
                         placeholder="Direccion de entrega"
                       />
@@ -362,7 +430,14 @@ function FichaTecnica() {
                       <Form.Label style={{ background: "white" }}>
                         Alcance
                       </Form.Label>
-                      <Form.Control type="text" placeholder="Alcance" />
+                      <Form.Control
+                        type="text"
+                        placeholder="Alcance"
+                        name="alcanceProyecto"
+                        onChange={(e) => {
+                          actualizarInput(e);
+                        }}
+                      />
                     </Form.Group>
                   </div>
                   <div
@@ -379,6 +454,10 @@ function FichaTecnica() {
                       <Form.Control
                         type="number"
                         placeholder="Ingrese cantidad de hectareas"
+                        name="areaProyecto"
+                        onChange={(e) => {
+                          actualizarInput(e);
+                        }}
                       />
                     </Form.Group>
 
@@ -389,7 +468,14 @@ function FichaTecnica() {
                       <Form.Label style={{ background: "white" }}>
                         Cultivo:
                       </Form.Label>
-                      <Form.Control type="text" placeholder="Ingrese cultivo" />
+                      <Form.Control
+                        type="text"
+                        placeholder="Ingrese cultivo"
+                        name="cultivoProyecto"
+                        onChange={(e) => {
+                          actualizarInput(e);
+                        }}
+                      />
                     </Form.Group>
 
                     <Form.Group
@@ -402,6 +488,10 @@ function FichaTecnica() {
                       <Form.Control
                         type="text"
                         placeholder="Modalidad del contrato"
+                        name="modalidadContrato"
+                        onChange={(e) => {
+                          actualizarInput(e);
+                        }}
                       />
                     </Form.Group>
 
@@ -415,6 +505,10 @@ function FichaTecnica() {
                       <Form.Control
                         type="text"
                         placeholder="Modalidad de ejecucion"
+                        name="modalidadEjecucion"
+                        onChange={(e) => {
+                          actualizarInput(e);
+                        }}
                       />
                     </Form.Group>
                   </div>
@@ -426,7 +520,13 @@ function FichaTecnica() {
                       <Form.Label style={{ background: "white" }}>
                         Detracciones:
                       </Form.Label>
-                      <Form.Select aria-label="Default select example">
+                      <Form.Select
+                        aria-label="Default select example"
+                        name="detracciones"
+                        onChange={(e) => {
+                          actualizarInput(e);
+                        }}
+                      >
                         <option>Seleccione una Opcion</option>
                         <option value="1">Si</option>
                         <option value="2">No</option>
@@ -437,7 +537,13 @@ function FichaTecnica() {
                       <Form.Label style={{ background: "white" }}>
                         Retenciones:
                       </Form.Label>
-                      <Form.Select aria-label="Default select example">
+                      <Form.Select
+                        aria-label="Default select example"
+                        name="retenciones"
+                        onChange={(e) => {
+                          actualizarInput(e);
+                        }}
+                      >
                         <option>Seleccione una Opcion</option>
                         <option value="1">Si</option>
                         <option value="2">No</option>
@@ -448,7 +554,13 @@ function FichaTecnica() {
                       <Form.Label style={{ background: "white" }}>
                         Carta Fianza por Anticipo:
                       </Form.Label>
-                      <Form.Select aria-label="Default select example">
+                      <Form.Select
+                        aria-label="Default select example"
+                        name="cartaFianzaAnticipo"
+                        onChange={(e) => {
+                          actualizarInput(e);
+                        }}
+                      >
                         <option>Seleccione una Opcion</option>
                         <option value="1">Si</option>
                         <option value="2">No</option>
@@ -459,7 +571,13 @@ function FichaTecnica() {
                       <Form.Label style={{ background: "white" }}>
                         Fiel Cumplimiento:
                       </Form.Label>
-                      <Form.Select aria-label="Default select example">
+                      <Form.Select
+                        aria-label="Default select example"
+                        name="fielCumplimiento"
+                        onChange={(e) => {
+                          actualizarInput(e);
+                        }}
+                      >
                         <option>Seleccione una Opcion</option>
                         <option value="1">Si</option>
                         <option value="2">No</option>
@@ -480,6 +598,10 @@ function FichaTecnica() {
                       <Form.Control
                         type="text"
                         placeholder="Plazo de ejecucion"
+                        name="plazoEjecucion"
+                        onChange={(e) => {
+                          actualizarInput(e);
+                        }}
                       />
                     </Form.Group>
 
@@ -490,7 +612,14 @@ function FichaTecnica() {
                       <Form.Label style={{ background: "white" }}>
                         Inicio Proyectado:
                       </Form.Label>
-                      <Form.Control type="date" placeholder="Ingrese inicio" />
+                      <Form.Control
+                        type="date"
+                        placeholder="Ingrese inicio"
+                        name="inicioProyectado"
+                        onChange={(e) => {
+                          actualizarInput(e);
+                        }}
+                      />
                     </Form.Group>
 
                     <Form.Group
@@ -500,28 +629,15 @@ function FichaTecnica() {
                       <Form.Label style={{ background: "white" }}>
                         Termino Proyectado:
                       </Form.Label>
-                      <Form.Control type="date" placeholder="Ingrese fin" />
+                      <Form.Control
+                        type="date"
+                        placeholder="Ingrese fin"
+                        name="finProyectado"
+                        onChange={(e) => {
+                          actualizarInput(e);
+                        }}
+                      />
                     </Form.Group>
-
-                    {/* <Form.Group>
-                      <Form.Label style={{ background: "white" }}>
-                        Forma de Pago:
-                      </Form.Label>
-                      <Form.Select aria-label="Default select example">
-                        <option>Seleccione Forma de Pago</option>
-                        <option value="1">Contado</option>
-                        <option value="2">
-                          Anticipo con la OC y saldo contra valorizaciones
-                        </option>
-                        <option value="3">100% Avance valorizado</option>
-                        <option value="4">
-                          Avance contra entrega de materiales
-                        </option>
-                        <option value="5">
-                          Instalación contra entrega de obra
-                        </option>
-                      </Form.Select>
-                    </Form.Group> */}
                   </div>
                   <h3 className="text-primary my-3">Forma de pago</h3>
                   <div
@@ -532,7 +648,13 @@ function FichaTecnica() {
                       <Form.Label style={{ background: "white" }}>
                         Anticipo:
                       </Form.Label>
-                      <Form.Select aria-label="Default select example">
+                      <Form.Select
+                        aria-label="Default select example"
+                        name="anticipo"
+                        onChange={(e) => {
+                          actualizarInput(e);
+                        }}
+                      >
                         <option>Seleccione opcion</option>
                         <option value="1">Si</option>
                         <option value="2">No</option>
@@ -546,7 +668,14 @@ function FichaTecnica() {
                       <Form.Label style={{ background: "white" }}>
                         %:
                       </Form.Label>
-                      <Form.Control type="text" placeholder="%" />
+                      <Form.Control
+                        type="text"
+                        placeholder="%"
+                        name="porcentaje"
+                        onChange={(e) => {
+                          actualizarInput(e);
+                        }}
+                      />
                     </Form.Group>
 
                     <Form.Group
@@ -556,14 +685,27 @@ function FichaTecnica() {
                       <Form.Label style={{ background: "white" }}>
                         Saldo:
                       </Form.Label>
-                      <Form.Control type="text" placeholder="Saldo" />
+                      <Form.Control
+                        type="text"
+                        placeholder="Saldo"
+                        name="saldo"
+                        onChange={(e) => {
+                          actualizarInput(e);
+                        }}
+                      />
                     </Form.Group>
 
                     <Form.Group>
                       <Form.Label style={{ background: "white" }}>
                         Financimiento:
                       </Form.Label>
-                      <Form.Select aria-label="Default select example">
+                      <Form.Select
+                        aria-label="Default select example"
+                        name="financiamiento"
+                        onChange={(e) => {
+                          actualizarInput(e);
+                        }}
+                      >
                         <option>Seleccione opcion</option>
                         <option value="1">Si</option>
                         <option value="2">No</option>
@@ -581,7 +723,14 @@ function FichaTecnica() {
                       <Form.Label style={{ background: "white" }}>
                         Tasa:
                       </Form.Label>
-                      <Form.Control type="text" placeholder="Tasa" />
+                      <Form.Control
+                        type="text"
+                        placeholder="Tasa"
+                        name="tasa"
+                        onChange={(e) => {
+                          actualizarInput(e);
+                        }}
+                      />
                     </Form.Group>
 
                     <Form.Group
@@ -594,6 +743,10 @@ function FichaTecnica() {
                       <Form.Control
                         type="text"
                         placeholder="Periodo de Gracia"
+                        name="periodoGracia"
+                        onChange={(e) => {
+                          actualizarInput(e);
+                        }}
                       />
                     </Form.Group>
 
@@ -604,7 +757,14 @@ function FichaTecnica() {
                       <Form.Label style={{ background: "white" }}>
                         Plazo:
                       </Form.Label>
-                      <Form.Control type="text" placeholder="Plazo" />
+                      <Form.Control
+                        type="text"
+                        placeholder="Plazo"
+                        name="plazo"
+                        onChange={(e) => {
+                          actualizarInput(e);
+                        }}
+                      />
                     </Form.Group>
 
                     <Form.Group
@@ -617,6 +777,10 @@ function FichaTecnica() {
                       <Form.Control
                         type="text"
                         placeholder="Periodo de cuotas"
+                        name="periodoCuotas"
+                        onChange={(e) => {
+                          actualizarInput(e);
+                        }}
                       />
                     </Form.Group>
                   </div>
@@ -634,6 +798,10 @@ function FichaTecnica() {
                       <Form.Control
                         type="text"
                         placeholder="Inicio del financiamiento"
+                        name="inicioFinanciamiento"
+                        onChange={(e) => {
+                          actualizarInput(e);
+                        }}
                       />
                     </Form.Group>
 
@@ -641,10 +809,16 @@ function FichaTecnica() {
                       <Form.Label style={{ background: "white" }}>
                         Factura negociable:
                       </Form.Label>
-                      <Form.Select aria-label="Default select example">
+                      <Form.Select
+                        aria-label="Default select example"
+                        name="facturaNegociable"
+                        onChange={(e) => {
+                          actualizarInput(e);
+                        }}
+                      >
                         <option>Seleccione opcion</option>
-                        <option value="1">Si</option>
-                        <option value="2">No</option>
+                        <option value="si">Si</option>
+                        <option value="no">No</option>
                       </Form.Select>
                     </Form.Group>
 
@@ -652,10 +826,16 @@ function FichaTecnica() {
                       <Form.Label style={{ background: "white" }}>
                         Letras anticipadas:
                       </Form.Label>
-                      <Form.Select aria-label="Default select example">
+                      <Form.Select
+                        aria-label="Default select example"
+                        name="letrasAnticipadas"
+                        onChange={(e) => {
+                          actualizarInput(e);
+                        }}
+                      >
                         <option>Seleccione opcion</option>
-                        <option value="1">Si</option>
-                        <option value="2">No</option>
+                        <option value="si">Si</option>
+                        <option value="no">No</option>
                       </Form.Select>
                     </Form.Group>
                   </div>
@@ -668,10 +848,16 @@ function FichaTecnica() {
                       <Form.Label style={{ background: "white" }}>
                         Anticipo con la OC:
                       </Form.Label>
-                      <Form.Select aria-label="Default select example">
+                      <Form.Select
+                        aria-label="Default select example"
+                        name="anticipoOC"
+                        onChange={(e) => {
+                          actualizarInput(e);
+                        }}
+                      >
                         <option>Seleccione opcion</option>
-                        <option value="1">Si</option>
-                        <option value="2">No</option>
+                        <option value="si">Si</option>
+                        <option value="no">No</option>
                       </Form.Select>
                     </Form.Group>
 
@@ -679,10 +865,16 @@ function FichaTecnica() {
                       <Form.Label style={{ background: "white" }}>
                         A firma de contrato:
                       </Form.Label>
-                      <Form.Select aria-label="Default select example">
+                      <Form.Select
+                        aria-label="Default select example"
+                        name="aFirmaDeContrato"
+                        onChange={(e) => {
+                          actualizarInput(e);
+                        }}
+                      >
                         <option>Seleccione opcion</option>
-                        <option value="1">Si</option>
-                        <option value="2">No</option>
+                        <option value="si">Si</option>
+                        <option value="no">No</option>
                       </Form.Select>
                     </Form.Group>
 
@@ -693,20 +885,34 @@ function FichaTecnica() {
                       <Form.Label style={{ background: "white" }}>
                         Saldo:
                       </Form.Label>
-                      <Form.Control type="text" placeholder="Saldo" />
+                      <Form.Control
+                        type="text"
+                        placeholder="Saldo"
+                        name="saldoFacturacion"
+                        onChange={(e) => {
+                          actualizarInput(e);
+                        }}
+                      />
                     </Form.Group>
                   </div>
                   <Form.Group className="my-2">
                     <Form.Label style={{ background: "white" }}>
                       Estado:
                     </Form.Label>
-                    <Form.Select aria-label="Default select example">
+                    <Form.Select
+                      aria-label="Default select example"
+                      name="estado"
+                      onChange={(e) => {
+                        actualizarInput(e);
+                      }}
+                    >
                       <option>Seleccione Tipo de Estado</option>
+                      {/* {estados.map((estado,i) => (<option value="1" key={i}>Preparacion</option> ))}
                       <option value="1">Preparacion</option>
                       <option value="2">Diseño</option>
                       <option value="3">Negociacion</option>
                       <option value="4">Cerrado</option>
-                      <option value="5">Perdido</option>
+                      <option value="5">Perdido</option> */}
                     </Form.Select>
                   </Form.Group>
                   <h3 className="text-primary my-3">Recursos</h3>
@@ -721,7 +927,14 @@ function FichaTecnica() {
                       <Form.Label style={{ background: "white" }}>
                         Instalacion:
                       </Form.Label>
-                      <Form.Control type="text" placeholder="Instalacion" />
+                      <Form.Control
+                        type="text"
+                        placeholder="Instalacion"
+                        name="instalacion"
+                        onChange={(e) => {
+                          actualizarInput(e);
+                        }}
+                      />
                     </Form.Group>
 
                     <Form.Group
@@ -731,7 +944,14 @@ function FichaTecnica() {
                       <Form.Label style={{ background: "white" }}>
                         Guardiania:
                       </Form.Label>
-                      <Form.Control type="text" placeholder="Guardiania" />
+                      <Form.Control
+                        type="text"
+                        placeholder="Guardiania"
+                        name="guardiania"
+                        onChange={(e) => {
+                          actualizarInput(e);
+                        }}
+                      />
                     </Form.Group>
 
                     <Form.Group
@@ -744,6 +964,10 @@ function FichaTecnica() {
                       <Form.Control
                         type="text"
                         placeholder="Contenedor Oficina"
+                        name="contenedorOficina"
+                        onChange={(e) => {
+                          actualizarInput(e);
+                        }}
                       />
                     </Form.Group>
 
@@ -757,6 +981,10 @@ function FichaTecnica() {
                       <Form.Control
                         type="text"
                         placeholder="Residente de obra"
+                        name="residenteObra"
+                        onChange={(e) => {
+                          actualizarInput(e);
+                        }}
                       />
                     </Form.Group>
 
@@ -767,7 +995,14 @@ function FichaTecnica() {
                       <Form.Label style={{ background: "white" }}>
                         Vehiculo:
                       </Form.Label>
-                      <Form.Control type="text" placeholder="Vehiculo" />
+                      <Form.Control
+                        type="text"
+                        placeholder="Vehiculo"
+                        name="vehiculo"
+                        onChange={(e) => {
+                          actualizarInput(e);
+                        }}
+                      />
                     </Form.Group>
 
                     <Form.Group
@@ -777,7 +1012,14 @@ function FichaTecnica() {
                       <Form.Label style={{ background: "white" }}>
                         Prevencionista:
                       </Form.Label>
-                      <Form.Control type="text" placeholder="Prevencionista" />
+                      <Form.Control
+                        type="text"
+                        placeholder="Prevencionista"
+                        name="prevenciones"
+                        onChange={(e) => {
+                          actualizarInput(e);
+                        }}
+                      />
                     </Form.Group>
                   </div>
                   <div
@@ -791,7 +1033,14 @@ function FichaTecnica() {
                       <Form.Label style={{ background: "white" }}>
                         Costos del Proyecto USD:
                       </Form.Label>
-                      <Form.Control type="text" placeholder="USD" />
+                      <Form.Control
+                        type="number"
+                        placeholder="USD"
+                        name="costosProyecto"
+                        onChange={(e) => {
+                          actualizarInput(e);
+                        }}
+                      />
                     </Form.Group>
 
                     <Form.Group
@@ -801,7 +1050,14 @@ function FichaTecnica() {
                       <Form.Label style={{ background: "white" }}>
                         Margen %:
                       </Form.Label>
-                      <Form.Control type="text" placeholder="Margen %" />
+                      <Form.Control
+                        type="number"
+                        placeholder="Margen %"
+                        name="margen"
+                        onChange={(e) => {
+                          actualizarInput(e);
+                        }}
+                      />
                     </Form.Group>
 
                     <Form.Group
@@ -811,7 +1067,14 @@ function FichaTecnica() {
                       <Form.Label style={{ background: "white" }}>
                         Utilidad USD:
                       </Form.Label>
-                      <Form.Control type="text" placeholder="Utilidad USD" />
+                      <Form.Control
+                        type="text"
+                        placeholder="Utilidad USD"
+                        name="utilidad"
+                        onChange={(e) => {
+                          actualizarInput(e);
+                        }}
+                      />
                     </Form.Group>
 
                     <Form.Group
@@ -824,6 +1087,10 @@ function FichaTecnica() {
                       <Form.Control
                         type="text"
                         placeholder="Valor venta sin IGV USD"
+                        name="valorVentaSinIgv"
+                        onChange={(e) => {
+                          actualizarInput(e);
+                        }}
                       />
                     </Form.Group>
 
@@ -834,7 +1101,14 @@ function FichaTecnica() {
                       <Form.Label style={{ background: "white" }}>
                         Prevencionista:
                       </Form.Label>
-                      <Form.Control type="text" placeholder="Prevencionista" />
+                      <Form.Control
+                        type="text"
+                        placeholder="Prevencionista"
+                        name="prevencionista"
+                        onChange={(e) => {
+                          actualizarInput(e);
+                        }}
+                      />
                     </Form.Group>
 
                     <Form.Group
@@ -847,6 +1121,10 @@ function FichaTecnica() {
                       <Form.Control
                         type="text"
                         placeholder="Valor Venta con IGV"
+                        name="valorVentaIgv"
+                        onChange={(e) => {
+                          actualizarInput(e);
+                        }}
                       />
                     </Form.Group>
                   </div>
@@ -860,6 +1138,10 @@ function FichaTecnica() {
                     <Form.Control
                       type="text"
                       placeholder="Oportunidades de Optimizacion"
+                      name="oportunidadesOptimizacion"
+                      onChange={(e) => {
+                        actualizarInput(e);
+                      }}
                     />
                   </Form.Group>
                   <Form.Group
@@ -872,6 +1154,10 @@ function FichaTecnica() {
                     <Form.Control
                       type="text"
                       placeholder="Riesgos del contrato"
+                      name="riegosContrato"
+                      onChange={(e) => {
+                        actualizarInput(e);
+                      }}
                     />
                   </Form.Group>
                   <div

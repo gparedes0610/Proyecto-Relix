@@ -3,6 +3,7 @@ import axios, { Axios } from "axios";
 const URLTIPOSPROYECTOS = `http://relixapi.mskdevmusic.com/tiposproyecto`;
 const URLVENDEDORES = `http://relixapi.mskdevmusic.com/vendedor`;
 const URLDEPARTAMENTOS = `http://relixapi.mskdevmusic.com/departamento`;
+const URLESTADOS = `http://relixapi.mskdevmusic.com/estadosfichaproyecto`;
 const obtenerTiposDeProyectos = async () => {
   try {
     const { data } = await axios.get(URLTIPOSPROYECTOS);
@@ -30,4 +31,18 @@ const obtenerDepartamentos = async () => {
   }
 };
 
-export { obtenerTiposDeProyectos, obtenerVendedores, obtenerDepartamentos };
+const obtenerEstados = async () => {
+  try {
+    const { data } = await axios.get(URLDEPARTAMENTOS);
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export {
+  obtenerTiposDeProyectos,
+  obtenerVendedores,
+  obtenerDepartamentos,
+  obtenerEstados,
+};

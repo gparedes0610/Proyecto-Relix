@@ -18,14 +18,16 @@ function TablaUsuarios({ setVerUsuarios, verUsuarios }) {
     console.log("diste click en cambiar estado");
     console.log(usuario);
     if (usuario.estadoUsuario == "ACTIVO") {
+      usuario.estadoUsuario = "INACTIVO";
       usuario.idEstadousuario = 0;
       //console.log("se tendria q cambiar a usuario inactivo", usuario);
     } else {
       usuario.idEstadousuario = 1;
+      usuario.estadoUsuario = "ACTIVO";
       //console.log("entro al else", usuario);
     }
     console.log("fuera de la condicional", usuario);
-    actualizarUsuario(usuario.idEstadousuario);
+    actualizarUsuario(usuario);
   };
 
   return (
@@ -58,7 +60,10 @@ function TablaUsuarios({ setVerUsuarios, verUsuarios }) {
                     Inhabilitar
                   </button>
                 ) : (
-                  <button className="btn btn-success text-uppercase">
+                  <button
+                    className="btn btn-success text-uppercase"
+                    onClick={() => cambiarEstado(usuario)}
+                  >
                     Habilitar
                   </button>
                 )}

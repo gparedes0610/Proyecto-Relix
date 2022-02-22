@@ -31,6 +31,7 @@ function RegisterView() {
     correoUsuario: "",
     passwordUsuario: "m",
     idRol: "",
+    idEstadousuario: "1",
   });
   const {
     nombreUsuario,
@@ -38,6 +39,7 @@ function RegisterView() {
     correoUsuario,
     idRol,
     passwordUsuario,
+    idEstadousuario,
   } = registrarUsuario;
 
   const actualizarInput = (e) => {
@@ -77,6 +79,7 @@ function RegisterView() {
       correoUsuario,
       idRol,
       passwordUsuario,
+      idEstadousuario,
     });
   };
 

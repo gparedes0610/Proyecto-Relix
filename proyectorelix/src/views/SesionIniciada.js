@@ -22,7 +22,17 @@ import TablaUsuarios from "../components/Administrador/TablaUsuarios";
 //Gerente
 import GerenteView from "./GerenteView";
 
+import fichaTecnicaContext from "../context/fichaTecnica/fichaTecnicaContext";
+
 function SesionIniciada() {
+  ///////////////////////////////
+  const fichatecnicacontext = useContext(fichaTecnicaContext);
+  const {
+    registroDeFichaTecnica,
+    obtenerTodasLasFichasTecnicas,
+    todasLasFichasTecnica,
+  } = fichatecnicacontext;
+  //////////////////////////////
   /////////////////////////////////
   const [ActivarFicha, setActivarFicha] = useState(false);
   const [verUsuarios, setVerUsuarios] = useState(false);
@@ -35,6 +45,7 @@ function SesionIniciada() {
   } = autentificaciones;
 
   useEffect(() => {
+    obtenerTodasLasFichasTecnicas();
     usuarioAutenticado();
     obtenerTodosLosUsuarios();
   }, []);

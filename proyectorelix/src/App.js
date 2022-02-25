@@ -16,8 +16,11 @@ import Cu08 from "./views/Cu08";
 import Cus016 from "./views/Cus016";
 import Cus017 from "./views/Cus017";
 
+//contex
 import AuthStateProvider from "./context/autenticacion/authState";
 import AlertaStateProvider from "./context/alertas/alertaState";
+import FichaTecnicaStateProvider from "./context/fichaTecnica/fichaTecnicaState";
+//contex
 import FichaTecnica from "./components/Ingeniero/FichaTecnica";
 import SesionIniciada from "./views/SesionIniciada";
 import ReporteDePartidas from "./views/ReporteDePartidas";
@@ -41,54 +44,58 @@ function App() {
   return (
     <AlertaStateProvider>
       <AuthStateProvider>
-        <Router>
-          <Routes>
-            <Route path="/" element={<LoginView />} />
-            {/* <Route path="/registrar" element={<RegisterView />} /> */}
-            <Route path="/cambiarclave" element={<CambiarContrasena />} />
-            <Route
-              path="/sesioniniciada/*"
-              element={
-                <PrivateRoute>
-                  <SesionIniciada />
-                </PrivateRoute>
-              }
-            />
-            <Route path="/gerente" element={<GerenteView />} />
-            <Route path="/backoffice" element={<BackOfficeView />} />
-            <Route path="/cu08" element={<Cu08 />} />
-            <Route path="/guiatranslado" element={<Cus014 />} />
-            <Route path="/guiavalorizada" element={<Cus016 />} />
-            <Route path="/guiavalorizadareal" element={<Cus017 />} />
+        <FichaTecnicaStateProvider>
+          <Router>
+            <Routes>
+              <Route path="/" element={<LoginView />} />
+              {/* <Route path="/registrar" element={<RegisterView />} /> */}
+              <Route path="/cambiarclave" element={<CambiarContrasena />} />
+              <Route
+                path="/sesioniniciada/*"
+                element={
+                  <PrivateRoute>
+                    <SesionIniciada />
+                  </PrivateRoute>
+                }
+              />
+              <Route path="/gerente" element={<GerenteView />} />
+              <Route path="/backoffice" element={<BackOfficeView />} />
+              <Route path="/cu08" element={<Cu08 />} />
+              <Route path="/guiatranslado" element={<Cus014 />} />
+              <Route path="/guiavalorizada" element={<Cus016 />} />
+              <Route path="/guiavalorizadareal" element={<Cus017 />} />
 
-            <Route path="/reportedepartidas" element={<ReporteDePartidas />} />
-            <Route
-              path="/presupuestocotizacion"
-              element={<PresupuestoCotizacion />}
-            />
-            <Route
-              path="/materialesprocesados"
-              element={<MaterialesProcesados />}
-            />
-            <Route
-              path="/materialesatendidos"
-              element={<MaterialesAtendidos />}
-            />
-            <Route
-              path="/materialesservicios"
-              element={<MaterialesServicios />}
-            />
-            <Route
-              path="/planeamiento-de-compras"
-              element={<PlaneamientoDeCompras />}
-            />
-            <Route path="/maestro" element={<MaestroView />} />
-            <Route path="/aside" element={<Aside />} />
+              <Route
+                path="/reportedepartidas"
+                element={<ReporteDePartidas />}
+              />
+              <Route
+                path="/presupuestocotizacion"
+                element={<PresupuestoCotizacion />}
+              />
+              <Route
+                path="/materialesprocesados"
+                element={<MaterialesProcesados />}
+              />
+              <Route
+                path="/materialesatendidos"
+                element={<MaterialesAtendidos />}
+              />
+              <Route
+                path="/materialesservicios"
+                element={<MaterialesServicios />}
+              />
+              <Route
+                path="/planeamiento-de-compras"
+                element={<PlaneamientoDeCompras />}
+              />
+              <Route path="/maestro" element={<MaestroView />} />
+              <Route path="/aside" element={<Aside />} />
 
-            {/* <Route path="*" element={<NotFound />} />
+              {/* <Route path="*" element={<NotFound />} />
         <Route path="/" element={<LoginView />} />
         <Route path="/fichatecnica" element={<FichaTecnica />} /> */}
-            {/*     <Route
+              {/*     <Route
           path="/administrador"
           element={
             <PrivateRoute>
@@ -104,8 +111,9 @@ function App() {
             </PrivateRouteIng>
           }
         /> */}
-          </Routes>
-        </Router>
+            </Routes>
+          </Router>
+        </FichaTecnicaStateProvider>
       </AuthStateProvider>
     </AlertaStateProvider>
   );

@@ -113,7 +113,7 @@ const AuthStateProvider = (props) => {
   const obtenerTodosLosUsuarios = async () => {
     try {
       const respuesta = await clienteAxios.get("/api/usuarios");
-      console.log("estas en obtener todos los usuarios", respuesta);
+      //console.log("estas en obtener todos los usuarios", respuesta);
       dispatch({
         type: OBTENER_TODOS_LOS_USUARIOS,
         payload: respuesta.data,

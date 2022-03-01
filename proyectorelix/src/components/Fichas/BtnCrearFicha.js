@@ -5,7 +5,7 @@ function BtnCrearFicha({ ActivarFicha, setActivarFicha }) {
     <div>
       <button
         type="button"
-        className="btn btn-outline-primary"
+        className="btn btn-outline-primary text-uppercase"
         onClick={() => setActivarFicha(!ActivarFicha)}
       >
         Asignar Ficha de Proyecto

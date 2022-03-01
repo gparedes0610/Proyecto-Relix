@@ -30,6 +30,8 @@ function FichaTecnica() {
     registroDeFichaTecnica,
     obtenerTodasLasFichasTecnicas,
     todasLasFichasTecnica,
+    fichaEdicion,
+    actualizarFicha,
   } = fichatecnicacontext;
   //////////////////////////////
   useEffect(() => {
@@ -77,29 +79,29 @@ function FichaTecnica() {
     cultivoFichatecnica: "",
     idModalidadcontrato: "",
     idModalidadejecucion: "",
-    idDetracciones: "",
-    idRetencion: "",
-    idCartafianza: "",
-    idFielcumplimiento: "",
+    detraccionesFichatecnica: "",
+    retencionFichatecnica: "",
+    cartafianzaFichatecnica: "",
+    fielcumplimientoFichatecnica: "",
     plazoejecucionFichatecnica: "",
     inicioproyectadoFichatecnica: "",
     finproyectadoFichatecnica: "",
     //////
     /*  forma de pago */
-    idAnticipo: "",
+    anticipoFichatecnica: "",
     porcentajeanticipoFichatecnica: "",
     idFormapago: "",
-    idFinanciamiento: "",
+    financiamientoFichatecnica: "",
     tasaFichatecnica: "",
     periodograciaFichatecnica: "",
     plazoFichatecnica: "",
     periodocuotaFichatecnica: "",
     iniciofinanciamientoFichatecnica: "",
-    idFacturanegociable: "",
-    idLetraanticipada: "",
+    facturanegociableFichatecnica: "",
+    letraanticipadaFichatecnica: "",
     /*  Facturacion */
-    idAnticipooc: "",
-    idFirmacontrato: "",
+    anticipoocFichatecnica: "",
+    firmacontratoFichatecnica: "",
     idFacturacion: "",
     idEstadofichaproyecto: "",
     /*  Recursos */
@@ -117,6 +119,7 @@ function FichaTecnica() {
     valorventaigvFichatecnica: "",
     oportunidadesFichatecnica: "",
     riesgocontratoFichatecnica: "",
+    codigoVendedorFichatecnica: "",
     idUsuario: usuario.idUsuario,
   });
 
@@ -140,26 +143,26 @@ function FichaTecnica() {
     cultivoFichatecnica,
     idModalidadcontrato,
     idModalidadejecucion,
-    idDetracciones,
-    idRetencion,
-    idCartafianza,
-    idFielcumplimiento,
+    detraccionesFichatecnica,
+    retencionFichatecnica,
+    cartafianzaFichatecnica,
+    fielcumplimientoFichatecnica,
     plazoejecucionFichatecnica,
     inicioproyectadoFichatecnica,
     finproyectadoFichatecnica,
-    idAnticipo,
+    anticipoFichatecnica,
     porcentajeanticipoFichatecnica,
     idFormapago,
-    idFinanciamiento,
+    financiamientoFichatecnica,
     tasaFichatecnica,
     periodograciaFichatecnica,
     plazoFichatecnica,
     periodocuotaFichatecnica,
     iniciofinanciamientoFichatecnica,
-    idFacturanegociable,
-    idLetraanticipada,
-    idAnticipooc,
-    idFirmacontrato,
+    facturanegociableFichatecnica,
+    letraanticipadaFichatecnica,
+    anticipoocFichatecnica,
+    firmacontratoFichatecnica,
     idFacturacion,
     idEstadofichaproyecto,
     instalacionFichatecnica,
@@ -175,6 +178,7 @@ function FichaTecnica() {
     valorventaigvFichatecnica,
     oportunidadesFichatecnica,
     riesgocontratoFichatecnica,
+    codigoVendedorFichatecnica,
     idUsuario,
   } = registrarFichaTecnica;
 
@@ -192,18 +196,35 @@ function FichaTecnica() {
     const valorNum = `PR-${
       vendedores[parseInt(e.target.value) - 1].codigoVendedor
     }-${codigoFichaTecnica.codigoFicha}`;
-    console.log(valorNum);
+    console.log("Num es", valorNum);
+
+    const valorCodigo = `${
+      vendedores[parseInt(e.target.value) - 1].codigoVendedor
+    }`;
+
+    console.log("codigo es", valorCodigo);
 
     setRegistrarFichaTecnica({
       ...registrarFichaTecnica,
       numFichatecnica: valorNum,
       idVendedor: e.target.value,
+      codigoVendedorFichatecnica: valorCodigo,
     });
   };
-
+  ///////////////////////////////////////////////////aqui para hacer el put
+  useEffect(() => {
+    if (fichaEdicion !== null) {
+      // setRegistrarFichaTecnica(fichaEdicion);
+      console.log("fichaedicion existe", fichaEdicion);
+      setRegistrarFichaTecnica(fichaEdicion);
+    } else {
+      console.log("fichaedicion no existe existe"); // me quede aqui
+    }
+  }, [fichaEdicion]);
+  ///////////////////////////////////////////////////////////////////////////////////////////
   const onSubmit = (e) => {
     e.preventDefault();
-
+    console.log("enviaste esta ficha tecnica", registrarFichaTecnica);
     if (
       fechaFichatecnica.trim() === "" ||
       numFichatecnica.trim() === "" ||
@@ -224,26 +245,26 @@ function FichaTecnica() {
       cultivoFichatecnica.trim() === "" ||
       idModalidadcontrato.trim() === "" ||
       idModalidadejecucion.trim() === "" ||
-      idDetracciones.trim() === "" ||
-      idRetencion.trim() === "" ||
-      idCartafianza.trim() === "" ||
-      idFielcumplimiento.trim() === "" ||
+      detraccionesFichatecnica.trim() === "" ||
+      retencionFichatecnica.trim() === "" ||
+      cartafianzaFichatecnica.trim() === "" ||
+      fielcumplimientoFichatecnica.trim() === "" ||
       plazoejecucionFichatecnica.trim() === "" ||
       inicioproyectadoFichatecnica.trim() === "" ||
-      finproyectadoFichatecnica.trim() === "" ||
-      idAnticipo.trim() === "" ||
+      firmacontratoFichatecnica.trim() === "" ||
+      anticipoFichatecnica.trim() === "" ||
       porcentajeanticipoFichatecnica.trim() === "" ||
       idFormapago.trim() === "" ||
-      idFinanciamiento.trim() === "" ||
+      financiamientoFichatecnica.trim() === "" ||
       tasaFichatecnica.trim() === "" ||
       periodograciaFichatecnica.trim() === "" ||
       plazoFichatecnica.trim() === "" ||
       periodocuotaFichatecnica.trim() === "" ||
       iniciofinanciamientoFichatecnica.trim() === "" ||
-      idFacturanegociable.trim() === "" ||
-      idLetraanticipada.trim() === "" ||
-      idAnticipooc.trim() === "" ||
-      idFirmacontrato.trim() === "" ||
+      facturanegociableFichatecnica.trim() === "" ||
+      letraanticipadaFichatecnica.trim() === "" ||
+      anticipoocFichatecnica.trim() === "" ||
+      firmacontratoFichatecnica.trim() === "" ||
       idFacturacion.trim() === "" ||
       idEstadofichaproyecto.trim() === "" ||
       instalacionFichatecnica.trim() === "" ||
@@ -264,66 +285,76 @@ function FichaTecnica() {
       mostrarAlerta("no puede haber un valor vacio", "alert alert-danger");
       return;
     }
+    console.log("no hay errores");
+    if (fichaEdicion === null) {
+      //ficha nueva
+      console.log("entras aqui si agregas ficha nueva");
+      console.log("ficha antes", registrarFichaTecnica);
 
-    registroDeFichaTecnica({
-      fechaFichatecnica,
-      numFichatecnica,
-      idDivision,
-      idTipoproyecto,
-      nombreFichatecnica,
-      clienteFichatecnica,
-      rucclienteFichatecnica,
-      telefonoFichatecnica,
-      direccionfiscalFichatecnica,
-      idVendedor,
-      idDepartamento,
-      idProvincia,
-      idDistrito,
-      direccionentregaFichatecnica,
-      alcanceFichatecnica,
-      areaFichatecnica,
-      cultivoFichatecnica,
-      idModalidadcontrato,
-      idModalidadejecucion,
-      idDetracciones,
-      idRetencion,
-      idCartafianza,
-      idFielcumplimiento,
-      plazoejecucionFichatecnica,
-      inicioproyectadoFichatecnica,
-      finproyectadoFichatecnica,
-      idAnticipo,
-      porcentajeanticipoFichatecnica,
-      idFormapago,
-      idFinanciamiento,
-      tasaFichatecnica,
-      periodograciaFichatecnica,
-      plazoFichatecnica,
-      periodocuotaFichatecnica,
-      iniciofinanciamientoFichatecnica,
-      idFacturanegociable,
-      idLetraanticipada,
-      idAnticipooc,
-      idFirmacontrato,
-      idFacturacion,
-      idEstadofichaproyecto,
-      instalacionFichatecnica,
-      guardianiaFichatecnica,
-      contenedoroficinaFichatecnica,
-      residenteobraFichatecnica,
-      vehiculoFichatecnica,
-      prevencionistaFichatecnica,
-      costoproyectoFichatecnica,
-      margenFichatecnica,
-      utilidadFichatecnica,
-      valorventaFichatecnica,
-      valorventaigvFichatecnica,
-      oportunidadesFichatecnica,
-      riesgocontratoFichatecnica,
-      idUsuario,
-    });
+      registroDeFichaTecnica({
+        fechaFichatecnica,
+        numFichatecnica,
+        idDivision,
+        idTipoproyecto,
+        nombreFichatecnica,
+        clienteFichatecnica,
+        rucclienteFichatecnica,
+        telefonoFichatecnica,
+        direccionfiscalFichatecnica,
+        idVendedor,
+        codigoVendedorFichatecnica,
+        idDepartamento,
+        idProvincia,
+        idDistrito,
+        direccionentregaFichatecnica,
+        alcanceFichatecnica,
+        areaFichatecnica,
+        cultivoFichatecnica,
+        idModalidadcontrato,
+        idModalidadejecucion,
+        detraccionesFichatecnica,
+        retencionFichatecnica,
+        cartafianzaFichatecnica,
+        fielcumplimientoFichatecnica,
+        plazoejecucionFichatecnica,
+        inicioproyectadoFichatecnica,
+        finproyectadoFichatecnica,
+        anticipoFichatecnica,
+        porcentajeanticipoFichatecnica,
+        idFormapago,
+        financiamientoFichatecnica,
+        tasaFichatecnica,
+        periodograciaFichatecnica,
+        plazoFichatecnica,
+        periodocuotaFichatecnica,
+        iniciofinanciamientoFichatecnica,
+        facturanegociableFichatecnica,
+        letraanticipadaFichatecnica,
+        anticipoocFichatecnica,
+        firmacontratoFichatecnica,
+        idFacturacion,
+        idEstadofichaproyecto,
+        instalacionFichatecnica,
+        guardianiaFichatecnica,
+        contenedoroficinaFichatecnica,
+        residenteobraFichatecnica,
+        vehiculoFichatecnica,
+        prevencionistaFichatecnica,
+        costoproyectoFichatecnica,
+        margenFichatecnica,
+        utilidadFichatecnica,
+        valorventaFichatecnica,
+        valorventaigvFichatecnica,
+        oportunidadesFichatecnica,
+        riesgocontratoFichatecnica,
+        idUsuario,
+      });
+    } else {
+      console.log("vas a actualizar una ficha", registrarFichaTecnica);
+      actualizarFicha(registrarFichaTecnica);
+    }
 
-    setRegistrarFichaTecnica({
+    /* setRegistrarFichaTecnica({
       fechaFichatecnica: "",
       numFichatecnica: "",
       idDivision: "",
@@ -343,32 +374,31 @@ function FichaTecnica() {
       cultivoFichatecnica: "",
       idModalidadcontrato: "",
       idModalidadejecucion: "",
-      idDetracciones: "",
-      idRetencion: "",
-      idCartafianza: "",
-      idFielcumplimiento: "",
+      detraccionesFichatecnica: "",
+      retencionFichatecnica: "",
+      cartafianzaFichatecnica: "",
+      fielcumplimientoFichatecnica: "",
       plazoejecucionFichatecnica: "",
       inicioproyectadoFichatecnica: "",
       finproyectadoFichatecnica: "",
       //////
-      /*  forma de pago */
-      idAnticipo: "",
+      anticipoFichatecnica: "",
       porcentajeanticipoFichatecnica: "",
       idFormapago: "",
-      idFinanciamiento: "",
+      financiamientoFichatecnica: "",
       tasaFichatecnica: "",
       periodograciaFichatecnica: "",
       plazoFichatecnica: "",
       periodocuotaFichatecnica: "",
       iniciofinanciamientoFichatecnica: "",
-      idFacturanegociable: "",
-      idLetraanticipada: "",
-      /*  Facturacion */
-      idAnticipooc: "",
-      idFirmacontrato: "",
+      facturanegociableFichatecnica: "",
+      letraanticipadaFichatecnica: "",
+      /////
+      anticipoocFichatecnica: "",
+      firmacontratoFichatecnica: "",
       idFacturacion: "",
       idEstadofichaproyecto: "",
-      /*  Recursos */
+      ////
       instalacionFichatecnica: "",
       guardianiaFichatecnica: "",
       contenedoroficinaFichatecnica: "",
@@ -383,7 +413,7 @@ function FichaTecnica() {
       valorventaigvFichatecnica: "",
       oportunidadesFichatecnica: "",
       riesgocontratoFichatecnica: "",
-    });
+    }); */
   };
 
   const getData = async () => {
@@ -394,9 +424,6 @@ function FichaTecnica() {
       const todosLosVendedores = await obtenerVendedores();
       setVendedores(todosLosVendedores);
 
-      const todosLosDepartamentos = await obtenerDepartamentos();
-      setDepartamentos(todosLosDepartamentos);
-
       const todosLosEstados = await obtenerEstados();
       setEstados(todosLosEstados);
 
@@ -406,13 +433,16 @@ function FichaTecnica() {
       const obteniendoFormasDePago = await obtenerFormasDePago();
       setFormasDePagos(obteniendoFormasDePago);
 
+      const todosLosDepartamentos = await obtenerDepartamentos();
+      setDepartamentos(todosLosDepartamentos);
+
       if (agarrarDepartamento) {
-        console.log("agarrarDepartamento existe");
+        //console.log("agarrarDepartamento existe");
         const todosLasProvincias = await obtenerProvincias(agarrarDepartamento);
         setProvincias(todosLasProvincias);
       }
       if (agarrarProvincia) {
-        console.log("agarrarProvincia existe", agarrarProvincia);
+        //console.log("agarrarProvincia existe", agarrarProvincia);
         const todosLosDistritos = await obtenerDistritos(agarrarProvincia);
         setDistritos(todosLosDistritos);
       }
@@ -468,6 +498,7 @@ function FichaTecnica() {
                           type="date"
                           placeholder="Ingrese fecha"
                           name="fechaFichatecnica"
+                          value={fechaFichatecnica}
                           onChange={(e) => actualizarInput(e)}
                         />
                       </Form.Group>
@@ -511,6 +542,7 @@ function FichaTecnica() {
                         </Form.Label>
                         <Form.Select
                           aria-label="Default select example"
+                          value={idDivision}
                           name="idDivision"
                           onChange={(e) => {
                             actualizarInput(e);
@@ -531,6 +563,7 @@ function FichaTecnica() {
                     <Form.Select
                       aria-label="Default select example"
                       name="idTipoproyecto"
+                      value={idTipoproyecto}
                       onChange={(e) => {
                         actualizarInput(e);
                       }}
@@ -555,6 +588,7 @@ function FichaTecnica() {
                         <Form.Control
                           type="text"
                           name="nombreFichatecnica"
+                          value={nombreFichatecnica}
                           placeholder="Nombre del proyecto"
                           onChange={(e) => actualizarInput(e)}
                         />
@@ -573,6 +607,7 @@ function FichaTecnica() {
                           type="text"
                           placeholder="Cliente"
                           name="clienteFichatecnica"
+                          value={clienteFichatecnica}
                           onChange={(e) => actualizarInput(e)}
                         />
                       </Form.Group>
@@ -590,6 +625,7 @@ function FichaTecnica() {
                           type="text"
                           placeholder="Ruc"
                           name="rucclienteFichatecnica"
+                          value={rucclienteFichatecnica}
                           onChange={(e) => actualizarInput(e)}
                         />
                       </Form.Group>
@@ -607,6 +643,7 @@ function FichaTecnica() {
                           type="number"
                           placeholder="Telefono"
                           name="telefonoFichatecnica"
+                          value={telefonoFichatecnica}
                           onChange={(e) => actualizarInput(e)}
                         />
                       </Form.Group>
@@ -627,6 +664,7 @@ function FichaTecnica() {
                           type="text"
                           placeholder="Direccion de Fiscal"
                           name="direccionfiscalFichatecnica"
+                          value={direccionfiscalFichatecnica}
                           onChange={(e) => actualizarInput(e)}
                         />
                       </Form.Group>
@@ -641,6 +679,7 @@ function FichaTecnica() {
                         <Form.Select
                           aria-label="Default select example"
                           name="idVendedor"
+                          value={idVendedor}
                           onChange={(e) => {
                             actualizarInput(e);
                             cambiarNum(e);
@@ -669,10 +708,11 @@ function FichaTecnica() {
                             <Form.Control
                               type="text"
                               placeholder="Codigo"
-                              value={
-                                vendedores[parseInt(idVendedor) - 1]
-                                  .codigoVendedor
-                              }
+                              value={codigoVendedorFichatecnica}
+                              // value={
+                              //vendedores[parseInt(idVendedor) - 1]
+                              // .codigoVendedor
+                              // }
                               disabled
                             />
                           </>
@@ -696,7 +736,7 @@ function FichaTecnica() {
                         </Form.Label>
                         <Form.Select
                           aria-label="Default select example"
-                          value={agarrarDepartamento}
+                          value={idDepartamento}
                           name="idDepartamento"
                           onChange={(e) => {
                             setAgarrarDepartamento(e.target.value);
@@ -726,6 +766,7 @@ function FichaTecnica() {
                             <Form.Select
                               aria-label="Default select example"
                               name="idProvincia"
+                              //value={fichaEdicion[0].nombreDistrito}
                               onChange={(e) => {
                                 setAgarrarProvincia(e.target.value);
                                 actualizarInput(e);
@@ -763,6 +804,7 @@ function FichaTecnica() {
                             <Form.Select
                               aria-label="Default select example"
                               name="idDistrito"
+                              value={idDistrito}
                               onChange={(e) => {
                                 setAgarrarDistrito(e.target.value);
                                 actualizarInput(e);
@@ -800,6 +842,7 @@ function FichaTecnica() {
                         </Form.Label>
                         <Form.Control
                           name="direccionentregaFichatecnica"
+                          value={direccionentregaFichatecnica}
                           onChange={(e) => {
                             actualizarInput(e);
                           }}
@@ -821,6 +864,7 @@ function FichaTecnica() {
                           type="text"
                           placeholder="Alcance"
                           name="alcanceFichatecnica"
+                          value={alcanceFichatecnica}
                           onChange={(e) => {
                             actualizarInput(e);
                           }}
@@ -841,6 +885,7 @@ function FichaTecnica() {
                           type="number"
                           placeholder="Ingrese cantidad de hectareas"
                           name="areaFichatecnica"
+                          value={areaFichatecnica}
                           onChange={(e) => {
                             actualizarInput(e);
                           }}
@@ -860,6 +905,7 @@ function FichaTecnica() {
                           type="text"
                           placeholder="Ingrese cultivo"
                           name="cultivoFichatecnica"
+                          value={cultivoFichatecnica}
                           onChange={(e) => {
                             actualizarInput(e);
                           }}
@@ -878,6 +924,7 @@ function FichaTecnica() {
                         <Form.Select
                           aria-label="Default select example"
                           name="idModalidadcontrato"
+                          value={idModalidadcontrato}
                           onChange={(e) => {
                             actualizarInput(e);
                           }}
@@ -900,6 +947,7 @@ function FichaTecnica() {
                         <Form.Select
                           aria-label="Default select example"
                           name="idModalidadejecucion"
+                          value={idModalidadejecucion}
                           onChange={(e) => {
                             actualizarInput(e);
                           }}
@@ -921,7 +969,8 @@ function FichaTecnica() {
                         </Form.Label>
                         <Form.Select
                           aria-label="Default select example"
-                          name="idDetracciones"
+                          name="detraccionesFichatecnica"
+                          value={detraccionesFichatecnica}
                           onChange={(e) => {
                             actualizarInput(e);
                           }}
@@ -940,14 +989,15 @@ function FichaTecnica() {
                         </Form.Label>
                         <Form.Select
                           aria-label="Default select example"
-                          name="idRetencion"
+                          name="retencionFichatecnica"
+                          value={retencionFichatecnica}
                           onChange={(e) => {
                             actualizarInput(e);
                           }}
                         >
                           <option>Seleccione una Opcion</option>
-                          <option value="1">Si</option>
-                          <option value="2">No</option>
+                          <option value="si">Si</option>
+                          <option value="no">No</option>
                         </Form.Select>
                       </Form.Group>
                     </div>
@@ -959,14 +1009,15 @@ function FichaTecnica() {
                         </Form.Label>
                         <Form.Select
                           aria-label="Default select example"
-                          name="idCartafianza"
+                          name="cartafianzaFichatecnica"
+                          value={cartafianzaFichatecnica}
                           onChange={(e) => {
                             actualizarInput(e);
                           }}
                         >
                           <option>Seleccione una Opcion</option>
-                          <option value="1">Si</option>
-                          <option value="2">No</option>
+                          <option value="si">Si</option>
+                          <option value="no">No</option>
                         </Form.Select>
                       </Form.Group>
                     </div>
@@ -978,14 +1029,15 @@ function FichaTecnica() {
                         </Form.Label>
                         <Form.Select
                           aria-label="Default select example"
-                          name="idFielcumplimiento"
+                          name="fielcumplimientoFichatecnica"
+                          value={fielcumplimientoFichatecnica}
                           onChange={(e) => {
                             actualizarInput(e);
                           }}
                         >
                           <option>Seleccione una Opcion</option>
-                          <option value="1">Si</option>
-                          <option value="2">No</option>
+                          <option value="si">Si</option>
+                          <option value="no">No</option>
                         </Form.Select>
                       </Form.Group>
                     </div>
@@ -1003,6 +1055,7 @@ function FichaTecnica() {
                           type="text"
                           placeholder="Plazo de ejecucion"
                           name="plazoejecucionFichatecnica"
+                          value={plazoejecucionFichatecnica}
                           onChange={(e) => {
                             actualizarInput(e);
                           }}
@@ -1023,6 +1076,7 @@ function FichaTecnica() {
                           type="date"
                           placeholder="Ingrese inicio"
                           name="inicioproyectadoFichatecnica"
+                          value={inicioproyectadoFichatecnica}
                           onChange={(e) => {
                             actualizarInput(e);
                           }}
@@ -1043,6 +1097,7 @@ function FichaTecnica() {
                           type="date"
                           placeholder="Ingrese fin"
                           name="finproyectadoFichatecnica"
+                          value={finproyectadoFichatecnica}
                           onChange={(e) => {
                             actualizarInput(e);
                           }}
@@ -1060,14 +1115,15 @@ function FichaTecnica() {
                         </Form.Label>
                         <Form.Select
                           aria-label="Default select example"
-                          name="idAnticipo"
+                          name="anticipoFichatecnica"
+                          value={anticipoFichatecnica}
                           onChange={(e) => {
                             actualizarInput(e);
                           }}
                         >
                           <option>Seleccione opcion</option>
-                          <option value="1">Si</option>
-                          <option value="2">No</option>
+                          <option value="si">Si</option>
+                          <option value="no">No</option>
                         </Form.Select>
                       </Form.Group>
                     </div>
@@ -1083,6 +1139,7 @@ function FichaTecnica() {
                           type="text"
                           placeholder="%"
                           name="porcentajeanticipoFichatecnica"
+                          value={porcentajeanticipoFichatecnica}
                           onChange={(e) => {
                             actualizarInput(e);
                           }}
@@ -1102,6 +1159,7 @@ function FichaTecnica() {
                           type="text"
                           placeholder="Saldo"
                           name="idFormapago"
+                          value={idFormapago}
                           onChange={(e) => {
                             actualizarInput(e);
                           }}
@@ -1121,14 +1179,15 @@ function FichaTecnica() {
                         </Form.Label>
                         <Form.Select
                           aria-label="Default select example"
-                          name="idFinanciamiento"
+                          name="financiamientoFichatecnica"
+                          value={financiamientoFichatecnica}
                           onChange={(e) => {
                             actualizarInput(e);
                           }}
                         >
                           <option>Seleccione opcion</option>
-                          <option value="1">Si</option>
-                          <option value="2">No</option>
+                          <option value="si">Si</option>
+                          <option value="no">No</option>
                         </Form.Select>
                       </Form.Group>
                     </div>
@@ -1146,6 +1205,7 @@ function FichaTecnica() {
                           type="text"
                           placeholder="Tasa"
                           name="tasaFichatecnica"
+                          value={tasaFichatecnica}
                           onChange={(e) => {
                             actualizarInput(e);
                           }}
@@ -1165,6 +1225,7 @@ function FichaTecnica() {
                           type="text"
                           placeholder="Periodo de Gracia"
                           name="periodograciaFichatecnica"
+                          value={periodograciaFichatecnica}
                           onChange={(e) => {
                             actualizarInput(e);
                           }}
@@ -1184,6 +1245,7 @@ function FichaTecnica() {
                           type="text"
                           placeholder="Plazo"
                           name="plazoFichatecnica"
+                          value={plazoFichatecnica}
                           onChange={(e) => {
                             actualizarInput(e);
                           }}
@@ -1203,6 +1265,7 @@ function FichaTecnica() {
                           type="text"
                           placeholder="Periodo de cuotas"
                           name="periodocuotaFichatecnica"
+                          value={periodocuotaFichatecnica}
                           onChange={(e) => {
                             actualizarInput(e);
                           }}
@@ -1223,6 +1286,7 @@ function FichaTecnica() {
                           type="text"
                           placeholder="Inicio del financiamiento"
                           name="iniciofinanciamientoFichatecnica"
+                          value={iniciofinanciamientoFichatecnica}
                           onChange={(e) => {
                             actualizarInput(e);
                           }}
@@ -1237,14 +1301,15 @@ function FichaTecnica() {
                         </Form.Label>
                         <Form.Select
                           aria-label="Default select example"
-                          name="idFacturanegociable"
+                          name="facturanegociableFichatecnica"
+                          value={facturanegociableFichatecnica}
                           onChange={(e) => {
                             actualizarInput(e);
                           }}
                         >
                           <option>Seleccione opcion</option>
-                          <option value="1">Si</option>
-                          <option value="2">No</option>
+                          <option value="si">Si</option>
+                          <option value="no">En descuento</option>
                         </Form.Select>
                       </Form.Group>
                     </div>
@@ -1256,14 +1321,15 @@ function FichaTecnica() {
                         </Form.Label>
                         <Form.Select
                           aria-label="Default select example"
-                          name="idLetraanticipada"
+                          name="letraanticipadaFichatecnica"
+                          value={letraanticipadaFichatecnica}
                           onChange={(e) => {
                             actualizarInput(e);
                           }}
                         >
                           <option>Seleccione opcion</option>
-                          <option value="1">Si</option>
-                          <option value="2">No</option>
+                          <option value="si">Si</option>
+                          <option value="no">En descuento</option>
                         </Form.Select>
                       </Form.Group>
                     </div>
@@ -1277,14 +1343,15 @@ function FichaTecnica() {
                         </Form.Label>
                         <Form.Select
                           aria-label="Default select example"
-                          name="idAnticipooc"
+                          name="anticipoocFichatecnica"
+                          value={anticipoocFichatecnica}
                           onChange={(e) => {
                             actualizarInput(e);
                           }}
                         >
                           <option>Seleccione opcion</option>
-                          <option value="1">Si</option>
-                          <option value="2">No</option>
+                          <option value="si">Si</option>
+                          <option value="no">No</option>
                         </Form.Select>
                       </Form.Group>
                     </div>
@@ -1296,14 +1363,15 @@ function FichaTecnica() {
                         </Form.Label>
                         <Form.Select
                           aria-label="Default select example"
-                          name="idFirmacontrato"
+                          name="firmacontratoFichatecnica"
+                          value={firmacontratoFichatecnica}
                           onChange={(e) => {
                             actualizarInput(e);
                           }}
                         >
                           <option>Seleccione opcion</option>
-                          <option value="1">Si</option>
-                          <option value="2">No</option>
+                          <option value="si">Si</option>
+                          <option value="no">No</option>
                         </Form.Select>
                       </Form.Group>
                     </div>
@@ -1319,6 +1387,7 @@ function FichaTecnica() {
                         <Form.Select
                           aria-label="Default select example"
                           name="idFacturacion"
+                          value={idFacturacion}
                           onChange={(e) => {
                             actualizarInput(e);
                           }}
@@ -1342,6 +1411,7 @@ function FichaTecnica() {
                     <Form.Select
                       aria-label="Default select example"
                       name="idEstadofichaproyecto"
+                      value={idEstadofichaproyecto}
                       onChange={(e) => {
                         actualizarInput(e);
                       }}
@@ -1369,6 +1439,7 @@ function FichaTecnica() {
                           type="text"
                           placeholder="Instalacion"
                           name="instalacionFichatecnica"
+                          value={instalacionFichatecnica}
                           onChange={(e) => {
                             actualizarInput(e);
                           }}
@@ -1388,6 +1459,7 @@ function FichaTecnica() {
                           type="text"
                           placeholder="Guardiania"
                           name="guardianiaFichatecnica"
+                          value={guardianiaFichatecnica}
                           onChange={(e) => {
                             actualizarInput(e);
                           }}
@@ -1407,6 +1479,7 @@ function FichaTecnica() {
                           type="text"
                           placeholder="Contenedor Oficina"
                           name="contenedoroficinaFichatecnica"
+                          value={contenedoroficinaFichatecnica}
                           onChange={(e) => {
                             actualizarInput(e);
                           }}
@@ -1426,6 +1499,7 @@ function FichaTecnica() {
                           type="text"
                           placeholder="Residente de obra"
                           name="residenteobraFichatecnica"
+                          value={residenteobraFichatecnica}
                           onChange={(e) => {
                             actualizarInput(e);
                           }}
@@ -1446,6 +1520,7 @@ function FichaTecnica() {
                           type="text"
                           placeholder="Vehiculo"
                           name="vehiculoFichatecnica"
+                          value={vehiculoFichatecnica}
                           onChange={(e) => {
                             actualizarInput(e);
                           }}
@@ -1465,6 +1540,7 @@ function FichaTecnica() {
                           type="text"
                           placeholder="Prevencionista"
                           name="prevencionistaFichatecnica"
+                          value={prevencionistaFichatecnica}
                           onChange={(e) => {
                             actualizarInput(e);
                           }}
@@ -1484,6 +1560,7 @@ function FichaTecnica() {
                           type="number"
                           placeholder="USD"
                           name="costoproyectoFichatecnica"
+                          value={costoproyectoFichatecnica}
                           onChange={(e) => {
                             actualizarInput(e);
                           }}
@@ -1503,6 +1580,7 @@ function FichaTecnica() {
                           type="number"
                           placeholder="Margen %"
                           name="margenFichatecnica"
+                          value={margenFichatecnica}
                           onChange={(e) => {
                             actualizarInput(e);
                           }}
@@ -1523,6 +1601,7 @@ function FichaTecnica() {
                           type="text"
                           placeholder="Utilidad USD"
                           name="utilidadFichatecnica"
+                          value={utilidadFichatecnica}
                           onChange={(e) => {
                             actualizarInput(e);
                           }}
@@ -1542,6 +1621,7 @@ function FichaTecnica() {
                           type="text"
                           placeholder="Valor venta sin IGV USD"
                           name="valorventaFichatecnica"
+                          value={valorventaFichatecnica}
                           onChange={(e) => {
                             actualizarInput(e);
                           }}
@@ -1561,6 +1641,7 @@ function FichaTecnica() {
                           type="text"
                           placeholder="Valor Venta con IGV"
                           name="valorventaigvFichatecnica"
+                          value={valorventaigvFichatecnica}
                           onChange={(e) => {
                             actualizarInput(e);
                           }}
@@ -1581,6 +1662,7 @@ function FichaTecnica() {
                           type="text"
                           placeholder="Oportunidades de Optimizacion"
                           name="oportunidadesFichatecnica"
+                          value={oportunidadesFichatecnica}
                           onChange={(e) => {
                             actualizarInput(e);
                           }}
@@ -1599,6 +1681,7 @@ function FichaTecnica() {
                           type="text"
                           placeholder="Riesgos del contrato"
                           name="riesgocontratoFichatecnica"
+                          value={riesgocontratoFichatecnica}
                           onChange={(e) => {
                             actualizarInput(e);
                           }}
@@ -1613,12 +1696,21 @@ function FichaTecnica() {
                   ) : null}
                   <div className="row mt-3">
                     <div className="col-12 col-md-6">
-                      <Button
-                        variant="info w-100 py-2  text-white btn btn-success"
-                        type="submit"
-                      >
-                        Guardar
-                      </Button>
+                      {fichaEdicion ? (
+                        <Button
+                          variant="info w-100 py-2  text-white btn btn-success"
+                          type="submit"
+                        >
+                          Editar
+                        </Button>
+                      ) : (
+                        <Button
+                          variant="info w-100 py-2  text-white btn btn-success"
+                          type="submit"
+                        >
+                          Guardar
+                        </Button>
+                      )}
                     </div>
                     <div className="col-12 col-md-6 ">
                       <Button

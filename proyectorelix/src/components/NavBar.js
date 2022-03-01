@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import LogoRelix from "../assets/relixjpg1.svg";
 import {
   Navbar,
@@ -10,18 +10,27 @@ import {
 } from "react-bootstrap";
 //import { Link, useNavigate } from "react-router-dom";
 import { FaBars } from "react-icons/fa";
-import { useContext } from "react";
 import authContext from "../context/autenticacion/authContext";
+import fichaTecnicaContext from "../context/fichaTecnica/fichaTecnicaContext";
 
 function NavBar({ setVerUsuarios, verUsuarios }) {
   /////////////////////////////////
   const autentificaciones = useContext(authContext);
   const { usuario, usuarioAutenticado, cerrarSesion } = autentificaciones;
+  ///////////////////////////////
+  const fichatecnicacontext = useContext(fichaTecnicaContext);
+  const {
+    fichaTecnica,
+    todasLasFichasTecnica,
+    registroDeFichaTecnica,
+    obtenerTodasLasFichasTecnicas,
+    fichaTecnicaActual,
+  } = fichatecnicacontext;
+  //////////////////////////////
 
   useEffect(() => {
     usuarioAutenticado();
   }, []);
-
   if (!usuario) {
     return null;
   }
@@ -60,14 +69,24 @@ function NavBar({ setVerUsuarios, verUsuarios }) {
                 NECESITA SELECCIONAR UNA FICHA TECNICA PARA REVISION
               </span>
             )}
-            {usuario.idRol == 3 && (
-              <span
-                className="text-uppercase h6"
-                style={{ color: "#4253FF", background: "white" }}
-              >
-                Necesita crear una ficha tecnica
-              </span>
-            )}
+            {usuario.idRol == 3 &&
+              (fichaTecnica ? (
+                <>
+                  <span
+                    className="lead fw-bolder fw-bold"
+                    style={{ color: "#4253FF", background: "white" }}
+                  >
+                    {fichaTecnica[0].nombreFichatecnica}
+                  </span>
+                </>
+              ) : (
+                <span
+                  className="lead fw-bolder"
+                  style={{ color: "#4253FF", background: "white" }}
+                >
+                  Seleccione o asigne una ficha tecnica
+                </span>
+              ))}
           </span>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
 

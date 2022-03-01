@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import fichaTecnicaContext from "../../context/fichaTecnica/fichaTecnicaContext";
 import Ficha from "./Ficha";
 
-function ListaFichas() {
+function ListaFichas({ setActivarFicha, ActivarFicha }) {
   ///////////////////////////////
   const fichatecnicacontext = useContext(fichaTecnicaContext);
   const {
@@ -12,12 +12,19 @@ function ListaFichas() {
   } = fichatecnicacontext;
   //////////////////////////////
   return (
-    <ul class="list-group">
-      {todasLasFichasTecnica.map((fichatecnica, i) => (
-        <li key={i}>
-          <Ficha fichatecnica={fichatecnica} />
-        </li>
-      ))}
+    <ul class="list-group cambiarcolores">
+      {todasLasFichasTecnica.length > 0 ? (
+        todasLasFichasTecnica.map((fichatecnica, i) => (
+          <Ficha
+            fichatecnica={fichatecnica}
+            key={i}
+            setActivarFicha={setActivarFicha}
+            ActivarFicha={ActivarFicha}
+          />
+        ))
+      ) : (
+        <p className="text-danger lead">No existe fichas tecnicas asignadas</p>
+      )}
     </ul>
   );
 }

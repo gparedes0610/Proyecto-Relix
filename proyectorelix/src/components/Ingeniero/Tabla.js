@@ -1,11 +1,24 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 
 import * as XLSX from "xlsx";
+
+import fichaTecnicaContext from "../../context/fichaTecnica/fichaTecnicaContext";
 function Tabla() {
+  ///////////////////////////////
+  const fichatecnicacontext = useContext(fichaTecnicaContext);
+  const {
+    fichaTecnica,
+    todasLasFichasTecnica,
+    registroDeFichaTecnica,
+    obtenerTodasLasFichasTecnicas,
+    fichaTecnicaActual,
+  } = fichatecnicacontext;
+  //////////////////////////////
+
   const [dataTabla, setDataTabla] = useState([]);
 
   /* COLUMNAS */
@@ -117,6 +130,13 @@ function Tabla() {
       setDataTabla(itemsFinales);
     });
   };
+
+  if (!fichaTecnica)
+    return (
+      <h3 className="fw-bolder mt-3 text-uppercase">
+        Cree tabla por ficha tecnica para trabajar
+      </h3>
+    ); // solo puede haber un return
   return (
     <div>
       {/*   Acciones */}

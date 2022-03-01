@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import NavBar from "../components/NavBar";
 import "../components/Navbar.css";
-
+import "../css/styles.css";
 import BdSimulado from "../services/BdSimulado.json";
 
 import { AgGridReact } from "ag-grid-react";
@@ -103,8 +103,11 @@ function SesionIniciada() {
                 </div>
                 <div className="row mt-4 text-start">
                   <div className="col-12">
-                    <h5>Lista de Fichas</h5>
-                    <ListaFichas />
+                    <h5 className="fw-bolder">Lista de Fichas</h5>
+                    <ListaFichas
+                      setActivarFicha={setActivarFicha}
+                      ActivarFicha={ActivarFicha}
+                    />
                   </div>
                 </div>
               </div>

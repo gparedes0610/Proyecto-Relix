@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 //import "./components/Navbar.css";
 import "./App.css";
+import "./css/styles.css";
 import bootstrap from "bootstrap/dist/css/bootstrap.min.css";
 
 import LoginView from "./components/auth/LoginView";

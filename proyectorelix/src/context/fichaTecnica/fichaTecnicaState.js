@@ -7,11 +7,16 @@ import {
   TODAS_LAS_FICHAS_TECNICAS,
   REGISTRO_FICHATECNICA_EXITOSA,
   REGISTRO_FICHATECNICA_ERROR,
+  FICHATECNICA_ACTUAL,
+  FICHA_EDICION,
+  ACTUALIZAR_FICHA,
 } from "../../types";
 import clienteAxios from "../../config/axios";
 const FichaTecnicaStateProvider = (props) => {
   const initialState = {
     todasLasFichasTecnica: [],
+    fichaTecnica: null,
+    fichaEdicion: null,
   };
 
   const [state, dispatch] = useReducer(fichaTecnicaReducer, initialState);
@@ -24,7 +29,7 @@ const FichaTecnicaStateProvider = (props) => {
       console.log(respuesta.data);
       dispatch({
         type: REGISTRO_FICHATECNICA_EXITOSA,
-        payload: datos,
+        payload: respuesta.data,
       });
     } catch (error) {
       console.log(error);
@@ -35,7 +40,7 @@ const FichaTecnicaStateProvider = (props) => {
   const obtenerTodasLasFichasTecnicas = async () => {
     try {
       const respuesta = await clienteAxios.get("/api/fichatecnica");
-      console.log("respuesta de obtenerTodasLasFichasTecnicas", respuesta.data);
+      // console.log("respuesta de obtenerTodasLasFichasTecnicas", respuesta.data);
       dispatch({
         type: TODAS_LAS_FICHAS_TECNICAS,
         payload: respuesta.data,
@@ -45,12 +50,52 @@ const FichaTecnicaStateProvider = (props) => {
     }
   };
 
+  //selecciona el proyecto que el usuario dio click
+  const fichaTecnicaActual = (fichaTecnicaId) => {
+    dispatch({
+      type: FICHATECNICA_ACTUAL,
+      payload: fichaTecnicaId,
+    });
+  };
+
+  /////////////////////////////////////////EXTRAER UNA TAREA PARA EDICION
+  const guardarFichaActual = (ficha) => {
+    console.log("estas en guardarFichaActual es para editar", ficha);
+    dispatch({
+      type: FICHA_EDICION,
+      payload: ficha,
+    });
+  };
+  //////////////////////////////////////////
+  const actualizarFicha = async (ficha) => {
+    console.log("estamos en actualizarFicha y te estoy mandando  ", ficha);
+    try {
+      const resultado = await clienteAxios.put(
+        `/api/fichatecnica/${ficha.idFichatecnica}`,
+        ficha
+      );
+      console.log("resultado de actualizarFicha", resultado);
+      console.log(resultado.data);
+      dispatch({
+        type: ACTUALIZAR_FICHA,
+        payload: resultado.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <fichaTecnicaContext.Provider
       value={{
         todasLasFichasTecnica: state.todasLasFichasTecnica,
+        fichaTecnica: state.fichaTecnica,
+        fichaEdicion: state.fichaEdicion,
         registroDeFichaTecnica,
         obtenerTodasLasFichasTecnicas,
+        fichaTecnicaActual,
+        guardarFichaActual,
+        actualizarFicha,
       }}
     >
       {props.children}

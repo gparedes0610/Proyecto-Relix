@@ -17,3 +17,6 @@ export const TODAS_LAS_FICHAS_TECNICAS = "TODAS_LAS_FICHAS_TECNICAS";
 export const FICHATECNICA_ACTUAL = "FICHATECNICA_ACTUAL";
 export const FICHA_EDICION = "FICHA_EDICION";
 export const ACTUALIZAR_FICHA = "ACTUALIZAR_FICHA";
+//////////////////////////////////////////////////////////////////
+export const OBTENER_DATOS_TABLA = "OBTENER_DATOS_TABLA";
+export const AGREGAR_DATOS_TABLA = "AGREGAR_DATOS_TABLA";

@@ -1,7 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
 import fichaTecnicaContext from "../../context/fichaTecnica/fichaTecnicaContext";
 import "./styles.css";
+import tablaContext from "../../context/tabla/tablaContext";
 function Ficha({ fichatecnica, setActivarFicha, ActivarFicha }) {
+  //////////////////////
+  const tablacontext = useContext(tablaContext);
+  const { tablaDatos, obtenerDatosTabla } = tablacontext;
+  ////////////////////////
   ///////////////////////////////
   const fichatecnicacontext = useContext(fichaTecnicaContext);
   const {
@@ -15,14 +20,18 @@ function Ficha({ fichatecnica, setActivarFicha, ActivarFicha }) {
   //////////////////////////////
 
   //console.log("ficha tecnica", fichaTecnica);
+  ////////////////////////////////////////////////////////TABLA EN CADA FICHA
   const crearTabla = (fichaTecnicaId) => {
     console.log(
       "hizo click en crear tabla y el id de esa fichatecnica es ",
       fichaTecnicaId
     );
-    console.log("y este es el objeto", fichatecnica);
+    //console.log("y este es el objeto", fichatecnica);
     fichaTecnicaActual(fichaTecnicaId);
+    //tmb deberia llamar los datos de la tabla por el id de la ficha
+    obtenerDatosTabla(fichatecnica);
   };
+
   /////////////////////////////////////////PARA EDITAR
   const btnEditar = () => {
     setActivarFicha(!ActivarFicha);

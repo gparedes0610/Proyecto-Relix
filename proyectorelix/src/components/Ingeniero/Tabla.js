@@ -7,49 +7,51 @@ import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 import * as XLSX from "xlsx";
 
 import fichaTecnicaContext from "../../context/fichaTecnica/fichaTecnicaContext";
+import tablaContext from "../../context/tabla/tablaContext";
 function Tabla() {
+  /////////////////////////////
+  const tablacontext = useContext(tablaContext);
+  const { tablaDatos, obtenerDatosTabla, agregarDatosTabla } = tablacontext;
+  //////////////////////////
   ///////////////////////////////
   const fichatecnicacontext = useContext(fichaTecnicaContext);
-  const {
-    fichaTecnica,
-    todasLasFichasTecnica,
-    registroDeFichaTecnica,
-    obtenerTodasLasFichasTecnicas,
-    fichaTecnicaActual,
-  } = fichatecnicacontext;
+  const { fichaTecnica } = fichatecnicacontext;
+  //console.log("ficha tecnica", fichaTecnica);
   //////////////////////////////
-
+  //useEffect(() => {}, [fichaTecnica]);
+  console.log("tabla de datos", tablaDatos);
   const [dataTabla, setDataTabla] = useState([]);
-
+  const [IdFichaDataTabla, setIdFichaDataTabla] = useState([]);
+  const [prueba, setPrueba] = useState([]);
   /* COLUMNAS */
   const columns = [
     {
       headerName: "Partida",
-      field: "partida",
+      field: "partidaDetallefichatecnica",
     },
     {
-      headerName: "Subpartida",
-      field: "subpartida",
+      headerName: "SubPartida",
+      field: "subpartidaDetallefichatecnica",
     },
     {
       headerName: "Marca",
-      field: "marca",
+      field: "marcaDetallefichatecnica",
     },
     {
-      headerName: "Codprov",
-      field: "codprov",
+      headerName: "Codido Proveedor",
+      field: "codigoproveedorDetallefichatecnica",
     },
     {
-      headerName: "Codsoftcom",
-      field: "codsoftcom",
+      headerName: "Codigo ERP",
+      field: "codigosoftcomProducto",
     },
     {
       headerName: "Descripcion",
-      field: "descripcion",
+      field: "descripcionDetallefichatecnica",
     },
     {
-      headerName: "CantTotal",
-      field: "cantTotal",
+      headerName: "Cantidad Total",
+      field: "cantidadDetallefichatecnica",
     },
     {
       headerName: "PreUnitario",
@@ -57,17 +59,17 @@ function Tabla() {
       cellRendererFramework: (params) => (
         <select defaultValue={"DEFAULT"}>
           <option value="DEFAULT" disabled>
-            Choose a salutation ...
+            Selecciona un precio
           </option>
-          <option value="value1">Value 1</option>
-          <option value="value2" selected>
-            Value 2
-          </option>
-          <option value="value3">Value 3</option>
+          {fichaTecnica ? (
+            fichaTecnica.map((ficha, i) => <option value={i}>{i}</option>)
+          ) : (
+            <option value="value1">No hay precios</option>
+          )}
         </select>
       ),
     },
-    {
+    /* {
       headerName: "PreTotal",
       field: "preTotal",
     },
@@ -78,9 +80,9 @@ function Tabla() {
     {
       headerName: "CostoTotal",
       field: "costoTotal",
-    },
+    }, */
     /////////////////para agregar una columna
-    {
+    /* {
       headerName: "Descuento",
       field: "",
     },
@@ -88,6 +90,10 @@ function Tabla() {
       headerName: "Total con descuento",
       field: "",
     },
+    {
+      headerName: "Acciones",
+      field: "",
+    }, */
   ];
   /* COLUMNAS */
 
@@ -95,7 +101,7 @@ function Tabla() {
     /* filter: true, */
     /*  filter: true,
     floatingFilter: true, */
-    editable: true,
+    //editable: true,
   };
 
   /* para importar un excel y convertilo en un array de objetos */
@@ -126,8 +132,18 @@ function Tabla() {
 
     promise.then((itemsFinales) => {
       //setItems(d);
-      console.log(itemsFinales);
-      setDataTabla(itemsFinales);
+      // console.log(itemsFinales); ///////////////estos son los datos del excel pasado a objeto
+      const items = itemsFinales;
+      //console.log(items);
+      const agregarId = items.map((item) => ({
+        ...item,
+        idFichatecnica: fichaTecnica[0].idFichatecnica,
+      }));
+      //console.log("agregado idFichaTecnica", agregarId);
+      agregarDatosTabla(agregarId);
+      console.log("tabladatos", tablaDatos);
+      //setDataTabla(tablaDatos);
+      //setIdFichaDataTabla(itemsFinales);
     });
   };
 
@@ -201,7 +217,7 @@ function Tabla() {
             style={{ height: 400, width: "100%" }}
           >
             <AgGridReact
-              rowData={dataTabla}
+              rowData={tablaDatos}
               columnDefs={columns}
               defaultColDef={defaultColDef}
             />

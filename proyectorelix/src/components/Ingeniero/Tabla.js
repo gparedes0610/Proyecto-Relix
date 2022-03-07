@@ -22,12 +22,16 @@ function Tabla() {
   console.log("tabla de datos", tablaDatos);
   const [dataTabla, setDataTabla] = useState([]);
   const [IdFichaDataTabla, setIdFichaDataTabla] = useState([]);
-  const [prueba, setPrueba] = useState([]);
+  const [prueba, setPrueba] = useState("");
+  const [verPrecios, setVerPrecios] = useState(false);
+  useEffect(() => {}, [verPrecios]);
+
   /* COLUMNAS */
   const columns = [
     {
       headerName: "Partida",
       field: "partidaDetallefichatecnica",
+      filter: true,
     },
     {
       headerName: "SubPartida",
@@ -36,6 +40,7 @@ function Tabla() {
     {
       headerName: "Marca",
       field: "marcaDetallefichatecnica",
+      filter: true,
     },
     {
       headerName: "Codido Proveedor",
@@ -57,16 +62,61 @@ function Tabla() {
       headerName: "PreUnitario",
       field: "preUnitario",
       cellRendererFramework: (params) => (
-        <select defaultValue={"DEFAULT"}>
-          <option value="DEFAULT" disabled>
-            Selecciona un precio
-          </option>
-          {fichaTecnica ? (
-            fichaTecnica.map((ficha, i) => <option value={i}>{i}</option>)
-          ) : (
-            <option value="value1">No hay precios</option>
-          )}
-        </select>
+        <>
+          <select value={prueba} onChange={(e) => setPrueba(e.target.value)}>
+            <option value={params.data.precioventaunoProducto}>
+              {params.data.precioventaunoProducto}
+            </option>
+            <option value={params.data.precioventadosProducto}>
+              {params.data.precioventadosProducto}
+            </option>
+            <option value={params.data.precioventatresProducto}>
+              {params.data.precioventatresProducto}
+            </option>
+            <option value={params.data.precioventacuatroProducto}>
+              {params.data.precioventacuatroProducto}
+            </option>
+          </select>
+        </>
+      ),
+      /* </select> */
+    },
+    {
+      headerName: "Precio Total",
+      field: "precioTotal",
+      cellRendererFramework: (params) => (
+        <>
+          <span>{params.data.cantidadDetallefichatecnica * prueba}</span>
+        </>
+      ),
+    },
+    {
+      headerName: "Costo Ing",
+      field: "costopromedioProducto",
+    },
+    {
+      headerName: "Costo Total",
+      field: "costototaling",
+      cellRendererFramework: (params) => (
+        <>
+          <span>
+            {params.data.cantidadDetallefichatecnica *
+              params.data.costopromedioProducto}
+          </span>
+        </>
+      ),
+    },
+    {
+      headerName: "Acciones",
+      field: "acciones",
+      sortable: false,
+      editable: false,
+      filter: false,
+
+      cellRendererFramework: (params) => (
+        <div>
+          <button onClick={() => actionButton(params)}>Aplicar</button>{" "}
+        </div>
       ),
     },
     /* {
@@ -96,6 +146,9 @@ function Tabla() {
     }, */
   ];
   /* COLUMNAS */
+  const actionButton = (params) => {
+    console.log("toda la fila", params.data, params.data.idDetallefichatecnica);
+  };
 
   const defaultColDef = {
     /* filter: true, */
@@ -141,7 +194,7 @@ function Tabla() {
       }));
       //console.log("agregado idFichaTecnica", agregarId);
       agregarDatosTabla(agregarId);
-      console.log("tabladatos", tablaDatos);
+      //console.log("tabladatos", tablaDatos);
       //setDataTabla(tablaDatos);
       //setIdFichaDataTabla(itemsFinales);
     });
@@ -155,8 +208,25 @@ function Tabla() {
     ); // solo puede haber un return
   return (
     <div>
+      {/*   {tablaDatos.map((dato, i) => (
+        <select>
+          <option value={dato.precioventaunoProducto}>
+            {dato.precioventaunoProducto}
+          </option>
+          <option value={dato.precioventadosProducto}>
+            {dato.precioventadosProducto}
+          </option>
+          <option value={dato.precioventatresProducto}>
+            {dato.precioventatresProducto}
+          </option>
+          <option value={dato.precioventacuatroProducto}>
+            {dato.precioventacuatroProducto}
+          </option>
+          <option value="value1">{i}</option>
+        </select>
+      ))} */}
       {/*   Acciones */}
-      <div className="row mt-3">
+      <div className="row mt-3 mb-4">
         <div className="col-12 col-md-6 mb-2">
           <input
             className="form-control"
@@ -170,6 +240,14 @@ function Tabla() {
         </div>
         <div className="col-12 col-md-6 mb-2">
           <div className="d-flex">
+            <input
+              className="form-control"
+              type="number"
+              placeholder="Descuento Total"
+            />
+            <button className="btn btn-success ms-2">Aplicar</button>
+          </div>
+          {/* <div className="d-flex">
             <input
               className="form-control"
               type="number"
@@ -187,11 +265,11 @@ function Tabla() {
               <option>Partida4</option>
             </select>
             <button className="ms-2 btn btn-success">Aplicar</button>
-          </div>
+          </div> */}
         </div>
       </div>
 
-      <div className="row mt-3 mb-3">
+      {/* <div className="row mt-3 mb-3">
         <div className="col-12 col-md-6  mb-2">
           <div className="d-flex">
             <input
@@ -205,7 +283,7 @@ function Tabla() {
         <div className="col-12 col-md-6 mb-2">
           <input className="form-control" type="Text" placeholder="Busqueda" />
         </div>
-      </div>
+      </div> */}
       {/*   Acciones */}
 
       {/* TABLA */}
@@ -227,7 +305,7 @@ function Tabla() {
       {/* TABLA */}
       <div className="row mt-3 mb-3">
         <div className="col-12 col-md-6 text-start">
-          <button
+          {/* <button
             style={{
               border: "none",
               color: "white ",
@@ -236,7 +314,7 @@ function Tabla() {
             className="ms-3 btn-danger"
           >
             Modificar ficha tecnica
-          </button>
+          </button> */}
         </div>
         <div className="col-12 col-md-6 text-end">
           <button

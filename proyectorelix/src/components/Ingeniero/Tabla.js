@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useMemo } from "react";
 
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/dist/styles/ag-grid.css";
@@ -8,6 +8,8 @@ import * as XLSX from "xlsx";
 
 import fichaTecnicaContext from "../../context/fichaTecnica/fichaTecnicaContext";
 import tablaContext from "../../context/tabla/tablaContext";
+import Select from "./Select";
+
 function Tabla() {
   /////////////////////////////
   const tablacontext = useContext(tablaContext);
@@ -22,8 +24,11 @@ function Tabla() {
   console.log("tabla de datos", tablaDatos);
   const [dataTabla, setDataTabla] = useState([]);
   const [IdFichaDataTabla, setIdFichaDataTabla] = useState([]);
+
   const [prueba, setPrueba] = useState("");
+
   const [verPrecios, setVerPrecios] = useState(false);
+
   useEffect(() => {}, [verPrecios]);
 
   /* COLUMNAS */
@@ -63,23 +68,9 @@ function Tabla() {
       field: "preUnitario",
       cellRendererFramework: (params) => (
         <>
-          <select value={prueba} onChange={(e) => setPrueba(e.target.value)}>
-            <option value={params.data.precioventaunoProducto}>
-              {params.data.precioventaunoProducto}
-            </option>
-            <option value={params.data.precioventadosProducto}>
-              {params.data.precioventadosProducto}
-            </option>
-            <option value={params.data.precioventatresProducto}>
-              {params.data.precioventatresProducto}
-            </option>
-            <option value={params.data.precioventacuatroProducto}>
-              {params.data.precioventacuatroProducto}
-            </option>
-          </select>
+          <Select parametros={params.data} />
         </>
       ),
-      /* </select> */
     },
     {
       headerName: "Precio Total",
@@ -119,33 +110,20 @@ function Tabla() {
         </div>
       ),
     },
-    /* {
-      headerName: "PreTotal",
-      field: "preTotal",
-    },
-    {
-      headerName: "CostoReal",
-      field: "costoReal",
-    },
-    {
-      headerName: "CostoTotal",
-      field: "costoTotal",
-    }, */
-    /////////////////para agregar una columna
-    /* {
-      headerName: "Descuento",
-      field: "",
-    },
-    {
-      headerName: "Total con descuento",
-      field: "",
-    },
-    {
-      headerName: "Acciones",
-      field: "",
-    }, */
   ];
   /* COLUMNAS */
+
+  const autoGroupColumnDef = useMemo(() => {
+    return {
+      headerName: "Athlete",
+      field: "athlete",
+      minWidth: 250,
+      cellRenderer: "agGroupCellRenderer",
+      cellRendererParams: {
+        checkbox: true,
+      },
+    };
+  }, []);
   const actionButton = (params) => {
     console.log("toda la fila", params.data, params.data.idDetallefichatecnica);
   };
@@ -208,7 +186,7 @@ function Tabla() {
     ); // solo puede haber un return
   return (
     <div>
-      {/*   {tablaDatos.map((dato, i) => (
+      {/* {tablaDatos.map((dato, i) => (
         <select>
           <option value={dato.precioventaunoProducto}>
             {dato.precioventaunoProducto}
@@ -298,6 +276,7 @@ function Tabla() {
               rowData={tablaDatos}
               columnDefs={columns}
               defaultColDef={defaultColDef}
+              autoGroupColumnDef={autoGroupColumnDef}
             />
           </div>
         </div>

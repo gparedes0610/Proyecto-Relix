@@ -10,10 +10,17 @@ import fichaTecnicaContext from "../../context/fichaTecnica/fichaTecnicaContext"
 import tablaContext from "../../context/tabla/tablaContext";
 import Select from "./Select";
 
+import { round } from "../../utils";
+
 function Tabla() {
   /////////////////////////////
   const tablacontext = useContext(tablaContext);
-  const { tablaDatos, obtenerDatosTabla, agregarDatosTabla } = tablacontext;
+  const {
+    tablaDatos,
+    obtenerDatosTabla,
+    agregarDatosTabla,
+    actualizarDatosTabla,
+  } = tablacontext;
   //////////////////////////
   ///////////////////////////////
   const fichatecnicacontext = useContext(fichaTecnicaContext);
@@ -68,18 +75,27 @@ function Tabla() {
       field: "preUnitario",
       cellRendererFramework: (params) => (
         <>
-          <Select parametros={params.data} />
+          <Select data={params.data} keyId={"idDetallefichatecnica"} />
         </>
       ),
     },
     {
       headerName: "Precio Total",
       field: "precioTotal",
-      cellRendererFramework: (params) => (
-        <>
-          <span>{params.data.cantidadDetallefichatecnica * prueba}</span>
-        </>
-      ),
+      valueGetter: (params) => {
+        const precioTotal =
+          (params.data.optionSelected ||
+            params.data.precioventacuatroProducto) *
+          params.data.cantidadDetallefichatecnica;
+
+        const isDecimal = precioTotal - Math.floor(precioTotal) !== 0;
+
+        const result = `S/ ${
+          isDecimal ? round(precioTotal, 2).toFixed(2) : precioTotal + ".00"
+        }`;
+
+        return result;
+      },
     },
     {
       headerName: "Costo Ing",

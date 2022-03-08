@@ -4,7 +4,11 @@ import tablaContext from "./tablaContext";
 
 import tablaReducer from "./tablaReducer";
 
-import { OBTENER_DATOS_TABLA, AGREGAR_DATOS_TABLA } from "../../types";
+import {
+  OBTENER_DATOS_TABLA,
+  AGREGAR_DATOS_TABLA,
+  ACTUALIZAR_DATOS_TABLA,
+} from "../../types";
 import clienteAxios from "../../config/axios";
 
 const TablaStateProvider = (props) => {
@@ -62,12 +66,25 @@ const TablaStateProvider = (props) => {
     }
   };
 
+  /**
+   *
+   * @param {any} rowUpdated
+   * @param {string} keyId El nombre de la columna de la tabla que representa el Id
+   */
+  const actualizarDatosTabla = (rowUpdated, keyId) => {
+    dispatch({
+      type: ACTUALIZAR_DATOS_TABLA,
+      payload: { rowUpdated, keyId },
+    });
+  };
+
   return (
     <tablaContext.Provider
       value={{
         tablaDatos: state.tablaDatos,
         obtenerDatosTabla,
         agregarDatosTabla,
+        actualizarDatosTabla,
       }}
     >
       {props.children}

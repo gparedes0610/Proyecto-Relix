@@ -20,3 +20,4 @@ export const ACTUALIZAR_FICHA = "ACTUALIZAR_FICHA";
 //////////////////////////////////////////////////////////////////
 export const OBTENER_DATOS_TABLA = "OBTENER_DATOS_TABLA";
 export const AGREGAR_DATOS_TABLA = "AGREGAR_DATOS_TABLA";
+export const ACTUALIZAR_DATOS_TABLA = "ACTUALIZAR_DATOS_TABLA";

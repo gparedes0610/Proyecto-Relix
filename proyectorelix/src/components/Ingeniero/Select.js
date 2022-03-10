@@ -1,12 +1,30 @@
-import React from "react";
+import React, { useContext } from "react";
+import tablaContext from "../../context/tabla/tablaContext";
 
-function Select({ parametros }) {
+function Select({ data, keyId }) {
+  const tablacontext = useContext(tablaContext);
+  const { actualizarDatosTabla } = tablacontext;
+  const onChange = (e) => {
+    const rowUpdated = { ...data, optionSelected: e.target.value };
+    actualizarDatosTabla(rowUpdated, keyId);
+  };
   return (
-    <select>
-      <option>{parametros.precioventaunoProducto}</option>
-      <option>{parametros.precioventadosProducto}</option>
-      <option>{parametros.precioventatresProducto}</option>
-      <option>{parametros.precioventacuatroProducto}</option>
+    <select
+      value={data.optionSelected || data.precioventacuatroProducto}
+      onChange={onChange}
+    >
+      <option value={data.precioventaunoProducto}>
+        {data.precioventaunoProducto}
+      </option>
+      <option value={data.precioventadosProducto}>
+        {data.precioventadosProducto}
+      </option>
+      <option value={data.precioventatresProducto}>
+        {data.precioventatresProducto}
+      </option>
+      <option value={data.precioventacuatroProducto}>
+        {data.precioventacuatroProducto}
+      </option>
     </select>
   );
 }

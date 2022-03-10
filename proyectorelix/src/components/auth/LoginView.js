@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import LogoRelix from "../../assets/relixjpg1.svg";
 import login from "../../assets/login4.svg";
 import { Form, Button } from "react-bootstrap";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import authContext from "../../context/autenticacion/authContext";
 import alertContext from "../../context/alertas/alertaContext";
 
@@ -82,7 +82,7 @@ function LoginView() {
                 <div>
                   <Form
                     style={{ background: "white" }}
-                    className="pb-5"
+                    className="pb-3"
                     onSubmit={handleSubmit}
                   >
                     <Form.Group
@@ -136,6 +136,12 @@ function LoginView() {
                       {alerta.msg}
                     </div>
                   ) : null}
+                  <div className="d-flex mb-3 justify-content-between">
+                    <Link to="/cambiar-password">Cambiar Contraseña</Link>
+                    <Link to="/recuperar-password">
+                      ¿Olvidaste tu contraseña?
+                    </Link>
+                  </div>
                 </div>
               </div>
             </div>

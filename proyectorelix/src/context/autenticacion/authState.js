@@ -9,6 +9,8 @@ import {
   REGISTRO_ERROR,
   OBTENER_TODOS_LOS_USUARIOS,
   ACTUALIZAR_USUARIO,
+  ACTUALIZAR_PASSWORD,
+  ENVIAR_PASSWORD,
 } from "../../types";
 import { useReducer } from "react";
 import clienteAxios from "../../config/axios"; //obtengo la bd urlS
@@ -21,6 +23,7 @@ const AuthStateProvider = (props) => {
     mensaje: null,
     cargando: true,
     todosLosUsuarios: [],
+    //cambioClave: null,
   };
 
   const [state, dispatch] = useReducer(authReducer, initialState);
@@ -143,6 +146,40 @@ const AuthStateProvider = (props) => {
     }
   };
 
+  //actualizar password
+  const actualizarPassword = async (datos) => {
+    console.log("actualizarpassword se envio", datos);
+    try {
+      const resultado = await clienteAxios.put(
+        `/actualizarClavedefault`,
+        datos
+      );
+      console.log(resultado);
+      console.log(resultado.data);
+      dispatch({
+        type: ACTUALIZAR_PASSWORD,
+        payload: resultado.data,
+      });
+    } catch (error) {
+      console.log(error.response.data.messages.error);
+    }
+  };
+  //enviar password
+  const enviarCorreoPassword = async (dato) => {
+    console.log("enviarPassword se envio", dato);
+    try {
+      const resultado = await clienteAxios.put(`/generarclave`, dato);
+      console.log(resultado);
+      console.log(resultado.data);
+      dispatch({
+        type: ENVIAR_PASSWORD,
+        payload: resultado.data,
+      });
+    } catch (error) {
+      console.log(error.response.data.messages.error);
+    }
+  };
+
   return (
     <authContext.Provider
       value={{
@@ -152,12 +189,15 @@ const AuthStateProvider = (props) => {
         mensaje: state.mensaje,
         cargando: state.cargando,
         todosLosUsuarios: state.todosLosUsuarios,
+        cambioClave: state.cambioClave,
         iniciarSesion,
         usuarioAutenticado,
         cerrarSesion,
         registroDeUsuario,
         obtenerTodosLosUsuarios,
         actualizarUsuario,
+        actualizarPassword,
+        enviarCorreoPassword,
       }}
     >
       {props.children}

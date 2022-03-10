@@ -10,10 +10,17 @@ import fichaTecnicaContext from "../../context/fichaTecnica/fichaTecnicaContext"
 import tablaContext from "../../context/tabla/tablaContext";
 import Select from "./Select";
 
+import { round } from "../../utils";
+
 function Tabla() {
   /////////////////////////////
   const tablacontext = useContext(tablaContext);
-  const { tablaDatos, obtenerDatosTabla, agregarDatosTabla } = tablacontext;
+  const {
+    tablaDatos,
+    obtenerDatosTabla,
+    agregarDatosTabla,
+    actualizarDatosTabla,
+  } = tablacontext;
   //////////////////////////
   ///////////////////////////////
   const fichatecnicacontext = useContext(fichaTecnicaContext);
@@ -37,6 +44,10 @@ function Tabla() {
       headerName: "Partida",
       field: "partidaDetallefichatecnica",
       filter: true,
+      /*  headerCheckboxSelection: true,
+      headerCheckboxSelectionFilteredOnly: true,
+      checkboxSelection: true, */
+      headerCheckboxSelection: true,
     },
     {
       headerName: "SubPartida",
@@ -68,18 +79,27 @@ function Tabla() {
       field: "preUnitario",
       cellRendererFramework: (params) => (
         <>
-          <Select parametros={params.data} />
+          <Select data={params.data} keyId={"idDetallefichatecnica"} />
         </>
       ),
     },
     {
       headerName: "Precio Total",
       field: "precioTotal",
-      cellRendererFramework: (params) => (
-        <>
-          <span>{params.data.cantidadDetallefichatecnica * prueba}</span>
-        </>
-      ),
+      valueGetter: (params) => {
+        const precioTotal =
+          (params.data.optionSelected ||
+            params.data.precioventacuatroProducto) *
+          params.data.cantidadDetallefichatecnica;
+
+        const isDecimal = precioTotal - Math.floor(precioTotal) !== 0;
+
+        const result = `S/ ${
+          isDecimal ? round(precioTotal, 2).toFixed(2) : precioTotal + ".00"
+        }`;
+
+        return result;
+      },
     },
     {
       headerName: "Costo Ing",
@@ -98,6 +118,15 @@ function Tabla() {
       ),
     },
     {
+      headerName: "Ingrese Descuento %",
+      field: "descuento",
+      editable: true,
+    },
+    {
+      headerName: "Precio Con descuento",
+      field: "preciocondescuento",
+    },
+    {
       headerName: "Acciones",
       field: "acciones",
       sortable: false,
@@ -106,7 +135,12 @@ function Tabla() {
 
       cellRendererFramework: (params) => (
         <div>
-          <button onClick={() => actionButton(params)}>Aplicar</button>{" "}
+          <buttonc
+            className="btn btn-primary"
+            onClick={() => actionButton(params)}
+          >
+            Aplicar
+          </buttonc>{" "}
         </div>
       ),
     },
@@ -127,12 +161,17 @@ function Tabla() {
   const actionButton = (params) => {
     console.log("toda la fila", params.data, params.data.idDetallefichatecnica);
   };
+  let gridApi;
+  const onGridReady = (params) => {
+    gridApi = params.api;
+  };
 
   const defaultColDef = {
     /* filter: true, */
     /*  filter: true,
     floatingFilter: true, */
     //editable: true,
+    resizable: true,
   };
 
   /* para importar un excel y convertilo en un array de objetos */
@@ -176,6 +215,22 @@ function Tabla() {
       //setDataTabla(tablaDatos);
       //setIdFichaDataTabla(itemsFinales);
     });
+  };
+  const rowSelectionType = "multiple";
+
+  const getSelectedRowData = () => {
+    console.log("entraste a getSelectedRowData ");
+    let selectedNodes = gridApi.getSelectedNodes();
+    console.log("selectNodes ", selectedNodes);
+    let selectedData = selectedNodes.map((node) => node.data);
+    console.log("filas", selectedData);
+  };
+
+  const onSelectionChanged = (event) => {
+    //sirve para coger todo el objeto de una fila
+    console.log(event.api.getSelectedRows());
+    /* const fila = event.api.getSelectedRows();
+    console.log(`soy fila agarrada`, fila); */
   };
 
   if (!fichaTecnica)
@@ -266,6 +321,9 @@ function Tabla() {
 
       {/* TABLA */}
       <div className="row">
+        {/* <button onClick={() => getSelectedRowData()} style={{ margin: 10 }}>
+          Agarrar Filas
+        </button> */}
         <div className="col-12 ">
           <div
             id="myGrid"
@@ -276,7 +334,14 @@ function Tabla() {
               rowData={tablaDatos}
               columnDefs={columns}
               defaultColDef={defaultColDef}
-              autoGroupColumnDef={autoGroupColumnDef}
+              // autoGroupColumnDef={autoGroupColumnDef}
+              //  suppressRowClickSelection={true}
+              //rowSelection={"multiple"}
+              onGridReady={onGridReady}
+              // rowSelection={rowSelectionType}
+              rowSelection={rowSelectionType} //selecciona una fila
+              onSelectionChanged={onSelectionChanged} //selecciona varias filas con control
+              rowMultiSelectWithClick={true}
             />
           </div>
         </div>

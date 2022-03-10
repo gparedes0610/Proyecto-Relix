@@ -3,6 +3,7 @@ import fichaTecnicaContext from "../../context/fichaTecnica/fichaTecnicaContext"
 import "./styles.css";
 import tablaContext from "../../context/tabla/tablaContext";
 function Ficha({ fichatecnica, setActivarFicha, ActivarFicha }) {
+  const [existeTabla, setExisteTabla] = useState(false);
   //////////////////////
   const tablacontext = useContext(tablaContext);
   const { tablaDatos, obtenerDatosTabla } = tablacontext;
@@ -56,7 +57,7 @@ function Ficha({ fichatecnica, setActivarFicha, ActivarFicha }) {
           className="btn btn-success mx-2 py-0"
           onClick={() => crearTabla(fichatecnica.idFichatecnica)}
         >
-          Crear Tabla
+          Ver Tabla
         </button>{" "}
         <button className="btn btn-warning py-0" onClick={() => btnEditar()}>
           Editar

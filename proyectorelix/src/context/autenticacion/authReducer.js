@@ -7,6 +7,8 @@ import {
   CERRAR_SESION,
   OBTENER_TODOS_LOS_USUARIOS,
   ACTUALIZAR_USUARIO,
+  ACTUALIZAR_PASSWORD,
+  ENVIAR_PASSWORD,
 } from "../../types";
 
 export default (state, action) => {
@@ -17,6 +19,15 @@ export default (state, action) => {
         ...state,
         //autenticado: true,
         mensaje: null,
+      };
+    case LOGIN_EXITOSO:
+      localStorage.setItem("token", "Bearer " + action.payload.Token);
+      return {
+        ...state,
+        autenticado: true,
+        mensaje: null,
+        cargando: false,
+        cambioClave: false,
       };
 
     case LOGIN_ERROR:
@@ -53,14 +64,19 @@ export default (state, action) => {
         autenticado: true,
         cargando: false,
       };
-    case LOGIN_EXITOSO:
-      localStorage.setItem("token", "Bearer " + action.payload.Token);
+    case ACTUALIZAR_PASSWORD:
       return {
         ...state,
-        autenticado: true,
-        mensaje: null,
-        cargando: false,
+        //cambioClave: true,
+        //mensaje: true,
       };
+    case ENVIAR_PASSWORD:
+      return {
+        ...state,
+        //cambioClave: true,
+        //mensaje: true,
+      };
+
     case CERRAR_SESION:
       localStorage.removeItem("token");
       return {
@@ -68,6 +84,7 @@ export default (state, action) => {
         autenticado: null,
         mensaje: null,
         usuario: null,
+        // cambioClave: false,
       };
     default:
       return state;

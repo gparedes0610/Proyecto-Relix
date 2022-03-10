@@ -36,6 +36,8 @@ import MaterialesServicios from "./views/MaterialesServicios";
 import PrivateRoute from "./rutas/PrivateRoute";
 import CambiarContrasena from "./views/CambiarContrasena";
 import PlaneamientoDeCompras from "./views/PlaneamientoDeCompras";
+import RecuperarPassword from "./components/auth/RecuperarPassword";
+import OlvidastePassword from "./components/auth/OlvidastePassword";
 
 function App() {
   //revisar si tenemos un token
@@ -94,7 +96,15 @@ function App() {
                   element={<PlaneamientoDeCompras />}
                 />
                 <Route path="/maestro" element={<MaestroView />} />
-                <Route path="/aside" element={<Aside />} />
+
+                <Route
+                  path="/cambiar-password"
+                  element={<RecuperarPassword />}
+                />
+                <Route
+                  path="/recuperar-password"
+                  element={<OlvidastePassword />}
+                />
 
                 {/* <Route path="*" element={<NotFound />} />
         <Route path="/" element={<LoginView />} />

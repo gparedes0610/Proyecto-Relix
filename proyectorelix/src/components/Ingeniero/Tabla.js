@@ -9,7 +9,7 @@ import * as XLSX from "xlsx";
 import fichaTecnicaContext from "../../context/fichaTecnica/fichaTecnicaContext";
 import tablaContext from "../../context/tabla/tablaContext";
 import Select from "./Select";
-
+import Swal from "sweetalert2";
 import { round } from "../../utils";
 
 function Tabla() {
@@ -20,6 +20,7 @@ function Tabla() {
     obtenerDatosTabla,
     agregarDatosTabla,
     actualizarDatosTabla,
+    guardarCotizacion,
   } = tablacontext;
   //////////////////////////
   ///////////////////////////////
@@ -160,6 +161,23 @@ function Tabla() {
   }, []);
   const actionButton = (params) => {
     console.log("toda la fila", params.data, params.data.idDetallefichatecnica);
+    console.log(params.data);
+    console.log("este es el id", params.data.idDetallefichatecnica);
+    console.log("este es el Precio Total", params.data.precioTotal);
+    console.log("este es el multiplo", parseInt(params.data.multiplo));
+    const numAMultiplicar = params.data.descuento;
+    const porcertajeNumero = numAMultiplicar / 100;
+    console.log(porcertajeNumero);
+    const idRow = params.data.idDetallefichatecnica;
+    console.log("soy idRow", idRow);
+    console.log("soy gridApi", gridApi);
+    console.log("soy gridApi.getRowNode", gridApi.getRowNode(0));
+    var rowNode = gridApi.getRowNode(idRow - 1);
+    console.log("soy rowNode", rowNode);
+    console.log(rowNode.data);
+    var newOperacion = rowNode.data.preciocondescuento * porcertajeNumero;
+    var operacionFinal = params.data.preciocondescuento - newOperacion;
+    rowNode.setDataValue("preciocondescuento", operacionFinal);
   };
   let gridApi;
   const onGridReady = (params) => {
@@ -231,6 +249,22 @@ function Tabla() {
     console.log(event.api.getSelectedRows());
     /* const fila = event.api.getSelectedRows();
     console.log(`soy fila agarrada`, fila); */
+  };
+  const EnviarguardadoCotizacion = async () => {
+    console.log("se guardo cotizacion");
+    console.log("ficha tecnica", fichaTecnica);
+    console.log("esta es la id", fichaTecnica[0].idFichatecnica);
+
+    const accionUsuario = await Swal.fire({
+      icon: "warning",
+      title: "Recuerde que se enviara un correo al Gerente General",
+      showConfirmButton: true,
+      showCancelButton: true,
+    });
+
+    if (accionUsuario.isConfirmed) {
+      guardarCotizacion(fichaTecnica[0].idFichatecnica);
+    }
   };
 
   if (!fichaTecnica)
@@ -341,7 +375,7 @@ function Tabla() {
               // rowSelection={rowSelectionType}
               rowSelection={rowSelectionType} //selecciona una fila
               onSelectionChanged={onSelectionChanged} //selecciona varias filas con control
-              rowMultiSelectWithClick={true}
+              //rowMultiSelectWithClick={true}
             />
           </div>
         </div>
@@ -368,9 +402,11 @@ function Tabla() {
               color: "white ",
               padding: "8px 16px",
             }}
+            onClick={() => EnviarguardadoCotizacion()}
           >
-            Guardar Cotizacion
+            Guardar Cotizacion Final
           </button>
+
           <button
             style={{
               background: "#008DCA",
@@ -380,7 +416,7 @@ function Tabla() {
             }}
             className="ms-3"
           >
-            Descuento
+            Guardar
           </button>
         </div>
       </div>

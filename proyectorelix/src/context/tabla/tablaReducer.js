@@ -2,6 +2,7 @@ import {
   OBTENER_DATOS_TABLA,
   AGREGAR_DATOS_TABLA,
   ACTUALIZAR_DATOS_TABLA,
+  GUARDAR_COTIZACIONES,
 } from "../../types";
 
 const tableReducer = (state, action) => {
@@ -15,6 +16,11 @@ const tableReducer = (state, action) => {
       return {
         ...state,
         tablaDatos: action.payload,
+      };
+    case GUARDAR_COTIZACIONES:
+      return {
+        ...state,
+        cotizaciones: action.payload,
       };
     case ACTUALIZAR_DATOS_TABLA:
       const { rowUpdated, keyId } = action.payload;

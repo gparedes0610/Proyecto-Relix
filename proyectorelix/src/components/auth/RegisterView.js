@@ -65,14 +65,14 @@ function RegisterView() {
       return;
     }
 
-    console.log("registraste");
-    console.log({
+    //console.log("registraste");
+    /* console.log({
       nombreUsuario,
       apellidoUsuario,
       correoUsuario,
       idRol,
       passwordUsuario,
-    });
+    }); */
     registroDeUsuario({
       nombreUsuario,
       apellidoUsuario,
@@ -80,6 +80,15 @@ function RegisterView() {
       idRol,
       passwordUsuario,
       idEstadousuario,
+    });
+    mostrarAlerta("Registro Exitoso", "alert alert-success");
+    setregistrarUsuario({
+      nombreUsuario: "",
+      apellidoUsuario: "",
+      correoUsuario: "",
+      passwordUsuario: "",
+      idRol: "",
+      idEstadousuario: "",
     });
   };
 

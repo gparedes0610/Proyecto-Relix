@@ -8,12 +8,14 @@ import {
   OBTENER_DATOS_TABLA,
   AGREGAR_DATOS_TABLA,
   ACTUALIZAR_DATOS_TABLA,
+  GUARDAR_COTIZACIONES,
 } from "../../types";
 import clienteAxios from "../../config/axios";
 
 const TablaStateProvider = (props) => {
   const initialState = {
     tablaDatos: [],
+    cotizaciones: [],
   };
 
   const [state, dispatch] = useReducer(tablaReducer, initialState);
@@ -77,14 +79,34 @@ const TablaStateProvider = (props) => {
       payload: { rowUpdated, keyId },
     });
   };
+  //////////////////guardar cotizacion
+  const guardarCotizacion = async (idFichaTecnica) => {
+    console.log("en guardarCotizacion el id es", idFichaTecnica);
+    try {
+      const resultado = await clienteAxios.put(
+        "/detallefichatecnica",
+        idFichaTecnica
+      );
+      console.log("resultado de agregarDatosTabla", resultado);
+      console.log("resultado de agregarDatosTabla", resultado.data);
+      dispatch({
+        type: GUARDAR_COTIZACIONES,
+        payload: resultado.data,
+      });
+    } catch (error) {
+      console.log(error.response.data.messages.error);
+    }
+  };
 
   return (
     <tablaContext.Provider
       value={{
         tablaDatos: state.tablaDatos,
+        cotizaciones: state.cotizaciones,
         obtenerDatosTabla,
         agregarDatosTabla,
         actualizarDatosTabla,
+        guardarCotizacion,
       }}
     >
       {props.children}

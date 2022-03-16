@@ -1,12 +1,9 @@
-import React, { useContext } from "react";
-import tablaContext from "../../context/tabla/tablaContext";
+import React from "react";
 
-function Select({ data, keyId }) {
-  const tablacontext = useContext(tablaContext);
-  const { actualizarDatosTabla } = tablacontext;
+function Select({ data, setValue }) {
   const onChange = (e) => {
-    const rowUpdated = { ...data, optionSelected: e.target.value };
-    actualizarDatosTabla(rowUpdated, keyId);
+    const options = { ...data, optionSelected: e.target.value };
+    setValue({ options, isManual: false });
   };
   return (
     <select

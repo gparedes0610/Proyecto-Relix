@@ -18,7 +18,7 @@ export interface IEmptyColumnDefinition {
     [key: Key]: any;
   };
   setValues?: (values: { [key: Key]: any }) => Promise<void> | void;
-  getValue?: (rowData: IRowData) => any;
+  getValue?: (rowData: IRowData, callback?: Function) => any;
 }
 //#endregion For body cells without data only format
 

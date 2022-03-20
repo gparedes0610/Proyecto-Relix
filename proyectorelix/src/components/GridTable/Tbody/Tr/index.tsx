@@ -10,36 +10,45 @@ export const Tr = ({
 }) => {
   return (
     <tr style={{ width: "100%", display: "flex", justifyContent: "stretch" }}>
-      {gridTable.columnsDefinition.map((column) => {
-        const cellState = rowState.state.find((cellState) => {
-          return cellState.key === column.key;
-        });
+      {gridTable.columnsDefinition
+        .filter((col) => col.show)
+        .map((column) => {
+          const cellState = rowState.state.find((cellState) => {
+            return cellState.key === column.key;
+          });
 
-        if (cellState) {
-          const cellParams: ICellParams = {
-            fullState: gridTable.fullState,
-            value: cellState.value,
-            values: cellState.values,
-            setValue: cellState.setValue,
-            setValues: cellState.setValues,
-            rowState: cellState.rowState,
-          } as ICellParams;
+          if (cellState) {
+            const cellParams: ICellParams = {
+              fullState: gridTable.fullState,
+              value: cellState.value,
+              values: cellState.values,
+              setValue: cellState.setValue,
+              setValues: cellState.setValues,
+              rowState: cellState.rowState,
+            } as ICellParams;
 
-          return (
-            <td style={{ minWidth: column.width }} key={cellState.key}>
-              {cellState.render
-                ? cellState.render(cellParams)
-                : cellState.value}
-            </td>
-          );
-        } else {
-          return (
-            <td style={{ minWidth: column.width }} key={column.key}>
-              {column.value}
-            </td>
-          );
-        }
-      })}
+            return (
+              <td style={{ minWidth: column.width }} key={cellState.key}>
+                {cellState.render
+                  ? cellState.render(cellParams)
+                  : cellState.value}
+              </td>
+            );
+          } else {
+            return (
+              <td
+                style={{
+                  minWidth: column.width,
+                  display: "flex",
+                  alignContent: "center",
+                }}
+                key={column.key}
+              >
+                {column.value}
+              </td>
+            );
+          }
+        })}
     </tr>
   );
 };

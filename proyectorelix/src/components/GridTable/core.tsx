@@ -90,6 +90,7 @@ export class GridTable {
   ): ICellState {
     const me = this;
     const cellData = rowData[key];
+
     const lastAlternative = columnDefinition.getValue
       ? columnDefinition.getValue(rowData)
       : null;
@@ -103,7 +104,6 @@ export class GridTable {
       },
       setValue(value: IValue): void | Promise<void> {
         let thisCellState = cellState as ICellState;
-
         thisCellState = { ...thisCellState, ...cellStateNPD };
 
         const newFullState = me.setValueFromCell(thisCellState, value);
@@ -281,8 +281,9 @@ export class GridTable {
           (cellState: ICellState) => {
             const newCellState = { ...cellState };
             if (cellState.getValue) {
-              newCellState.value = cellState.getValue(dataForRowStateUpdated);
-              newCellState.values.value = newCellState.value;
+              const _result = cellState.getValue(dataForRowStateUpdated);
+              newCellState.value = _result;
+              newCellState.values.value = _result;
             }
             return newCellState;
           }
@@ -305,9 +306,15 @@ export class GridTable {
       state: newStateforFullState,
       data: newStateforFullState.map((rowState) => {
         const rowData: IRowData = {};
+        // rowState.state.forEach((cellState) => {
+        //   rowData[cellState.key] =
+        //     cellState.getValue?.(rowState.data) || cellState.value;
+        // });
+
         rowState.state.forEach((cellState) => {
-          rowData[cellState.key] =
-            cellState.getValue?.(rowState.data) || cellState.value;
+          rowData[cellState.key] = cellState.getValue
+            ? cellState.getValue(rowState.data)
+            : cellState.value;
         });
         return rowData;
       }),
@@ -374,7 +381,7 @@ export class GridTable {
   }
 
   private getFullValuesFromState(newFullState: IRowState[]): IArrayValues[] {
-    throw [];
+    return [];
   }
 
   private subscribers: Set<ICallbackSubscriber> = new Set();

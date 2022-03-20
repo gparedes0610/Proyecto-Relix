@@ -1,6 +1,11 @@
-import React, { useContext, useEffect, useState, useMemo } from "react";
+import React, {
+  useContext,
+  useEffect,
+  useState,
+  useMemo,
+  useCallback,
+} from "react";
 
-import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 
@@ -15,28 +20,17 @@ import { GridTable, useGridTable } from "../GridTable";
 
 function Tabla() {
   /////////////////////////////
+  const [discount, setDiscount] = useState(0);
   const tablacontext = useContext(tablaContext);
-  const {
-    tablaDatos,
-    obtenerDatosTabla,
-    agregarDatosTabla,
-    actualizarDatosTabla,
-    guardarCotizacion,
-  } = tablacontext;
+  const { tablaDatos, agregarDatosTabla, guardarCotizacion } = tablacontext;
   //////////////////////////
   ///////////////////////////////
   const fichatecnicacontext = useContext(fichaTecnicaContext);
   const { fichaTecnica } = fichatecnicacontext;
-  //console.log("ficha tecnica", fichaTecnica);
   //////////////////////////////
   //useEffect(() => {}, [fichaTecnica]);
-  console.log("tabla de datos", tablaDatos);
-  const [dataTabla, setDataTabla] = useState([]);
-  const [IdFichaDataTabla, setIdFichaDataTabla] = useState([]);
 
-  const [prueba, setPrueba] = useState("");
-
-  const [verPrecios, setVerPrecios] = useState(false);
+  const [verPrecios] = useState(false);
 
   useEffect(() => {}, [verPrecios]);
 
@@ -83,48 +77,77 @@ function Tabla() {
     },
     {
       headerName: "PreUnitario",
-      field: "preUnitario",
-      getValue: (rowData) => {
-        const {
-          precioventaunoProducto,
-          precioventadosProducto,
-          precioventatresProducto,
-          precioventacuatroProducto,
-        } = rowData;
-        const options = {
-          optionSelected: precioventaunoProducto,
-          precioventaunoProducto,
-          precioventadosProducto,
-          precioventatresProducto,
-          precioventacuatroProducto,
-        };
-        const isManual = Object.keys(options).every(
-          (key) => options[key] === 0
+      field: "preciounitarioDetallefichatecnica",
+      render: ({ value, setValue, rowState }) => {
+        const cellPrecioConD = rowState.state.find(
+          (cell) => cell.key === "preciocondescuento"
         );
+        const rowData = rowState.data;
 
-        return { options, isManual };
-      },
-      render: ({ value: { options, isManual }, setValue }) => {
-        return (
-          <>
-            <Select
-              data={options}
-              setValue={setValue}
-              keyId={"idDetallefichatecnica"}
-            />
-          </>
+        const getPrecioConDescuento = (preUnit) => {
+          const cantidad = Number(rowData.cantidadDetallefichatecnica);
+          const precioTotal = cantidad * preUnit;
+
+          const descuento = Number(
+            rowData.descuentounitarioDetallefichatecnica || 0
+          );
+          const precio = Number(precioTotal || 0);
+          const resultadoDescuentoUnitario = precio * (1 - descuento / 100);
+          const descuentoGeneral = Number(
+            rowData.descuentogeneralDetallefichatecnica || 0
+          );
+
+          return resultadoDescuentoUnitario * (1 - descuentoGeneral / 100);
+        };
+        console.log("->>>>>>>>>", value);
+        // precioConD.setValue()
+        const { options, isManual } = value;
+        return isManual ? (
+          <input
+            type="number"
+            value={options.optionSelected || 0}
+            onChange={(e) => {
+              setValue({
+                ...options,
+                optionSelected: e.target.value,
+              });
+            }}
+          />
+        ) : (
+          <Select
+            data={options}
+            setValue={(newValue) => {
+              setValue(newValue);
+              const precioConD = getPrecioConDescuento(
+                Number(newValue.options.optionSelected)
+              );
+
+              const format2Decimals = new Intl.NumberFormat("de-DE", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              });
+              cellPrecioConD.setValue(format2Decimals.format(precioConD));
+            }}
+          />
         );
       },
     },
     {
       headerName: "Precio Total",
-      field: "precioTotal",
-      valueGetter: (params) => {
+      field: "preciototalDetallefichatecnica",
+      getValue(rowData) {
         const precioTotal =
-          (params.data.optionSelected ||
-            params.data.precioventacuatroProducto) *
-          params.data.cantidadDetallefichatecnica;
-
+          Number(
+            rowData.preciounitarioDetallefichatecnica.options.optionSelected
+          ) * Number(rowData.cantidadDetallefichatecnica);
+        return precioTotal;
+      },
+      render: ({ value, rowState: { data } }) => {
+        const precioTotal =
+          value ||
+          Number(
+            data.preciounitarioDetallefichatecnica.options.optionSelected
+          ) * Number(data.cantidadDetallefichatecnica);
         const isDecimal = precioTotal - Math.floor(precioTotal) !== 0;
 
         const result = `S/ ${
@@ -141,23 +164,73 @@ function Tabla() {
     {
       headerName: "Costo Total",
       field: "costototaling",
-      cellRendererFramework: (params) => (
-        <>
-          <span>
-            {params.data.cantidadDetallefichatecnica *
-              params.data.costopromedioProducto}
-          </span>
-        </>
-      ),
+      getValue(data) {
+        const { cantidadDetallefichatecnica, costopromedioProducto } = data;
+        const cantidad = Number(cantidadDetallefichatecnica);
+        const costo = Number(costopromedioProducto);
+        const costoFinal = cantidad * costo;
+        return costoFinal;
+      },
+      render: ({ value }) => {
+        return <span>{value}</span>;
+      },
     },
     {
       headerName: "Ingrese Descuento %",
-      field: "descuento",
-      editable: true,
+      field: "descuentounitarioDetallefichatecnica",
+      getValue(rowData) {
+        if (rowData.descuentounitarioDetallefichatecnica === null) {
+          return 0;
+        }
+        return rowData.descuentounitarioDetallefichatecnica;
+      },
+      render: ({ value, setValue }) => {
+        return (
+          <input
+            type="number"
+            value={value || 0}
+            onChange={(e) => setValue(Number(e.target.value))}
+          />
+        );
+      },
+    },
+    {
+      label: "Descuento general",
+      field: "descuentogeneralDetallefichatecnica",
+      getValue(rowData) {
+        if (
+          rowData.descuentogeneralDetallefichatecnica === undefined ||
+          rowData.descuentogeneralDetallefichatecnica === null
+        ) {
+          return 0;
+        }
+        return rowData.descuentogeneralDetallefichatecnica;
+      },
     },
     {
       headerName: "Precio Con descuento",
-      field: "preciocondescuento",
+      key: "preciocondescuento",
+      getValue(rowData) {
+        const descuento = Number(
+          rowData.descuentounitarioDetallefichatecnica || 0
+        );
+        const precio = Number(rowData.preciototalDetallefichatecnica || 0);
+        const resultadoDescuentoUnitario = precio * (1 - descuento / 100);
+        const descuentoGeneral = Number(
+          rowData.descuentogeneralDetallefichatecnica || 0
+        );
+        const format2Decimals = new Intl.NumberFormat("de-DE", {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        });
+
+        return format2Decimals.format(
+          resultadoDescuentoUnitario * (1 - descuentoGeneral / 100)
+        );
+      },
+      render: ({ value }) => {
+        return <span>{value}</span>;
+      },
     },
     {
       headerName: "Acciones",
@@ -166,14 +239,9 @@ function Tabla() {
       editable: false,
       filter: false,
 
-      cellRendererFramework: (params) => (
+      render: (params) => (
         <div>
-          <buttonc
-            className="btn btn-primary"
-            onClick={() => actionButton(params)}
-          >
-            Aplicar
-          </buttonc>{" "}
+          <button className="btn btn-primary">Aplicar</button>{" "}
         </div>
       ),
     },
@@ -184,50 +252,7 @@ function Tabla() {
     ...col,
   }));
   /* COLUMNAS */
-
-  const autoGroupColumnDef = useMemo(() => {
-    return {
-      headerName: "Athlete",
-      field: "athlete",
-      minWidth: 250,
-      cellRenderer: "agGroupCellRenderer",
-      cellRendererParams: {
-        checkbox: true,
-      },
-    };
-  }, []);
-  const actionButton = (params) => {
-    console.log("toda la fila", params.data, params.data.idDetallefichatecnica);
-    console.log(params.data);
-    console.log("este es el id", params.data.idDetallefichatecnica);
-    console.log("este es el Precio Total", params.data.precioTotal);
-    console.log("este es el multiplo", parseInt(params.data.multiplo));
-    const numAMultiplicar = params.data.descuento;
-    const porcertajeNumero = numAMultiplicar / 100;
-    console.log(porcertajeNumero);
-    const idRow = params.data.idDetallefichatecnica;
-    console.log("soy idRow", idRow);
-    console.log("soy gridApi", gridApi);
-    console.log("soy gridApi.getRowNode", gridApi.getRowNode(0));
-    var rowNode = gridApi.getRowNode(idRow - 1);
-    console.log("soy rowNode", rowNode);
-    console.log(rowNode.data);
-    var newOperacion = rowNode.data.preciocondescuento * porcertajeNumero;
-    var operacionFinal = params.data.preciocondescuento - newOperacion;
-    rowNode.setDataValue("preciocondescuento", operacionFinal);
-  };
-  let gridApi;
-  const onGridReady = (params) => {
-    gridApi = params.api;
-  };
-
-  const defaultColDef = {
-    /* filter: true, */
-    /*  filter: true,
-    floatingFilter: true, */
-    //editable: true,
-    resizable: true,
-  };
+  console.log(tablaDatos);
 
   /* para importar un excel y convertilo en un array de objetos */
 
@@ -257,41 +282,18 @@ function Tabla() {
 
     promise.then((itemsFinales) => {
       //setItems(d);
-      // console.log(itemsFinales); ///////////////estos son los datos del excel pasado a objeto
       const items = itemsFinales;
-      //console.log(items);
       const agregarId = items.map((item) => ({
         ...item,
         idFichatecnica: fichaTecnica[0].idFichatecnica,
       }));
-      //console.log("agregado idFichaTecnica", agregarId);
       agregarDatosTabla(agregarId);
-      //console.log("tabladatos", tablaDatos);
       //setDataTabla(tablaDatos);
       //setIdFichaDataTabla(itemsFinales);
     });
   };
-  const rowSelectionType = "multiple";
 
-  const getSelectedRowData = () => {
-    console.log("entraste a getSelectedRowData ");
-    let selectedNodes = gridApi.getSelectedNodes();
-    console.log("selectNodes ", selectedNodes);
-    let selectedData = selectedNodes.map((node) => node.data);
-    console.log("filas", selectedData);
-  };
-
-  const onSelectionChanged = (event) => {
-    //sirve para coger todo el objeto de una fila
-    console.log(event.api.getSelectedRows());
-    /* const fila = event.api.getSelectedRows();
-    console.log(`soy fila agarrada`, fila); */
-  };
   const EnviarguardadoCotizacion = async () => {
-    console.log("se guardo cotizacion");
-    console.log("ficha tecnica", fichaTecnica);
-    console.log("esta es la id", fichaTecnica[0].idFichatecnica);
-
     const accionUsuario = await Swal.fire({
       icon: "warning",
       title: "Recuerde que se enviara un correo al Gerente General",
@@ -304,13 +306,106 @@ function Tabla() {
     }
   };
 
+  const finalTablaDatos = useMemo(() => {
+    return tablaDatos.map((rowData) => {
+      const newRowData = { ...rowData };
+      if (!newRowData.preciounitarioDetallefichatecnica) {
+        const {
+          precioventaunoProducto,
+          precioventadosProducto,
+          precioventatresProducto,
+          precioventacuatroProducto,
+        } = newRowData;
+        const options = {
+          optionSelected: precioventaunoProducto,
+          precioventaunoProducto,
+          precioventadosProducto,
+          precioventatresProducto,
+          precioventacuatroProducto,
+        };
+        const isManual = Object.keys(options).every(
+          (key) => options[key] === 0
+        );
+
+        newRowData.preciounitarioDetallefichatecnica = { options, isManual };
+      }
+      return newRowData;
+    });
+  }, [tablaDatos]);
+
   const { gridTable } = useGridTable({
-    data: tablaDatos,
+    data: finalTablaDatos,
     definitions: {
       columnsDefinition: columns,
       rowsDefinition: { idKey: "idDetallefichatecnica" },
     },
   });
+
+  const applyDiscount = () => {
+    const rowsStates = gridTable.fullState.state;
+    rowsStates
+      .filter((row) => row.show)
+      .forEach((rowState) => {
+        const discountCell = rowState.state.find((cellState) => {
+          return cellState.key === "descuentogeneralDetallefichatecnica";
+        });
+        console.log(discountCell.value);
+        discountCell?.setValue(discount);
+        console.log(discountCell.value);
+      });
+  };
+
+  const [isFirstUpdate, setIsFirstUpdate] = useState(false);
+  const updatePrecioTotal = useCallback(() => {
+    gridTable.fullState.state.forEach((rowState) => {
+      const precioTotalCell = rowState.state.find((cellState) => {
+        return cellState.key === "preciototalDetallefichatecnica";
+      });
+      const cantidad = rowState.state.find((cellState) => {
+        return cellState.key === "cantidadDetallefichatecnica";
+      });
+      const preUnitario = rowState.state.find((cellState) => {
+        return cellState.key === "preciounitarioDetallefichatecnica";
+      });
+      precioTotalCell?.setValue(
+        Number(cantidad.value) *
+          Number(preUnitario.value.options.optionSelected)
+      );
+    });
+  }, [gridTable.fullState.state]);
+
+  useEffect(() => {
+    if (!isFirstUpdate && gridTable.fullState.state.length > 0) {
+      updatePrecioTotal();
+      setIsFirstUpdate(true);
+    }
+  }, [gridTable.fullState.state, isFirstUpdate, updatePrecioTotal]);
+
+  const dataUpdated = useMemo(() => {
+    const data = gridTable.fullState.state.map((rowState) => {
+      const rowData = {};
+      rowState.state.forEach((cellState) => {
+        rowData[cellState.key] = cellState.value;
+      });
+      return rowData;
+    });
+    return data;
+  }, [gridTable.fullState.state]);
+
+  const download = useCallback(() => {
+    const filename = "results.xlsx";
+    const dataForExcel = dataUpdated.map((data) => ({
+      ...data,
+      preciounitarioDetallefichatecnica:
+        data.preciounitarioDetallefichatecnica.options.optionSelected,
+    }));
+    const worksheet = XLSX.utils.json_to_sheet(dataForExcel);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Results");
+    XLSX.writeFile(workbook, filename);
+  }, [dataUpdated]);
+
+  console.log("Datos actualizados! -> ", dataUpdated);
 
   if (!fichaTecnica)
     return (
@@ -320,7 +415,6 @@ function Tabla() {
     ); // solo puede haber un return
   return (
     <div>
-      xd
       <div className="row mt-3 mb-4">
         <div className="col-12 col-md-6 mb-2">
           <input
@@ -339,8 +433,12 @@ function Tabla() {
               className="form-control"
               type="number"
               placeholder="Descuento Total"
+              value={discount}
+              onChange={(e) => setDiscount(Number(e.target.value))}
             />
-            <button className="btn btn-success ms-2">Aplicar</button>
+            <button className="btn btn-success ms-2" onClick={applyDiscount}>
+              Aplicar
+            </button>
           </div>
           {/* <div className="d-flex">
             <input
@@ -399,7 +497,20 @@ function Tabla() {
             Modificar ficha tecnica
           </button> */}
         </div>
-        <div className="col-12 col-md-6 text-end">
+        <div className="col-12 col-md-9 text-end">
+          {/* <button
+            style={{
+              background: "#008DCA",
+              border: "none",
+              color: "white ",
+              padding: "8px 16px",
+            }}
+            className="ms-3"
+            onClick={download}
+          >
+            Descargar Excel
+          </button> */}
+
           <button
             style={{
               background: "#008DCA",
@@ -407,6 +518,7 @@ function Tabla() {
               color: "white ",
               padding: "8px 16px",
             }}
+            className="ms-3"
             onClick={() => EnviarguardadoCotizacion()}
           >
             Guardar Cotizacion Final

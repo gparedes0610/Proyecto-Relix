@@ -2,8 +2,9 @@ import React from "react";
 
 function Select({ data, setValue }) {
   const onChange = (e) => {
-    const options = { ...data, optionSelected: e.target.value };
-    setValue({ options, isManual: false });
+    const newOptions = { ...data, optionSelected: e.target.value };
+    const newValue = { options: newOptions, isManual: false };
+    setValue(newValue);
   };
   return (
     <select

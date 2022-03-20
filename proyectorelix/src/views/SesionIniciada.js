@@ -10,7 +10,7 @@ import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 
 import ComoTrabajar from "../components/ComoTrabajar";
-import Tabla from "../components/Ingeniero/Tabla";
+import Tabla from "../components/Ingeniero/GridTable";
 import BtnCrearFicha from "../components/Fichas/BtnCrearFicha";
 import ListaFichas from "../components/Fichas/ListaFichas";
 import authContext from "../context/autenticacion/authContext";

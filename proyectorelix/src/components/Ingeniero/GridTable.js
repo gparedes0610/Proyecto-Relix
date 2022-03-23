@@ -22,12 +22,20 @@ function Tabla() {
   /////////////////////////////
   const [discount, setDiscount] = useState(0);
   const tablacontext = useContext(tablaContext);
+<<<<<<< HEAD
   const { tablaDatos, agregarDatosTabla, guardarCotizacionEnLaBd } =
     tablacontext;
   //////////////////////////
   ///////////////////////////////
   const fichatecnicacontext = useContext(fichaTecnicaContext);
   const { fichaTecnica, guardarCotizacion } = fichatecnicacontext;
+=======
+  const { tablaDatos, agregarDatosTabla, guardarCotizacion } = tablacontext;
+  //////////////////////////
+  ///////////////////////////////
+  const fichatecnicacontext = useContext(fichaTecnicaContext);
+  const { fichaTecnica } = fichatecnicacontext;
+>>>>>>> db6dba1bcf4ccf01baf6da96fa33e7a5b6437e0a
   //////////////////////////////
   //useEffect(() => {}, [fichaTecnica]);
 
@@ -79,7 +87,10 @@ function Tabla() {
     {
       headerName: "PreUnitario",
       field: "preciounitarioDetallefichatecnica",
+<<<<<<< HEAD
 
+=======
+>>>>>>> db6dba1bcf4ccf01baf6da96fa33e7a5b6437e0a
       render: ({ value, setValue, rowState }) => {
         const cellPrecioConD = rowState.state.find(
           (cell) => cell.key === "preciocondescuento"
@@ -96,12 +107,20 @@ function Tabla() {
           const precio = Number(precioTotal || 0);
           const resultadoDescuentoUnitario = precio * (1 - descuento / 100);
           const descuentoGeneral = Number(
+<<<<<<< HEAD
             rowData.descuentototalDetallefichatecnica || 0
+=======
+            rowData.descuentogeneralDetallefichatecnica || 0
+>>>>>>> db6dba1bcf4ccf01baf6da96fa33e7a5b6437e0a
           );
 
           return resultadoDescuentoUnitario * (1 - descuentoGeneral / 100);
         };
+<<<<<<< HEAD
         //console.log("->>>>>>>>>", value);
+=======
+        console.log("->>>>>>>>>", value);
+>>>>>>> db6dba1bcf4ccf01baf6da96fa33e7a5b6437e0a
         // precioConD.setValue()
         const { options, isManual } = value;
         return isManual ? (
@@ -152,7 +171,11 @@ function Tabla() {
           ) * Number(data.cantidadDetallefichatecnica);
         const isDecimal = precioTotal - Math.floor(precioTotal) !== 0;
 
+<<<<<<< HEAD
         const result = `$ ${
+=======
+        const result = `S/ ${
+>>>>>>> db6dba1bcf4ccf01baf6da96fa33e7a5b6437e0a
           isDecimal ? round(precioTotal, 2).toFixed(2) : precioTotal + ".00"
         }`;
 
@@ -198,6 +221,7 @@ function Tabla() {
     },
     {
       label: "Descuento general",
+<<<<<<< HEAD
       field: "descuentototalDetallefichatecnica",
       getValue(rowData) {
         if (
@@ -207,6 +231,17 @@ function Tabla() {
           return 0;
         }
         return rowData.descuentototalDetallefichatecnica;
+=======
+      field: "descuentogeneralDetallefichatecnica",
+      getValue(rowData) {
+        if (
+          rowData.descuentogeneralDetallefichatecnica === undefined ||
+          rowData.descuentogeneralDetallefichatecnica === null
+        ) {
+          return 0;
+        }
+        return rowData.descuentogeneralDetallefichatecnica;
+>>>>>>> db6dba1bcf4ccf01baf6da96fa33e7a5b6437e0a
       },
     },
     {
@@ -219,7 +254,11 @@ function Tabla() {
         const precio = Number(rowData.preciototalDetallefichatecnica || 0);
         const resultadoDescuentoUnitario = precio * (1 - descuento / 100);
         const descuentoGeneral = Number(
+<<<<<<< HEAD
           rowData.descuentototalDetallefichatecnica || 0
+=======
+          rowData.descuentogeneralDetallefichatecnica || 0
+>>>>>>> db6dba1bcf4ccf01baf6da96fa33e7a5b6437e0a
         );
         const format2Decimals = new Intl.NumberFormat("de-DE", {
           minimumFractionDigits: 2,
@@ -231,10 +270,17 @@ function Tabla() {
         );
       },
       render: ({ value }) => {
+<<<<<<< HEAD
         return <span>$ {value}</span>;
       },
     },
     /* {
+=======
+        return <span>{value}</span>;
+      },
+    },
+    {
+>>>>>>> db6dba1bcf4ccf01baf6da96fa33e7a5b6437e0a
       headerName: "Acciones",
       field: "acciones",
       sortable: false,
@@ -246,7 +292,11 @@ function Tabla() {
           <button className="btn btn-primary">Aplicar</button>{" "}
         </div>
       ),
+<<<<<<< HEAD
     }, */
+=======
+    },
+>>>>>>> db6dba1bcf4ccf01baf6da96fa33e7a5b6437e0a
   ].map((col) => ({
     label: col.headerName,
     width: "100px",
@@ -254,7 +304,11 @@ function Tabla() {
     ...col,
   }));
   /* COLUMNAS */
+<<<<<<< HEAD
   //console.log(tablaDatos);
+=======
+  console.log(tablaDatos);
+>>>>>>> db6dba1bcf4ccf01baf6da96fa33e7a5b6437e0a
 
   /* para importar un excel y convertilo en un array de objetos */
 
@@ -294,8 +348,24 @@ function Tabla() {
       //setIdFichaDataTabla(itemsFinales);
     });
   };
+<<<<<<< HEAD
   //console.log("datos en la tabla", tablaDatos);
   /* para importar un excel y convertilo en un array de objetos */
+=======
+
+  const EnviarguardadoCotizacion = async () => {
+    const accionUsuario = await Swal.fire({
+      icon: "warning",
+      title: "Recuerde que se enviara un correo al Gerente General",
+      showConfirmButton: true,
+      showCancelButton: true,
+    });
+
+    if (accionUsuario.isConfirmed) {
+      guardarCotizacion(fichaTecnica[0].idFichatecnica);
+    }
+  };
+>>>>>>> db6dba1bcf4ccf01baf6da96fa33e7a5b6437e0a
 
   const finalTablaDatos = useMemo(() => {
     return tablaDatos.map((rowData) => {
@@ -338,7 +408,11 @@ function Tabla() {
       .filter((row) => row.show)
       .forEach((rowState) => {
         const discountCell = rowState.state.find((cellState) => {
+<<<<<<< HEAD
           return cellState.key === "descuentototalDetallefichatecnica";
+=======
+          return cellState.key === "descuentogeneralDetallefichatecnica";
+>>>>>>> db6dba1bcf4ccf01baf6da96fa33e7a5b6437e0a
         });
         console.log(discountCell.value);
         discountCell?.setValue(discount);
@@ -383,7 +457,11 @@ function Tabla() {
     return data;
   }, [gridTable.fullState.state]);
 
+<<<<<<< HEAD
   /* const download = useCallback(() => {
+=======
+  const download = useCallback(() => {
+>>>>>>> db6dba1bcf4ccf01baf6da96fa33e7a5b6437e0a
     const filename = "results.xlsx";
     const dataForExcel = dataUpdated.map((data) => ({
       ...data,
@@ -394,6 +472,7 @@ function Tabla() {
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, "Results");
     XLSX.writeFile(workbook, filename);
+<<<<<<< HEAD
   }, [dataUpdated]); */
 
   //console.log("Datos actualizados que es lo que yo enviare", dataUpdated);
@@ -428,11 +507,20 @@ function Tabla() {
     console.log("toda la tabla", tablaConIdDeFichaTecnica);
     guardarCotizacionEnLaBd(tablaConIdDeFichaTecnica);
   };
+=======
+  }, [dataUpdated]);
+
+  console.log("Datos actualizados! -> ", dataUpdated);
+>>>>>>> db6dba1bcf4ccf01baf6da96fa33e7a5b6437e0a
 
   if (!fichaTecnica)
     return (
       <h3 className="fw-bolder mt-3 text-uppercase">
+<<<<<<< HEAD
         Seleccionar Ver Tabla para empezar a Trabajar
+=======
+        Cree tabla por ficha tecnica para trabajar
+>>>>>>> db6dba1bcf4ccf01baf6da96fa33e7a5b6437e0a
       </h3>
     ); // solo puede haber un return
   return (
@@ -533,6 +621,7 @@ function Tabla() {
             Descargar Excel
           </button> */}
 
+<<<<<<< HEAD
           {fichaTecnica[0].cotizacionenviadaFichatecnica === "1" ? (
             <p>Masaki chupa pinga</p>
           ) : (
@@ -564,6 +653,32 @@ function Tabla() {
               </button>
             </>
           )}
+=======
+          <button
+            style={{
+              background: "#008DCA",
+              border: "none",
+              color: "white ",
+              padding: "8px 16px",
+            }}
+            className="ms-3"
+            onClick={() => EnviarguardadoCotizacion()}
+          >
+            Guardar Cotizacion Final
+          </button>
+
+          <button
+            style={{
+              background: "#008DCA",
+              border: "none",
+              color: "white ",
+              padding: "8px 16px",
+            }}
+            className="ms-3"
+          >
+            Guardar
+          </button>
+>>>>>>> db6dba1bcf4ccf01baf6da96fa33e7a5b6437e0a
         </div>
       </div>
     </div>

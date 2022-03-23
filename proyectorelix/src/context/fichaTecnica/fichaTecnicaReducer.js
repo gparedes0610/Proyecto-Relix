@@ -5,6 +5,7 @@ import {
   FICHATECNICA_ACTUAL,
   FICHA_EDICION,
   ACTUALIZAR_FICHA,
+  GUARDAR_COTIZACION,
 } from "../../types";
 
 export default (state, action) => {
@@ -42,6 +43,13 @@ export default (state, action) => {
           ficha.id === action.payload.id ? action.payload : ficha
         ),
       };
+
+    case GUARDAR_COTIZACION:
+      return {
+        ...state,
+        prueba: action.payload,
+      };
+
     default:
       return state;
   }

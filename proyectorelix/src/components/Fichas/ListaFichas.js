@@ -12,7 +12,7 @@ function ListaFichas({ setActivarFicha, ActivarFicha }) {
   } = fichatecnicacontext;
   //////////////////////////////
   return (
-    <ul class="list-group cambiarcolores">
+    <ul className="list-group cambiarcolores">
       {todasLasFichasTecnica.length > 0 ? (
         todasLasFichasTecnica.map((fichatecnica, i) => (
           <Ficha

@@ -10,6 +10,7 @@ import {
   FICHATECNICA_ACTUAL,
   FICHA_EDICION,
   ACTUALIZAR_FICHA,
+  GUARDAR_COTIZACION,
 } from "../../types";
 import clienteAxios from "../../config/axios";
 const FichaTecnicaStateProvider = (props) => {
@@ -17,6 +18,7 @@ const FichaTecnicaStateProvider = (props) => {
     todasLasFichasTecnica: [],
     fichaTecnica: null,
     fichaEdicion: null,
+    prueba: null,
   };
 
   const [state, dispatch] = useReducer(fichaTecnicaReducer, initialState);
@@ -50,7 +52,7 @@ const FichaTecnicaStateProvider = (props) => {
     }
   };
 
-  //selecciona el proyecto que el usuario dio click
+  //selecciona el proyecto que el usuario dio click en VER TABLA
   const fichaTecnicaActual = (fichaTecnicaId) => {
     dispatch({
       type: FICHATECNICA_ACTUAL,
@@ -85,17 +87,40 @@ const FichaTecnicaStateProvider = (props) => {
     }
   };
 
+  //////////////////guardar cotizacion
+  const guardarCotizacion = async (idFichaTecnica) => {
+    console.log("en guardarCotizacion el id es", idFichaTecnica);
+    try {
+      console.log("entraste al try");
+      const resultado = await clienteAxios.put(
+        "/detallefichatecnica",
+        idFichaTecnica
+      );
+      console.log("resultado de guardarCotizacion", resultado);
+      console.log("resultado de guardarCotizacion", resultado.data);
+      dispatch({
+        type: GUARDAR_COTIZACION,
+        payload: resultado.data,
+      });
+    } catch (error) {
+      console.log(error);
+      console.log(error.response.data.messages.error);
+    }
+  };
+
   return (
     <fichaTecnicaContext.Provider
       value={{
         todasLasFichasTecnica: state.todasLasFichasTecnica,
         fichaTecnica: state.fichaTecnica,
         fichaEdicion: state.fichaEdicion,
+        prueba: state.prueba,
         registroDeFichaTecnica,
         obtenerTodasLasFichasTecnicas,
         fichaTecnicaActual,
         guardarFichaActual,
         actualizarFicha,
+        guardarCotizacion,
       }}
     >
       {props.children}

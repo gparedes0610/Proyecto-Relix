@@ -24,13 +24,15 @@ function Ficha({ fichatecnica, setActivarFicha, ActivarFicha }) {
   ////////////////////////////////////////////////////////TABLA EN CADA FICHA
   const crearTabla = (fichaTecnicaId) => {
     console.log(
-      "hizo click en crear tabla y el id de esa fichatecnica es ",
-      fichaTecnicaId
+      "hizo click en ver tabla y el id de esa fichatecnica es ",
+      fichaTecnicaId,
+      "ficha tecnica",
+      fichatecnica
     );
     //console.log("y este es el objeto", fichatecnica);
-    fichaTecnicaActual(fichaTecnicaId);
+    fichaTecnicaActual(fichaTecnicaId); // me chapa todos los datos de la ficha seleccionada
     //tmb deberia llamar los datos de la tabla por el id de la ficha
-    obtenerDatosTabla(fichatecnica);
+    obtenerDatosTabla(fichatecnica); // manda la ficha objeto, pero luego solo se envia el id de esa ficha en el get
   };
 
   /////////////////////////////////////////PARA EDITAR

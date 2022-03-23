@@ -9,6 +9,7 @@ import {
   AGREGAR_DATOS_TABLA,
   ACTUALIZAR_DATOS_TABLA,
   GUARDAR_COTIZACIONES,
+  GUARDAR_COTIZACIONES_EN_LA_BD,
 } from "../../types";
 import clienteAxios from "../../config/axios";
 
@@ -48,7 +49,8 @@ const TablaStateProvider = (props) => {
         payload: resultado.data, // lo ejecuta usefect al cargar la pagina
       });
     } catch (error) {
-      console.log(error);
+      console.log("hay un error");
+      console.log(error.response.data.messages.error);
     }
   };
 
@@ -58,7 +60,10 @@ const TablaStateProvider = (props) => {
     try {
       const resultado = await clienteAxios.post("/detallefichatecnica", datos);
       console.log("resultado de agregarDatosTabla", resultado);
-      console.log("resultado de agregarDatosTabla", resultado.data);
+      console.log(
+        "resultado de agregarDatosTabla,ESTO ES LO Q ME DEVUELVE",
+        resultado.data
+      );
       dispatch({
         type: AGREGAR_DATOS_TABLA,
         payload: resultado.data,
@@ -80,7 +85,7 @@ const TablaStateProvider = (props) => {
     });
   };
   //////////////////guardar cotizacion
-  const guardarCotizacion = async (idFichaTecnica) => {
+  /* const guardarCotizacion = async (idFichaTecnica) => {
     console.log("en guardarCotizacion el id es", idFichaTecnica);
     try {
       const resultado = await clienteAxios.put(
@@ -96,6 +101,21 @@ const TablaStateProvider = (props) => {
     } catch (error) {
       console.log(error.response.data.messages.error);
     }
+  }; */
+  //////////////////guardar cotizacion
+  const guardarCotizacionEnLaBd = async (data) => {
+    console.log("esta es la data en guardarCotizacionEnLaBd ", data);
+    try {
+      const resultado = await clienteAxios.put("/guardardataficha", data);
+      console.log("resultado de agregarDatosTabla", resultado);
+      console.log("resultado de agregarDatosTabla", resultado.data);
+      dispatch({
+        type: GUARDAR_COTIZACIONES_EN_LA_BD,
+        payload: resultado.data,
+      });
+    } catch (error) {
+      console.log(error.response.data.messages.error);
+    }
   };
 
   return (
@@ -103,10 +123,12 @@ const TablaStateProvider = (props) => {
       value={{
         tablaDatos: state.tablaDatos,
         cotizaciones: state.cotizaciones,
+        resultado: state.resultado,
         obtenerDatosTabla,
         agregarDatosTabla,
         actualizarDatosTabla,
-        guardarCotizacion,
+        //guardarCotizacion,
+        guardarCotizacionEnLaBd,
       }}
     >
       {props.children}

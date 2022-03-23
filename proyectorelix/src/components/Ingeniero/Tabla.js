@@ -359,7 +359,7 @@ function Tabla() {
           Agarrar Filas
         </button> */}
         <div className="col-12 ">
-          <div
+          {/*  <div
             id="myGrid"
             className="ag-theme-alpine"
             style={{ height: 400, width: "100%" }}
@@ -377,7 +377,7 @@ function Tabla() {
               onSelectionChanged={onSelectionChanged} //selecciona varias filas con control
               //rowMultiSelectWithClick={true}
             />
-          </div>
+          </div> */}
         </div>
       </div>
       {/* TABLA */}
